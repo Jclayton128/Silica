@@ -6,6 +6,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
+    public Action RunStarted;
+
 
     [SerializeField] PlayerDataHolder _playerPrefab;
     public PlayerDataHolder Player { get; private set; }
@@ -39,5 +41,6 @@ public class GameController : MonoBehaviour
     private void SetupNewRun()
     {
         NodeController.Instance.SpawnNode(NodeHandler.NodeStates.Current);
+        RunStarted?.Invoke();
     }
 }

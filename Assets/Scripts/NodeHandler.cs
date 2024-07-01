@@ -52,7 +52,7 @@ public class NodeHandler : MonoBehaviour
     public void ConvertToUsedNode()
     {
         NodeState = NodeStates.Used;
-        _sr.sprite = NodeLibrary.Instance.GetAvailableNodeSprite();
+        _sr.sprite = NodeLibrary.Instance.GetUsedNodeSprite();
         AdjustRotation(Vector2.up);
 
         NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
@@ -60,6 +60,7 @@ public class NodeHandler : MonoBehaviour
 
     public void DeactivateNode()
     {
+        Debug.Log("deactivating node");
         NodeController.Instance.DespawnNode(this);
 
         gameObject.SetActive(false);
@@ -81,6 +82,11 @@ public class NodeHandler : MonoBehaviour
         {
             //transfer active node to this one
             NodeController.Instance.AdjustCurrentNode(this);
+            PacketHandler ph;
+            if (collision.TryGetComponent<PacketHandler>(out ph))
+            {
+                ph.DeactivatePacket();
+            }
         }
     }
 

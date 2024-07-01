@@ -10,6 +10,7 @@ public class NodeLibrary : MonoBehaviour
 
     [SerializeField] Sprite _activeNodeSprite = null;
     [SerializeField] Sprite _availableNodeSprite = null;
+    [SerializeField] Sprite _usedNodeSprite = null;
 
 
 
@@ -31,6 +32,10 @@ public class NodeLibrary : MonoBehaviour
     public Sprite GetAvailableNodeSprite()
     {
         return _availableNodeSprite;
+    }
+    public Sprite GetUsedNodeSprite()
+    {
+        return _usedNodeSprite;
     }
 
 
