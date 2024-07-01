@@ -19,7 +19,7 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (NodeController.Instance.ActiveNode == null) return;
+        if (NodeController.Instance.CurrentNode == null) return;
 
         UpdateMousePosition();
 

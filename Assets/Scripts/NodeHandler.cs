@@ -5,50 +5,83 @@ using UnityEngine;
 
 public class NodeHandler : MonoBehaviour
 {
-    [SerializeField] bool _isHomeNode = false;
-    public bool IsHomeNode => _isHomeNode;
+    public enum NodeStates {Current, Available, Used}
 
     //references
     SpriteRenderer _sr;
 
     //state
     private bool _isInitialized = false;
-    Vector3 _angs = Vector3.zero;
+    public NodeStates NodeState { get; private set; }
 
-    public void SetupNodeInstance(bool isActiveNode)
+    private void Initialize()
     {
+        _sr = GetComponent<SpriteRenderer>();
+        _isInitialized = true;
+    }
+
+    public void ActivateNode(NodeStates nodeState)
+    {
+        gameObject.SetActive(true);
+
         if (!_isInitialized)
         {
-            Initialize(isActiveNode);
+            Initialize();
+        }
+
+        if (nodeState == NodeStates.Current)
+        {
+            _sr.sprite = NodeLibrary.Instance.GetCurrentNodeSprite();
+        }
+        else if (nodeState == NodeStates.Available)
+        {
+            _sr.sprite = NodeLibrary.Instance.GetAvailableNodeSprite();
         }
 
         //Setup other nuances for this node later in this method
     }
 
-    private void Initialize(bool isActiveNode)
+    public void ConvertToCurrentNode()
     {
-        _sr = GetComponent<SpriteRenderer>();
-        if (isActiveNode)
-        {
-            _sr.sprite = NodeLibrary.Instance.GetActiveNodeSprite();
-        }
-        else
-        {
-            _sr.sprite = NodeLibrary.Instance.GetAvailableNodeSprite();
-        }
+        NodeState = NodeStates.Current;
+        _sr.sprite = NodeLibrary.Instance.GetCurrentNodeSprite();
 
-        _isInitialized = true;
+        NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
     }
 
-    public void TeardownAsActiveNode()
+    public void ConvertToUsedNode()
     {
+        NodeState = NodeStates.Used;
         _sr.sprite = NodeLibrary.Instance.GetAvailableNodeSprite();
-        transform.right = Vector2.up;
+        AdjustRotation(Vector2.up);
+
+        NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
+    }
+
+    public void DeactivateNode()
+    {
+        NodeController.Instance.DespawnNode(this);
+
+        gameObject.SetActive(false);
     }
 
     public void AdjustRotation(Vector2 facingDir)
     {
         transform.up = facingDir;
     }
-   
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (NodeController.Instance.CurrentNode == this)
+        {
+            //Debug.Log("self collision");
+            //Destroy(collision.transform.gameObject);
+        }
+        else if (NodeController.Instance.CheckIfNodeIsAvailable(this))
+        {
+            //transfer active node to this one
+            NodeController.Instance.AdjustCurrentNode(this);
+        }
+    }
+
 }

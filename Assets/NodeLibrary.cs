@@ -6,8 +6,7 @@ public class NodeLibrary : MonoBehaviour
 {
     public static NodeLibrary Instance { get; private set; }
 
-    [SerializeField] NodeHandler _homeNodePrefab = null;
-    [SerializeField] NodeHandler _commercialNodePrefab = null;
+    [SerializeField] NodeHandler _nodePrefab = null;
 
     [SerializeField] Sprite _activeNodeSprite = null;
     [SerializeField] Sprite _availableNodeSprite = null;
@@ -19,17 +18,12 @@ public class NodeLibrary : MonoBehaviour
         Instance = this;
     }
 
-    public NodeHandler GetHomeNodePrefab()
+    public NodeHandler GetNodePrefab()
     {
-        return _homeNodePrefab;
+        return _nodePrefab;
     }
 
-    public NodeHandler GetCommercialNodePrefab()
-    {
-        return _commercialNodePrefab;
-    }
-
-    public Sprite GetActiveNodeSprite()
+    public Sprite GetCurrentNodeSprite()
     {
         return _activeNodeSprite;
     }

@@ -38,6 +38,6 @@ public class GameController : MonoBehaviour
 
     private void SetupNewRun()
     {
-        NodeController.Instance.CreateStartingNode();
+        NodeController.Instance.SpawnNode(NodeHandler.NodeStates.Current);
     }
 }
