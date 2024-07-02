@@ -11,6 +11,7 @@ public class PoolHandler : MonoBehaviour
     SpriteRenderer _sr;
     Collider2D _coll;
     ParticleSystem _ps;
+    ParticleSystem.MainModule _psm;
 
     //state
     [SerializeField] PoolTypes _poolType;
@@ -20,7 +21,7 @@ public class PoolHandler : MonoBehaviour
     float _lifetimeRemaining;
 
 
-    public void ActivatePoolObject(Vector2 velocity, float lifetime)
+    public void ActivatePoolObject(Vector2 velocity, float lifetime, int ownerIndex)
     {
         if (!_isInitialized)
         {
@@ -28,6 +29,7 @@ public class PoolHandler : MonoBehaviour
             _sr = GetComponent<SpriteRenderer>();
             _coll = GetComponent<Collider2D>();
             _ps = GetComponent<ParticleSystem>();
+            _psm = _ps.main;
             _isInitialized = true;
         }
 
@@ -36,6 +38,8 @@ public class PoolHandler : MonoBehaviour
         _coll.enabled = true;
         _ps.Play();
 
+        _sr.color = ColorLibrary.Instance.PlayerColors[ownerIndex - 1];
+        _psm.startColor = _sr.color;
         transform.up = velocity.normalized;
         _rb.velocity = velocity;
         _lifetimeRemaining = lifetime;

@@ -42,6 +42,7 @@ public class NodeHandler : MonoBehaviour
         {
             _ownerIndex = 0;
             _sr.sprite = NodeLibrary.Instance.GetAvailableNodeSprite();
+            _sr.color = ColorLibrary.Instance.UsedColor;
         }
 
         NodeType = nodeType;
@@ -58,7 +59,7 @@ public class NodeHandler : MonoBehaviour
         _ownerIndex = ownerIndex;
         NodeState = NodeStates.Current;
         _sr.sprite = NodeLibrary.Instance.GetCurrentNodeSprite();
-        //TODO set color based on owner index
+        _sr.color = ColorLibrary.Instance.PlayerColors[_ownerIndex -1];
 
         //tell the owningplayer that he now has a new current node
         PlayerHandler player = PlayerController.Instance.GetPlayer(_ownerIndex);
@@ -70,6 +71,7 @@ public class NodeHandler : MonoBehaviour
         NodeState = NodeStates.Used;
         _sr.sprite = NodeLibrary.Instance.GetUsedNodeSprite();
         AdjustRotation(Vector2.up);
+        _sr.color = ColorLibrary.Instance.UsedColor;
 
         _ownerIndex = -1;
         NodeController.Instance.RemoveNodeFromAvailableNodeList(this);

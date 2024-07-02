@@ -14,6 +14,7 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] private NodeHandler _currentNode;
     public NodeHandler CurrentNode => _currentNode;
     [SerializeField] int _ownerIndex = 0;
+    public int OwnerIndex => _ownerIndex;
     Vector2 _facingDirForActiveNode;
 
 

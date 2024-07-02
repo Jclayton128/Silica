@@ -42,7 +42,9 @@ public class BlasterHandler : WeaponHandler
     {
         PoolHandler ph = PoolController.Instance.CheckoutPoolObject(_projectileType);
 
-        ph.ActivatePoolObject(_player.CurrentNode.transform.up * _shotSpeed, _lifetime);
+        ph.ActivatePoolObject(_player.CurrentNode.transform.up * _shotSpeed,
+            _lifetime,
+            _player.OwnerIndex);
         ph.transform.position = _player.CurrentNode.transform.position;
     }
 }

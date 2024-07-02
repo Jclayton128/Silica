@@ -22,7 +22,7 @@ public class PacketHandler : MonoBehaviour
         _sr = GetComponent<SpriteRenderer>();
         _ps = GetComponent<ParticleSystem>();
         _ownerIndex = ownerIndex;
-        //TODO set color by ownerindex
+        _sr.color = ColorLibrary.Instance.PlayerColors[_ownerIndex -1];
     }
 
     public void DeactivatePacket()

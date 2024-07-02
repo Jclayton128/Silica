@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 1250369451}
   - component: {fileID: 1250369452}
   - component: {fileID: 1250369453}
+  - component: {fileID: 1250369454}
   m_Layer: 0
   m_Name: Library
   m_TagString: Untagged
@@ -380,6 +381,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _packetPrefab: {fileID: 7897264231342302110, guid: de226d0c381d51741832431c2760fe53, type: 3}
+--- !u!114 &1250369454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250369450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e813a64fedaf5444b4d42943621a4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerColors:
+  - {r: 0, g: 0.9501138, b: 1, a: 1}
+  - {r: 0.9898695, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0.031644605, b: 0, a: 1}
+  - {r: 0.91330194, g: 0, b: 1, a: 1}
 --- !u!1 &1337814598
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,6 +484,7 @@ GameObject:
   - component: {fileID: 1999929162}
   - component: {fileID: 1999929163}
   - component: {fileID: 1999929164}
+  - component: {fileID: 1999929165}
   m_Layer: 0
   m_Name: Controller
   m_TagString: GameController
@@ -497,6 +516,7 @@ MonoBehaviour:
   _densityMin: 1
   _densityMax: 5
   _nodeDensity: 0.5
+  _currentNodes: []
 --- !u!114 &1999929160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,6 +583,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerHandlers: []
+--- !u!114 &1999929165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999929158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41e5de8468b24e049848e7edd9fd68b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _poolHandlerPrefabs:
+  - {fileID: 9118682916367402259, guid: d150527571dbf6b43affae14c4770dd9, type: 3}
+  - {fileID: 9118682916367402259, guid: 731e3dc5932802a448cecd51fb790dee, type: 3}
 --- !u!1 &2111614349
 GameObject:
   m_ObjectHideFlags: 0
