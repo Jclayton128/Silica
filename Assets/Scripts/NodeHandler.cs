@@ -11,6 +11,8 @@ public class NodeHandler : MonoBehaviour
     SpriteRenderer _sr;
 
     //state
+    [SerializeField] private int _ownerIndex = 0;
+    PlayerHandler _playerHandler;
     private bool _isInitialized = false;
     public NodeStates NodeState { get; private set; }
 
@@ -20,7 +22,7 @@ public class NodeHandler : MonoBehaviour
         _isInitialized = true;
     }
 
-    public void ActivateNode(NodeStates nodeState)
+    public void ActivateNode(NodeStates nodeState, int ownerIndex)
     {
         gameObject.SetActive(true);
 
@@ -31,22 +33,27 @@ public class NodeHandler : MonoBehaviour
 
         if (nodeState == NodeStates.Current)
         {
-            _sr.sprite = NodeLibrary.Instance.GetCurrentNodeSprite();
+            ConvertToCurrentNode(ownerIndex);
         }
         else if (nodeState == NodeStates.Available)
         {
+            _ownerIndex = 0;
             _sr.sprite = NodeLibrary.Instance.GetAvailableNodeSprite();
         }
 
         //Setup other nuances for this node later in this method
     }
 
-    public void ConvertToCurrentNode()
+    public void ConvertToCurrentNode(int ownerIndex)
     {
+        _ownerIndex = ownerIndex;
         NodeState = NodeStates.Current;
         _sr.sprite = NodeLibrary.Instance.GetCurrentNodeSprite();
+        //TODO set color based on owner index
 
-        NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
+        //tell the owningplayer that he now has a new current node
+        PlayerHandler player = PlayerController.Instance.GetPlayer(_ownerIndex);
+        player.AdjustCurrentNode(this);
     }
 
     public void ConvertToUsedNode()
@@ -55,12 +62,13 @@ public class NodeHandler : MonoBehaviour
         _sr.sprite = NodeLibrary.Instance.GetUsedNodeSprite();
         AdjustRotation(Vector2.up);
 
+        _ownerIndex = -1;
         NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
     }
 
     public void DeactivateNode()
     {
-        Debug.Log("deactivating node");
+
         NodeController.Instance.DespawnNode(this);
 
         gameObject.SetActive(false);
@@ -73,21 +81,33 @@ public class NodeHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (NodeController.Instance.CurrentNode == this)
+        PacketHandler ph;
+        if (!collision.TryGetComponent<PacketHandler>(out ph))
         {
-            //Debug.Log("self collision");
-            //Destroy(collision.transform.gameObject);
+            Debug.LogWarning("triggered collision with a non-packet!");
+            return;
         }
-        else if (NodeController.Instance.CheckIfNodeIsAvailable(this))
+        else
         {
-            //transfer active node to this one
-            NodeController.Instance.AdjustCurrentNode(this);
-            PacketHandler ph;
-            if (collision.TryGetComponent<PacketHandler>(out ph))
+            if (_ownerIndex > 0)
             {
+                Debug.LogWarning("An owned node can't be captured!");
+                return;
+            }
+            else if (NodeController.Instance.CheckIfNodeIsAvailable(this))
+            {
+                //capture this node and make it the current node of the owning player
+                _ownerIndex = ph.OwnerIndex;
+
+                if (_ownerIndex > 0)
+                {
+                    ConvertToCurrentNode(_ownerIndex);
+                }
+
                 ph.DeactivatePacket();
             }
-        }
-    }
 
+
+        }       
+    }
 }

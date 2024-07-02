@@ -9,7 +9,11 @@ public class PacketHandler : MonoBehaviour
     SpriteRenderer _sr;
     ParticleSystem _ps;
 
-    public void InitializePacket(Vector2 velocity)
+    //state
+    int _ownerIndex = -1;
+    public int OwnerIndex => _ownerIndex;
+
+    public void InitializePacket(Vector2 velocity, int ownerIndex)
     {
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = velocity;
@@ -17,7 +21,8 @@ public class PacketHandler : MonoBehaviour
         _coll = GetComponent<Collider2D>();
         _sr = GetComponent<SpriteRenderer>();
         _ps = GetComponent<ParticleSystem>();
-
+        _ownerIndex = ownerIndex;
+        //TODO set color by ownerindex
     }
 
     public void DeactivatePacket()

@@ -8,11 +8,12 @@ public class NodeController : MonoBehaviour
 {
     public static NodeController Instance { get; private set; }
 
-    public Action CurrentNodeUpdated;
+    public Action CurrentNodesUpdated;
 
-    public NodeHandler CurrentNode;// { get; private set; } = null;
+
 
     //settings
+    [SerializeField] float[] _xStarts = { -3f, -1f, 1f, 3f };
     [SerializeField] float _xSpan = 4;
     [SerializeField] float _yMin = 2;
     [SerializeField] float _yMax = 5;
@@ -22,11 +23,12 @@ public class NodeController : MonoBehaviour
 
 
     //state
-    Vector2 _facingDirForActiveNode;
+
     Vector2 _pos;
     [SerializeField] float _nodeDensity = 0.5f;
 
-
+    [SerializeField] List<NodeHandler> _currentNodes = new List<NodeHandler>();// { get; private set; } = null;
+    public float CurrentNodesCentroid => FindCurrentNodesYCentroid();
     Queue<NodeHandler> _deactivatedNodes = new Queue<NodeHandler>();
     List<NodeHandler> _activatedNodes = new List<NodeHandler>();
 
@@ -36,48 +38,31 @@ public class NodeController : MonoBehaviour
     {
         Instance = this;
     }
-    private void Start()
-    {
-        InputController.Instance.MouseChanged_LMB = HandlePrimaryClick;
-        InputController.Instance.MouseChanged_RMB = HandleSecondaryClick;
-    }
+
 
     #region Flow
-    private void Update()
-    {
-        if (CurrentNode != null)
-        {
-            UpdateActiveNodeFacing();
-        }
-    }
-
-    private void UpdateActiveNodeFacing()
-    {
-        _facingDirForActiveNode = InputController.Instance.MousePosition - CurrentNode.transform.position;
-        CurrentNode.AdjustRotation(_facingDirForActiveNode);
-    }
-
-    private void HandlePrimaryClick(bool wasPushedDown)
-    {
-
-    }
-
-    private void HandleSecondaryClick(bool wasPushedDown)
-    {
-        if (!wasPushedDown)
-        {
-            //release a packet
-            Vector2 location = CurrentNode.transform.position;
-            PacketHandler packet = Instantiate(PacketLibrary.Instance.GetPacketPrefab());
-            packet.transform.position = CurrentNode.transform.position;
-            packet.InitializePacket(CurrentNode.transform.up * GameController.Instance.Player.CurrentSpeed);
-        }
-    }
+    
 
     #endregion
 
     #region Node Creation
 
+    public void SpawnStartingNode(int ownerIndex)
+    {
+        NodeHandler newNode;
+        newNode = Instantiate(NodeLibrary.Instance.GetNodePrefab());
+
+        _pos = Vector2.zero;
+        _pos.x = _xStarts[ownerIndex - 1];
+        newNode.transform.position = _pos;
+
+        newNode.ActivateNode(NodeHandler.NodeStates.Current, ownerIndex);
+
+        _activatedNodes.Add(newNode);
+        //_currentNodes.Add(newNode);
+        CurrentNodesUpdated?.Invoke();
+
+    }
     public void SpawnNode(NodeHandler.NodeStates nodeState)
     {
         NodeHandler newNode;
@@ -95,25 +80,20 @@ public class NodeController : MonoBehaviour
         if (nodeState == NodeHandler.NodeStates.Available)
         {
             //Should check if proposed point is too close to existing nodes
-            _pos.y = CurrentNode.transform.position.y + UnityEngine.Random.Range(_yMin, _yMax);
+            _pos.y = CurrentNodesCentroid + UnityEngine.Random.Range(_yMin, _yMax);
             _pos.x += UnityEngine.Random.Range(-_xSpan, _xSpan);
             _availableNodes.Add(newNode);
-        }
-        else if (nodeState == NodeHandler.NodeStates.Current)
-        {
-            CurrentNode = newNode;
-            CurrentNodeUpdated?.Invoke();
         }
 
         _activatedNodes.Add(newNode);
 
         newNode.transform.position = _pos;
-        newNode.ActivateNode(nodeState);
+        newNode.ActivateNode(nodeState, 0);
     }
     
     public void DespawnNode(NodeHandler unneededNode)
     {
-        if (CurrentNode == unneededNode) CurrentNode = null;
+        _currentNodes.Remove(unneededNode);
         _availableNodes.Remove(unneededNode);
         _activatedNodes.Remove(unneededNode);
         _deactivatedNodes.Enqueue(unneededNode);
@@ -125,7 +105,7 @@ public class NodeController : MonoBehaviour
     internal bool CheckIfNodeIsAvailable(NodeHandler nodeHandler)
     {
         if (_availableNodes.Contains(nodeHandler) &&
-            nodeHandler.transform.position.y > CurrentNode.transform.position.y)
+            nodeHandler.transform.position.y > CurrentNodesCentroid)
         {
             return true;
         }
@@ -135,14 +115,14 @@ public class NodeController : MonoBehaviour
         }
     }
 
-    public void AdjustCurrentNode(NodeHandler newCurrentNode)
+    public void AdjustCurrentNodes(NodeHandler oldCurrentNode, NodeHandler newCurrentNode)
     {
-        CurrentNode.ConvertToUsedNode();
+        RemoveNodeFromAvailableNodeList(newCurrentNode);
+        
+        _currentNodes.Remove(oldCurrentNode);
+        _currentNodes.Add(newCurrentNode);
 
-        CurrentNode = newCurrentNode;
-        CurrentNode.ConvertToCurrentNode();
-
-        CurrentNodeUpdated?.Invoke();
+        CurrentNodesUpdated?.Invoke();
 
         SpawnHigherNodes();
 
@@ -166,7 +146,7 @@ public class NodeController : MonoBehaviour
         List<NodeHandler> nodesToCull = new List<NodeHandler>();
         foreach (var node in _activatedNodes)
         {
-            if (node.transform.position.y < CurrentNode.transform.position.y + (2 * _yStarting))
+            if (node.transform.position.y < CurrentNodesCentroid + (2 * _yStarting))
             {
                 nodesToCull.Add(node);
             }
@@ -183,6 +163,24 @@ public class NodeController : MonoBehaviour
         _availableNodes.Remove(usedNode);
     }
 
+
+    #endregion
+
+    #region Helpers
+
+    private float FindCurrentNodesYCentroid()
+    {
+        float centroid = 0;
+
+        foreach (var node in _currentNodes)
+        {
+            centroid += node.transform.position.y / (float)_currentNodes.Count;
+        }
+
+        Debug.Log("centroid: " + centroid);
+        return centroid;
+
+    }
 
     #endregion
 

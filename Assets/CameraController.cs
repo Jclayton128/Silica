@@ -22,12 +22,12 @@ public class CameraController : MonoBehaviour
         _cvc = Camera.main.GetComponentInChildren<CinemachineVirtualCamera>();
         this.gameObject.transform.position = _pos;
         _cvc.Follow = this.transform;
-        NodeController.Instance.CurrentNodeUpdated = HandleNewCurrentNode;
+        NodeController.Instance.CurrentNodesUpdated = HandleUpdatedCurrentNodes;
     }
 
-    private void HandleNewCurrentNode()
+    private void HandleUpdatedCurrentNodes()
     {
-        _pos = NodeController.Instance.CurrentNode.transform.position;
+        _pos.y = NodeController.Instance.CurrentNodesCentroid;
         //_pos.x = 0;
         this.gameObject.transform.position = _pos;
     }
