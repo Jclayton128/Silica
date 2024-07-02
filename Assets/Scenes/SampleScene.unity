@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 3, z: -10}
+  m_FollowOffset: {x: 0, y: 2, z: -10}
   m_XDamping: 4
   m_YDamping: 4
   m_ZDamping: 1
@@ -252,7 +252,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -368,6 +368,8 @@ MonoBehaviour:
   _activeNodeSprite: {fileID: 21300000, guid: 36e25fac3939d154da3dcf6217f157ba, type: 3}
   _availableNodeSprite: {fileID: 21300000, guid: aaaa1199df2b9e54b9821669341e82fa, type: 3}
   _usedNodeSprite: {fileID: 21300000, guid: 09c06d766969d464295034e100db25b1, type: 3}
+  _iconBlaster: {fileID: 21300000, guid: 41bcc5e534cf04e479d94a9e404b839b, type: 3}
+  _iconShotgun: {fileID: 21300000, guid: 1382b337593cf72489a79f40601556ca, type: 3}
 --- !u!114 &1250369453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +400,8 @@ MonoBehaviour:
   - {r: 0.9898695, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.031644605, b: 0, a: 1}
   - {r: 0.91330194, g: 0, b: 1, a: 1}
+  _usedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _availableColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1337814598
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +457,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 6
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0

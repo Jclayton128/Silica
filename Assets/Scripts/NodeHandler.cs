@@ -11,6 +11,7 @@ public class NodeHandler : MonoBehaviour
 
     //references
     SpriteRenderer _sr;
+    [SerializeField] Transform _icon = null;
 
     //state
     [SerializeField] private int _ownerIndex = 0;
@@ -42,7 +43,7 @@ public class NodeHandler : MonoBehaviour
         {
             _ownerIndex = 0;
             _sr.sprite = NodeLibrary.Instance.GetAvailableNodeSprite();
-            _sr.color = ColorLibrary.Instance.UsedColor;
+            _sr.color = ColorLibrary.Instance.AvailableColor;
         }
 
         NodeType = nodeType;
@@ -88,6 +89,7 @@ public class NodeHandler : MonoBehaviour
     public void AdjustRotation(Vector2 facingDir)
     {
         transform.up = facingDir;
+        _icon.up = Vector2.up;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

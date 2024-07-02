@@ -12,6 +12,12 @@ public class NodeLibrary : MonoBehaviour
     [SerializeField] Sprite _availableNodeSprite = null;
     [SerializeField] Sprite _usedNodeSprite = null;
 
+    [SerializeField] Sprite _iconBlaster = null;
+    public Sprite IconBlaster => _iconBlaster;
+
+    [SerializeField] Sprite _iconShotgun = null;
+    public Sprite IconShotgun => _iconShotgun;
+
 
 
     private void Awake()
