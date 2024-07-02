@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class PlayerHandler : MonoBehaviour
 {
-    //Knows what node it is on
-    //Adjusts its current node to face towards target position
-    //Listens for LMB/RMB
+
+    //references
+    [SerializeField] WeaponHandler _blaster;
+    [SerializeField] WeaponHandler _shotgun;
+
 
     //state
     [SerializeField] private NodeHandler _currentNode;
+    public NodeHandler CurrentNode => _currentNode;
     [SerializeField] int _ownerIndex = 0;
     Vector2 _facingDirForActiveNode;
+
 
     private void Start()
     {
@@ -21,6 +25,7 @@ public class PlayerHandler : MonoBehaviour
         NodeController.Instance.SpawnStartingNode(_ownerIndex);
     }
 
+    #region Flow
     private void Update()
     {
         if (_currentNode != null)
@@ -37,10 +42,25 @@ public class PlayerHandler : MonoBehaviour
 
     private void HandlePrimaryClick(bool wasPushedDown)
     {
-        if (wasPushedDown)
+        switch (_currentNode.NodeType)
         {
+            case NodeHandler.NodeTypes.Empty:
+                //do nothing
+                return;
+
+            case NodeHandler.NodeTypes.Blaster:
+                if (wasPushedDown) _blaster.HandleButtonDown();
+                else _blaster.HandleButtonUp();
+                return;
+
+            case NodeHandler.NodeTypes.Shotgun:
+                if (wasPushedDown) _shotgun.HandleButtonDown();
+                else _shotgun.HandleButtonUp();
+                return;
+
 
         }
+        
     }
 
     private void HandleSecondaryClick(bool wasPushedDown)
@@ -57,6 +77,10 @@ public class PlayerHandler : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Current Node Management
+
     public void AdjustCurrentNode(NodeHandler newCurrentNode)
     {
         NodeHandler oldNode = null;
@@ -71,4 +95,6 @@ public class PlayerHandler : MonoBehaviour
         //tell the node controller IOT update the current nodes list (for camera and spawning)
         NodeController.Instance.AdjustCurrentNodes(oldNode, newCurrentNode);
     }
-}   
+
+    #endregion
+}

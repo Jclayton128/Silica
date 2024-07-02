@@ -56,7 +56,9 @@ public class NodeController : MonoBehaviour
         _pos.x = _xStarts[ownerIndex - 1];
         newNode.transform.position = _pos;
 
-        newNode.ActivateNode(NodeHandler.NodeStates.Current, ownerIndex);
+        newNode.ActivateNode(NodeHandler.NodeStates.Current,
+            NodeHandler.NodeTypes.Empty, //The node type should not be fixed
+            ownerIndex);
 
         _activatedNodes.Add(newNode);
         //_currentNodes.Add(newNode);
@@ -88,7 +90,9 @@ public class NodeController : MonoBehaviour
         _activatedNodes.Add(newNode);
 
         newNode.transform.position = _pos;
-        newNode.ActivateNode(nodeState, 0);
+        newNode.ActivateNode(nodeState,
+            NodeHandler.NodeTypes.Blaster, //The node type should not be fixed
+            0);
     }
     
     public void DespawnNode(NodeHandler unneededNode)
@@ -177,7 +181,7 @@ public class NodeController : MonoBehaviour
             centroid += node.transform.position.y / (float)_currentNodes.Count;
         }
 
-        Debug.Log("centroid: " + centroid);
+        //Debug.Log("centroid: " + centroid);
         return centroid;
 
     }

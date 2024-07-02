@@ -7,6 +7,8 @@ public class NodeHandler : MonoBehaviour
 {
     public enum NodeStates {Current, Available, Used}
 
+    public enum NodeTypes {Empty, Blaster, Shotgun, Heal}
+
     //references
     SpriteRenderer _sr;
 
@@ -14,7 +16,8 @@ public class NodeHandler : MonoBehaviour
     [SerializeField] private int _ownerIndex = 0;
     PlayerHandler _playerHandler;
     private bool _isInitialized = false;
-    public NodeStates NodeState { get; private set; }
+    public NodeStates NodeState;// { get; private set; }
+    public NodeTypes NodeType;// { get; private set; }
 
     private void Initialize()
     {
@@ -22,7 +25,7 @@ public class NodeHandler : MonoBehaviour
         _isInitialized = true;
     }
 
-    public void ActivateNode(NodeStates nodeState, int ownerIndex)
+    public void ActivateNode(NodeStates nodeState, NodeTypes nodeType, int ownerIndex)
     {
         gameObject.SetActive(true);
 
@@ -39,6 +42,12 @@ public class NodeHandler : MonoBehaviour
         {
             _ownerIndex = 0;
             _sr.sprite = NodeLibrary.Instance.GetAvailableNodeSprite();
+        }
+
+        NodeType = nodeType;
+        switch (nodeType)
+        {
+            //setup node icons
         }
 
         //Setup other nuances for this node later in this method

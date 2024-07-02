@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 7016316795695720178}
   - component: {fileID: 9062248025818415727}
   - component: {fileID: 2297293910283599451}
+  - component: {fileID: 9118682916367402259}
   m_Layer: 6
-  m_Name: Bullet
+  m_Name: Blaster_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4947,3 +4948,15 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0029354244, y: 0.0082191825}
   m_Size: {x: 0.05088067, y: 0.44657528}
   m_Direction: 0
+--- !u!114 &9118682916367402259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5245665625134932867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5321de02b6db04a9401b3059600eaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
