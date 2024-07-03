@@ -7,9 +7,13 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
     public Action RunStarted;
+   
+    [SerializeField] PlayerDataHolder _playerPrefab; 
 
+    //settings
+    int _limiterSpawnThreshold = 3;
 
-    [SerializeField] PlayerDataHolder _playerPrefab;
+    //state
     public PlayerDataHolder Player { get; private set; }
 
     private void Awake()
@@ -17,10 +21,12 @@ public class GameController : MonoBehaviour
         Instance = this;
     }
 
-    //private void Start()
-    //{
-    //    InitializePlayer();
-    //}
+    private void Start()
+    {
+        NodeController.Instance.CurrentNodesUpdated += CheckForLimiterSpawn;
+    }
+
+
 
     public void InitializeNewPlayer()
     {
@@ -41,5 +47,13 @@ public class GameController : MonoBehaviour
     private void SetupNewRun()
     {
         RunStarted?.Invoke();
+    }
+
+    private void CheckForLimiterSpawn(int nodesAscended)
+    {
+        if (nodesAscended >= _limiterSpawnThreshold)
+        {            
+            LimiterController.Instance.SpawnLimiter();
+        }
     }
 }

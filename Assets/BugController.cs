@@ -66,7 +66,7 @@ public class BugController : MonoBehaviour
 
         Vector2 pos = Vector2.zero;
         pos.x = UnityEngine.Random.Range(-NodeController.Instance.XSpan, NodeController.Instance.XSpan);
-        pos.y = NodeController.Instance.YOffScreen;
+        pos.y = NodeController.Instance.YOffScreen_Up;
         bug.transform.position = pos;
 
         bug.ActivateBug();

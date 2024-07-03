@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 1999929164}
   - component: {fileID: 1999929165}
   - component: {fileID: 1999929166}
+  - component: {fileID: 1999929167}
   m_Layer: 0
   m_Name: Controller
   m_TagString: GameController
@@ -521,6 +522,7 @@ MonoBehaviour:
   _yStarting: -4
   _densityMin: 1
   _densityMax: 5
+  _currentNodesAscended: 0
   _nodeDensity: 0.5
   _currentNodes: []
 --- !u!114 &1999929160
@@ -618,6 +620,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bugHandlerPrefabs:
   - {fileID: 5498664782580499546, guid: c4e8308aeb6d33048a371c1099624131, type: 3}
+--- !u!114 &1999929167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999929158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a06d955f10a69e4aa5005a06ce9054c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _limiterPrefab: {fileID: 5415130230672019522, guid: 7020654f4805b174d82ed7d5f17a6707, type: 3}
+  _limiterStartSpeed: 1
 --- !u!1 &2111614349
 GameObject:
   m_ObjectHideFlags: 0

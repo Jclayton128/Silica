@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NodeHandler : MonoBehaviour
+public class NodeHandler : MonoBehaviour, IDamageable
 {
     public enum NodeStates {Current, Available, Used}
 
@@ -63,8 +63,10 @@ public class NodeHandler : MonoBehaviour
         _sr.color = ColorLibrary.Instance.PlayerColors[_ownerIndex -1];
 
         //tell the owningplayer that he now has a new current node
-        PlayerHandler player = PlayerController.Instance.GetPlayer(_ownerIndex);
-        player.AdjustCurrentNode(this);
+        _playerHandler = PlayerController.Instance.GetPlayer(_ownerIndex);
+        _playerHandler.AdjustCurrentNode(this);
+
+        NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
     }
 
     public void ConvertToUsedNode()
@@ -74,8 +76,9 @@ public class NodeHandler : MonoBehaviour
         AdjustRotation(Vector2.up);
         _sr.color = ColorLibrary.Instance.UsedColor;
 
+        _playerHandler = null;
         _ownerIndex = -1;
-        NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
+
     }
 
     public void DeactivateNode()
@@ -122,5 +125,14 @@ public class NodeHandler : MonoBehaviour
 
 
         }       
+    }
+
+
+
+    public void HandleZeroHealth()
+    {
+        //TODO have a cool node destruction sequence
+        DeactivateNode();
+        if (_playerHandler) _playerHandler.HandleCurrentNodeDestruction();
     }
 }

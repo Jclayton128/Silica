@@ -8,7 +8,7 @@ public class NodeController : MonoBehaviour
 {
     public static NodeController Instance { get; private set; }
 
-    public Action CurrentNodesUpdated;
+    public Action<int> CurrentNodesUpdated;
 
 
 
@@ -19,11 +19,13 @@ public class NodeController : MonoBehaviour
     [SerializeField] float _yMin = 2;
     [SerializeField] float _yMax = 5;
     [SerializeField] float _yOffscreenOffset = 10;
-    public float YOffScreen => _yOffscreenOffset + CurrentNodesCentroid;
+    public float YOffScreen_Up => _yOffscreenOffset + CurrentNodesCentroid;
+    public float YOffScreen_Down => -_yOffscreenOffset + CurrentNodesCentroid;
     [SerializeField] float _yStarting = -4f;
     [SerializeField] int _densityMin = 1;
     [SerializeField] int _densityMax = 5;
-
+    public int CurrentNodesAscended => _currentNodesAscended;
+    [SerializeField] int _currentNodesAscended = 0;
 
     //state
 
@@ -65,7 +67,7 @@ public class NodeController : MonoBehaviour
 
         _activatedNodes.Add(newNode);
         //_currentNodes.Add(newNode);
-        CurrentNodesUpdated?.Invoke();
+        //CurrentNodesUpdated?.Invoke(_currentNodesAscended);
 
     }
     public void SpawnNode(NodeHandler.NodeStates nodeState)
@@ -129,7 +131,10 @@ public class NodeController : MonoBehaviour
         _currentNodes.Remove(oldCurrentNode);
         _currentNodes.Add(newCurrentNode);
 
-        CurrentNodesUpdated?.Invoke();
+        _currentNodesAscended++;
+
+        Debug.Log($"new current node");
+        CurrentNodesUpdated?.Invoke(_currentNodesAscended);
 
         SpawnHigherNodes();
 

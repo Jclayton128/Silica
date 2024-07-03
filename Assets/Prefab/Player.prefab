@@ -88,3 +88,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ce09439c5a56439c4c77e02516f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeBetweenShot: 0.5
+  _projectileType: 0
+  _shotSpeed: 4
+  _lifetime: 3
+  _timeUntilNextShot: 0
+  _isFiring: 0

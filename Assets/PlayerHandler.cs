@@ -97,5 +97,13 @@ public class PlayerHandler : MonoBehaviour
         NodeController.Instance.AdjustCurrentNodes(oldNode, newCurrentNode);
     }
 
+    public void HandleCurrentNodeDestruction()
+    {
+        Debug.Log("game over!");
+        _currentNode = null;
+        //TODO handle destruction of player's current node from game mechanics, not graphics
+    }
+
     #endregion
+
 }
