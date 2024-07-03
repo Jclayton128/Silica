@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 9062248025818415727}
   - component: {fileID: 2297293910283599451}
   - component: {fileID: 9118682916367402259}
-  m_Layer: 6
+  - component: {fileID: -5058594278042829295}
+  m_Layer: 8
   m_Name: Shotgun_Pellet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4961,3 +4962,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolType: 1
+--- !u!114 &-5058594278042829295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5245665625134932867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07e11bbb266cceb40924d8efb611d1c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage: 1
+  _isPiercing: 0

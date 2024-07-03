@@ -17,6 +17,9 @@ public class ColorLibrary : MonoBehaviour
     [SerializeField] Color _availableColor = Color.green;
     public Color AvailableColor => _availableColor;
 
+    [SerializeField] Color _bugColor = Color.red;
+    public Color BugColor => _bugColor;
+
     private void Awake()
     {
         Instance = this;

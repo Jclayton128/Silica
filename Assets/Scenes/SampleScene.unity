@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nodePrefab: {fileID: 1378184291008995926, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
-  _activeNodeSprite: {fileID: 21300000, guid: 36e25fac3939d154da3dcf6217f157ba, type: 3}
+  _activeNodeSprite: {fileID: 21300000, guid: 0740d69d8bad7fa4993b65511a65f98a, type: 3}
   _availableNodeSprite: {fileID: 21300000, guid: aaaa1199df2b9e54b9821669341e82fa, type: 3}
   _usedNodeSprite: {fileID: 21300000, guid: 09c06d766969d464295034e100db25b1, type: 3}
   _iconBlaster: {fileID: 21300000, guid: 41bcc5e534cf04e479d94a9e404b839b, type: 3}
@@ -398,10 +398,10 @@ MonoBehaviour:
   _playerColors:
   - {r: 0, g: 0.9501138, b: 1, a: 1}
   - {r: 0.9898695, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0.031644605, b: 0, a: 1}
-  - {r: 0.91330194, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0.93099165, a: 1}
   _usedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _availableColor: {r: 0, g: 1, b: 0, a: 1}
+  _bugColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1337814598
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,6 +489,7 @@ GameObject:
   - component: {fileID: 1999929163}
   - component: {fileID: 1999929164}
   - component: {fileID: 1999929165}
+  - component: {fileID: 1999929166}
   m_Layer: 0
   m_Name: Controller
   m_TagString: GameController
@@ -516,6 +517,7 @@ MonoBehaviour:
   _xSpan: 6
   _yMin: 4
   _yMax: 8
+  _yOffscreenOffset: 10
   _yStarting: -4
   _densityMin: 1
   _densityMax: 5
@@ -602,6 +604,20 @@ MonoBehaviour:
   _poolHandlerPrefabs:
   - {fileID: 9118682916367402259, guid: d150527571dbf6b43affae14c4770dd9, type: 3}
   - {fileID: 9118682916367402259, guid: 731e3dc5932802a448cecd51fb790dee, type: 3}
+--- !u!114 &1999929166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999929158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6196b0803a9c41e4ca3d1b658d802149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bugHandlerPrefabs:
+  - {fileID: 5498664782580499546, guid: c4e8308aeb6d33048a371c1099624131, type: 3}
 --- !u!1 &2111614349
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,7 +22,7 @@ public class BlasterHandler : WeaponHandler
     public override void HandleButtonUp()
     {
         _isFiring = false;
-        _timeUntilNextShot = _timeBetweenShot;
+        //_timeUntilNextShot = _timeBetweenShot;
     }
 
     private void Update()

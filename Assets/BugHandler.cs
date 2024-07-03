@@ -1,0 +1,79 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BugHandler : MonoBehaviour, IDamageable
+{
+    public enum BugTypes {Test, Goblin, Ogre, Bat, Snake}
+
+    public enum BugBehaviors { StraightFall, Oscillate, Dodge, SeekPlayer, ErraticSprint}
+
+    //refs
+    Rigidbody2D _rb;
+    Collider2D _coll;
+    SpriteRenderer _sr;
+    ParticleSystem _ps;
+    HealthHandler _health;
+
+    //state
+    bool _isInitialized = false;
+    bool _isActivated = false;
+    [SerializeField] float _moveSpeed = 2f;
+
+    [SerializeField] BugTypes _bugType = BugTypes.Test;
+    public BugTypes BugType => _bugType;
+
+    [SerializeField] BugBehaviors _bugBehavior = BugBehaviors.StraightFall;
+    public BugBehaviors BugBehavior => _bugBehavior;
+
+
+    //private void Awake()
+    //{
+    //    Initialize();
+    //}
+
+    public void Initialize()
+    {
+        if (_isInitialized) return;
+        _rb = GetComponent<Rigidbody2D>();
+        _coll = GetComponent<Collider2D>();
+        _sr = GetComponent<SpriteRenderer>();
+        _ps = GetComponent<ParticleSystem>();
+        _health = GetComponent<HealthHandler>();
+        _isInitialized = true;
+    }
+
+    public void ActivateBug()
+    {
+        Initialize();
+
+        _isActivated = true;
+
+        _rb.simulated = true;
+        _coll.enabled = true;
+        _sr.enabled = true;
+        if (_ps) _ps?.Play();
+        _health.Reset();
+
+        _rb.velocity = -transform.up * _moveSpeed;
+    }
+
+    public void DeactivateBug()
+    {
+        _isActivated = false;
+
+        _rb.simulated = false;
+        _coll.enabled = false;
+        _sr.enabled = false;
+        if (_ps) _ps?.Stop();
+
+        BugController.Instance.CheckinDeactivatedBug(BugType, this);
+    }
+
+    public void HandleZeroHealth()
+    {
+        DeactivateBug();
+
+    }
+
+}

@@ -18,6 +18,11 @@ public class DebugController : MonoBehaviour
         {
             GenerateAvailableNode();
         }
+
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            GenerateTestBug();
+        }
     }
 
     private void GenerateAvailableNode()
@@ -29,5 +34,9 @@ public class DebugController : MonoBehaviour
     {
         Debug.Log("new run!");
         GameController.Instance.InitializeNewPlayer();
+    }
+    private void GenerateTestBug()
+    {
+        BugController.Instance.SpawnBug(BugHandler.BugTypes.Test);
     }
 }
