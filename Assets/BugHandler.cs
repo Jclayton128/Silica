@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BugHandler : MonoBehaviour, IDamageable
+public class BugHandler : MonoBehaviour, IDestroyable
 {
     public enum BugTypes {Test, Goblin, Ogre, Bat, Snake}
 
@@ -25,6 +25,8 @@ public class BugHandler : MonoBehaviour, IDamageable
 
     [SerializeField] BugBehaviors _bugBehavior = BugBehaviors.StraightFall;
     public BugBehaviors BugBehavior => _bugBehavior;
+
+    [SerializeField] float _damage = 1;
 
 
     //private void Awake()
@@ -74,6 +76,25 @@ public class BugHandler : MonoBehaviour, IDamageable
     {
         DeactivateBug();
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        HealthHandler hh;
+        if (collision.TryGetComponent<HealthHandler>(out hh))
+        {
+            hh.ApplyDamage(_damage);
+        }
+    }
+
+    public void HandleHealthDrop(float factorRemaining)
+    {
+        float a = _sr.color.a;
+        Color col = _sr.color;
+        float n = Mathf.Lerp(0.5f, 1f, factorRemaining);
+        //TODO remove magic numbers. What about things that are alway a little translucent?
+        col.a = n;
+        _sr.color = col;
     }
 
 }

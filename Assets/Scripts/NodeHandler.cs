@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NodeHandler : MonoBehaviour, IDamageable
+public class NodeHandler : MonoBehaviour, IDestroyable
 {
     public enum NodeStates {Current, Available, Used}
 
@@ -16,6 +16,7 @@ public class NodeHandler : MonoBehaviour, IDamageable
     //state
     [SerializeField] private int _ownerIndex = 0;
     PlayerHandler _playerHandler;
+    public bool HoldsPlayer => _playerHandler != null;
     private bool _isInitialized = false;
     public NodeStates NodeState;// { get; private set; }
     public NodeTypes NodeType;// { get; private set; }
@@ -134,5 +135,19 @@ public class NodeHandler : MonoBehaviour, IDamageable
         //TODO have a cool node destruction sequence
         DeactivateNode();
         if (_playerHandler) _playerHandler.HandleCurrentNodeDestruction();
+    }
+
+    public void HandleHealthDrop(float factorRemaining)
+    {
+        float h;
+        float s;
+        float v;
+        Color.RGBToHSV(_sr.color, out h, out s, out v);
+
+        v = Mathf.Lerp(0.1f, 1f, factorRemaining); //TODO remove magic numbers.    
+        //v = factorRemaining;
+ 
+
+        _sr.color = Color.HSVToRGB(h, s, v);
     }
 }
