@@ -971,8 +971,8 @@ MonoBehaviour:
   - 1
   - 3
   _xSpan: 6
-  _yMin: 4
-  _yMax: 8
+  _yMin: 8
+  _yMax: 12
   _yOffscreenOffset: 10
   _yStarting: -4
   _densityMin: 1
