@@ -27,7 +27,8 @@ public class BugHandler : MonoBehaviour, IDestroyable
     public BugBehaviors BugBehavior => _bugBehavior;
 
     [SerializeField] float _damage = 1;
-
+    public float Corruption => _corruption;
+    [SerializeField] float _corruption = 0.1f;
 
     //private void Awake()
     //{

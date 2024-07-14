@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     [SerializeField] PlayerDataHolder _playerPrefab; 
 
     //settings
-    int _limiterSpawnThreshold = 3;
+    int _limiterSpawnThreshold = 2;
 
     //state
     public PlayerDataHolder Player { get; private set; }

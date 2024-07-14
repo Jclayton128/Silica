@@ -131,6 +131,7 @@ MonoBehaviour:
   _bugType: 0
   _bugBehavior: 0
   _damage: 1
+  _corruption: 0.1
 --- !u!114 &1402112721488542199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,8 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee3139055e31424dab716086886c49b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthStarting: 1
-  _healthMax: 10
+  _healthMax: 1
+  _currentHealth: 0
 --- !u!58 &5977098774001755567
 CircleCollider2D:
   m_ObjectHideFlags: 0

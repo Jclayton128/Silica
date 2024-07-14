@@ -30,9 +30,9 @@ public class LimiterHandler : MonoBehaviour
         _isInitialized = true;
     }
 
-    public void AdjustSpeed(float speedToAdd)
+    public void SetSpeed(float speedToSet)
     {
-        _currentSpeed += speedToAdd;
+        _currentSpeed = speedToSet;
         _rb.velocity = transform.up * _currentSpeed;
     }
 
@@ -43,11 +43,18 @@ public class LimiterHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        BugHandler bh;
+        if (collision.TryGetComponent<BugHandler>(out bh))
+        {
+            LimiterController.Instance.HandleBugAbsorb(bh.transform.position, bh.Corruption);
+        }
+
         HealthHandler hh;
         if (collision.TryGetComponent<HealthHandler>(out hh))
         {
             hh.ApplyDamage(999);
-        }     
-    }
+        }
 
+
+    }
 }
