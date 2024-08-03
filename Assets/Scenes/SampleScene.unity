@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 2, z: -10}
+  m_FollowOffset: {x: 0, y: 3, z: -10}
   m_XDamping: 4
   m_YDamping: 4
   m_ZDamping: 1
@@ -971,15 +971,15 @@ MonoBehaviour:
   - 1
   - 3
   _xSpan: 6
-  _yMin: 8
-  _yMax: 12
+  _ySpan: 3
+  _yOffsetNewNodes: 6
   _yOffscreenOffset: 10
   _yStarting: -4
   _densityMin: 1
   _densityMax: 5
+  _minDistanceFromExistingNodes: 2
   _currentNodesAscended: 0
   _nodeDensity: 0.5
-  _currentNodes: []
 --- !u!114 &1999929160
 MonoBehaviour:
   m_ObjectHideFlags: 0

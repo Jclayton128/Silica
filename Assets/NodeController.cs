@@ -16,14 +16,20 @@ public class NodeController : MonoBehaviour
     [SerializeField] float[] _xStarts = { -3f, -1f, 1f, 3f };
     public float XSpan => _xSpan;
     [SerializeField] float _xSpan = 4;
-    [SerializeField] float _yMin = 2;
-    [SerializeField] float _yMax = 5;
+    [SerializeField] float _ySpan = 2;
+    [SerializeField] float _yOffsetNewNodes = 3.5f;
+    //[SerializeField] float _yMin = 2;
+    //[SerializeField] float _yMax = 5;
     [SerializeField] float _yOffscreenOffset = 10;
     public float YOffScreen_Up => _yOffscreenOffset + CurrentNodesCentroid;
     public float YOffScreen_Down => -_yOffscreenOffset + CurrentNodesCentroid;
     [SerializeField] float _yStarting = -4f;
     [SerializeField] int _densityMin = 1;
     [SerializeField] int _densityMax = 5;
+
+    [SerializeField] float _minDistanceFromExistingNodes = 1f;
+
+
     public int CurrentNodesAscended => _currentNodesAscended;
     [SerializeField] int _currentNodesAscended = 0;
 
@@ -32,7 +38,7 @@ public class NodeController : MonoBehaviour
     Vector2 _pos;
     [SerializeField] float _nodeDensity = 0.5f;
 
-    [SerializeField] List<NodeHandler> _currentNodes = new List<NodeHandler>();// { get; private set; } = null;
+    List<NodeHandler> _currentNodes = new List<NodeHandler>();// { get; private set; } = null;
     public float CurrentNodesCentroid => FindCurrentNodesYCentroid();
     Queue<NodeHandler> _deactivatedNodes = new Queue<NodeHandler>();
     List<NodeHandler> _activatedNodes = new List<NodeHandler>();
@@ -87,8 +93,10 @@ public class NodeController : MonoBehaviour
         if (nodeState == NodeHandler.NodeStates.Available)
         {
             //Should check if proposed point is too close to existing nodes
-            _pos.y = CurrentNodesCentroid + UnityEngine.Random.Range(_yMin, _yMax);
-            _pos.x += UnityEngine.Random.Range(-_xSpan, _xSpan);
+            //_pos.y = CurrentNodesCentroid + UnityEngine.Random.Range(_yMin, _yMax);
+            //_pos.x += UnityEngine.Random.Range(-_xSpan, _xSpan);
+            _pos = GenerateNodePosition();
+
             _availableNodes.Add(newNode);
         }
 
@@ -99,7 +107,24 @@ public class NodeController : MonoBehaviour
             NodeHandler.NodeTypes.Blaster, //The node type should not be fixed
             0);
     }
-    
+
+
+    private Vector2 GenerateNodePosition()
+    {
+        List<Vector3> currentNodePositions = new List<Vector3>();
+
+        foreach (var node in _activatedNodes)
+        {
+            currentNodePositions.Add(node.transform.position);
+        }
+
+        Vector2 pos = CUR.GetRandomPosWithinRectangularArenaAwayFromOtherPoints(
+            0, _xSpan, _yOffsetNewNodes + CurrentNodesCentroid, _ySpan,
+            currentNodePositions, _minDistanceFromExistingNodes); ;
+
+        return pos;
+    }
+
     public void DespawnNode(NodeHandler unneededNode)
     {
         _currentNodes.Remove(unneededNode);
@@ -179,6 +204,8 @@ public class NodeController : MonoBehaviour
     #endregion
 
     #region Helpers
+
+
 
     private float FindCurrentNodesYCentroid()
     {
