@@ -76,6 +76,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c7627e4bb859524691b0f938ff83555, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _projectileType: 1
+  _degreeSpread: 30
+  _chargeRate: 3.3
+  _maxCharge: 5
+  _minChargeToFire: 2
+  _shotSpeed: 4
+  _lifetime: 1.5
+  _chargeLevel: 0
 --- !u!114 &8831722850285743249
 MonoBehaviour:
   m_ObjectHideFlags: 0

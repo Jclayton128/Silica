@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32eae34a453bbb84c82e421c826b5e2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sr_Icon: {fileID: 8108983932497158781}
   _icon: {fileID: 5811203406763903640}
   _ownerIndex: 0
   NodeState: 0
@@ -235,6 +236,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee3139055e31424dab716086886c49b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthStarting: 10
   _healthMax: 10
   _currentHealth: 0

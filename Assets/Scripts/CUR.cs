@@ -96,6 +96,11 @@ public static class CUR : object
         return pos;
     }
 
+    internal static NodeHandler.NodeTypes GetRandomFromCollection(NodeHandler.NodeTypes[] types)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public static Vector3 GetRandomPosWithinArenaAwayFromOtherPoints(Vector3 arenaCenter, float arenaSize,
         List<Vector3> otherPoints, float minSeparation)
     {

@@ -7,10 +7,11 @@ public class NodeHandler : MonoBehaviour, IDestroyable
 {
     public enum NodeStates {Current, Available, Used}
 
-    public enum NodeTypes {Empty, Blaster, Shotgun, Heal}
+    public enum NodeTypes {Empty, Blaster, Shotgun, Heal,    Count}
 
     //references
     SpriteRenderer _sr;
+    [SerializeField] SpriteRenderer _sr_Icon = null;
     [SerializeField] Transform _icon = null;
 
     //state
@@ -50,7 +51,14 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         NodeType = nodeType;
         switch (nodeType)
         {
-            //setup node icons
+            case NodeTypes.Blaster:
+                _sr_Icon.sprite = NodeLibrary.Instance.IconBlaster;
+                break;
+
+            case NodeTypes.Shotgun:
+                _sr_Icon.sprite = NodeLibrary.Instance.IconShotgun;
+                break;
+
         }
 
         //Setup other nuances for this node later in this method

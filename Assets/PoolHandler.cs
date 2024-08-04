@@ -46,6 +46,12 @@ public class PoolHandler : MonoBehaviour
         _isDeactivating = false;
     }
 
+    public void ForceVelocityToLocalUp()
+    {
+        float mag = _rb.velocity.magnitude;
+        _rb.velocity = transform.up * mag;
+    }
+
     public void DeactivatePoolObject()
     {
         if (_isDeactivating) return;

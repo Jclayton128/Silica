@@ -56,6 +56,7 @@ public class PoolController : MonoBehaviour
     public void CheckinDeactivatedPoolObject(PoolHandler.PoolTypes poolType, PoolHandler poolObject)
     {
         _inactivePoolObjects[poolType].Enqueue(poolObject);
+        Debug.Log($"checking in a {poolType}. Queue contains {_inactivePoolObjects[poolType].Count}");
     }
 
 }

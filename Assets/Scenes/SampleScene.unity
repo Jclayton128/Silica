@@ -979,7 +979,7 @@ MonoBehaviour:
   _densityMax: 5
   _minDistanceFromExistingNodes: 2
   _currentNodesAscended: 0
-  _nodeDensity: 0.5
+  _currentLevel: {fileID: 11400000, guid: 6ec686bd76d065d47ba941f47a7068ce, type: 2}
 --- !u!114 &1999929160
 MonoBehaviour:
   m_ObjectHideFlags: 0

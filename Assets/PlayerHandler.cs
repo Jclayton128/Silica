@@ -93,6 +93,9 @@ public class PlayerHandler : MonoBehaviour
 
         _currentNode = newCurrentNode;
 
+        _blaster.HandleNodeChange();
+        _shotgun.HandleNodeChange();
+
         //tell the node controller IOT update the current nodes list (for camera and spawning)
         NodeController.Instance.AdjustCurrentNodes(oldNode, newCurrentNode);
     }

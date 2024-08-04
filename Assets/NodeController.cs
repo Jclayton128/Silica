@@ -27,16 +27,13 @@ public class NodeController : MonoBehaviour
     [SerializeField] int _densityMin = 1;
     [SerializeField] int _densityMax = 5;
 
-    [SerializeField] float _minDistanceFromExistingNodes = 1f;
-
-
     public int CurrentNodesAscended => _currentNodesAscended;
     [SerializeField] int _currentNodesAscended = 0;
 
     //state
-
+    [SerializeField] Level _currentLevel;
     Vector2 _pos;
-    [SerializeField] float _nodeDensity = 0.5f;
+    //[SerializeField] float _nodeDensity = 0.5f;
 
     List<NodeHandler> _currentNodes = new List<NodeHandler>();// { get; private set; } = null;
     public float CurrentNodesCentroid => FindCurrentNodesYCentroid();
@@ -104,10 +101,15 @@ public class NodeController : MonoBehaviour
 
         newNode.transform.position = _pos;
         newNode.ActivateNode(nodeState,
-            NodeHandler.NodeTypes.Blaster, //The node type should not be fixed
+            GenerateRandomNodeType(),
             0);
     }
 
+    private NodeHandler.NodeTypes GenerateRandomNodeType()
+    {
+        int rand = UnityEngine.Random.Range(0, _currentLevel.PossibleNodes.Count);
+        return _currentLevel.PossibleNodes[rand];
+    }
 
     private Vector2 GenerateNodePosition()
     {
@@ -120,7 +122,7 @@ public class NodeController : MonoBehaviour
 
         Vector2 pos = CUR.GetRandomPosWithinRectangularArenaAwayFromOtherPoints(
             0, _xSpan, _yOffsetNewNodes + CurrentNodesCentroid, _ySpan,
-            currentNodePositions, _minDistanceFromExistingNodes); ;
+            currentNodePositions, _currentLevel.MinDistanceBetweenNodes);
 
         return pos;
     }
@@ -169,7 +171,8 @@ public class NodeController : MonoBehaviour
     private void SpawnHigherNodes()
     {
         //create new nodes
-        int spawnCount = Mathf.RoundToInt(Mathf.Lerp(_densityMin, _densityMax, _nodeDensity));
+        int spawnCount = Mathf.RoundToInt(Mathf.Lerp(_densityMin, _densityMax,
+            _currentLevel.NodeDensity));
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnNode(NodeHandler.NodeStates.Available);

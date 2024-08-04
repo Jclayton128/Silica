@@ -25,6 +25,11 @@ public class BlasterHandler : WeaponHandler
         //_timeUntilNextShot = _timeBetweenShot;
     }
 
+    public override void HandleNodeChange()
+    {
+        _isFiring = false;
+    }
+
     private void Update()
     {
         if (_isFiring)

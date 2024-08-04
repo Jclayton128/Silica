@@ -14,4 +14,6 @@ public abstract class WeaponHandler : MonoBehaviour
     public abstract void HandleButtonDown();
 
     public abstract void HandleButtonUp();
+
+    public abstract void HandleNodeChange();
 }
