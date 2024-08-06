@@ -11,11 +11,12 @@ public class ShotgunHandler : WeaponHandler
     [SerializeField] float _degreeSpread = 30f;
 
     [SerializeField] float _chargeRate = 3.3f; // units per second;
-    [SerializeField] float _maxCharge = 5f;
+    [SerializeField] float _maxCharge = 10f;
     [SerializeField] float _minChargeToFire = 2f;
 
     [SerializeField] float _shotSpeed = 4;
     [SerializeField] float _lifetime = 3;
+    [SerializeField] float _energyCostPerSecondCharging = 0.4f;
 
 
     //state
@@ -44,23 +45,33 @@ public class ShotgunHandler : WeaponHandler
     {
         if (_isCharging)
         {
-            _chargeLevel += _chargeRate * Time.deltaTime;
-            _chargeLevel = Mathf.Clamp(_chargeLevel, 0, _maxCharge);
+            if (_playerEnergyHandler.CheckEnergy(_energyCostPerSecondCharging * Time.deltaTime))
+            {
+                _chargeLevel += _chargeRate * Time.deltaTime;
+                _chargeLevel = Mathf.Clamp(_chargeLevel, 0, _maxCharge);
+
+                _playerEnergyHandler.SpendEnergy(_energyCostPerSecondCharging * Time.deltaTime);
+            }
+            else
+            {
+                HandleButtonUp();
+            }
+
+
         }
     }
 
     protected void ActivateInternal()
     {
+        int proposedAmount = Mathf.RoundToInt(_chargeLevel);
         if (_chargeLevel >= _minChargeToFire) 
         {
-            Fire();
+            Fire(proposedAmount);
         }
     }
 
-    private void Fire()
+    private void Fire(int amount)
     {
-        int amount = Mathf.RoundToInt(_chargeLevel);
-        Debug.Log($"firing {amount} with charge of {_chargeLevel}");
         float spreadSubdivided = _degreeSpread / amount;
         for (int i = 0; i < amount; i++)
         {

@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
     //state
     [SerializeField] List<PlayerHandler> _playerHandlers = new List<PlayerHandler>();
-
+    [SerializeField] AvatarUIDriver _avatarUIPrefab = null;
     private void Awake()
     {
         Instance = this;
@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public int RegisterNewPlayer(PlayerHandler newPlayerHandler)
     {
         _playerHandlers.Add(newPlayerHandler);
+        AvatarUIDriver newAvatar = Instantiate(_avatarUIPrefab);
+        newAvatar.AttachUIToAvatar(newPlayerHandler);
         return _playerHandlers.Count;
     }
 

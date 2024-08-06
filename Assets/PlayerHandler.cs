@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerHandler : MonoBehaviour
 {
+    public Action<NodeHandler> CurrentNodeChanged;
 
     //references
     [SerializeField] WeaponHandler _blaster;
@@ -92,6 +94,7 @@ public class PlayerHandler : MonoBehaviour
         } 
 
         _currentNode = newCurrentNode;
+        CurrentNodeChanged?.Invoke(_currentNode);
 
         _blaster.HandleNodeChange();
         _shotgun.HandleNodeChange();

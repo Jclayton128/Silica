@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: TestLevel
   m_EditorClassIdentifier: 
   _possibleNodes: 0100000002000000
-  _nodeDensity: 0.5
+  _nodeDensity: 0.2
+  _minDistanceBetweenNodes: 2

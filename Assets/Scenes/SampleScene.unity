@@ -810,6 +810,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1856439482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1856439483}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1856439483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856439482}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1919534896
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,7 +1008,6 @@ MonoBehaviour:
   _yStarting: -4
   _densityMin: 1
   _densityMax: 5
-  _minDistanceFromExistingNodes: 2
   _currentNodesAscended: 0
   _currentLevel: {fileID: 11400000, guid: 6ec686bd76d065d47ba941f47a7068ce, type: 2}
 --- !u!114 &1999929160
@@ -1046,6 +1076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerHandlers: []
+  _avatarUIPrefab: {fileID: 9120569002865646216, guid: 17ede1b793190664d936d2d7b22f8864, type: 3}
 --- !u!114 &1999929165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,3 +1188,4 @@ SceneRoots:
   - {fileID: 2111614351}
   - {fileID: 1919534901}
   - {fileID: 668850301}
+  - {fileID: 1856439483}

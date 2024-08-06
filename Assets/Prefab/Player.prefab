@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3040455092749952140}
-  - component: {fileID: 4318528683135902362}
   - component: {fileID: 7534842052325720133}
+  - component: {fileID: 4318528683135902362}
+  - component: {fileID: -1265509049078613102}
   - component: {fileID: 7345495205441012557}
   - component: {fileID: 8831722850285743249}
   m_Layer: 0
@@ -35,19 +36,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4318528683135902362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964083891707838149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9786d77f86b383d43a2a5e13044a60a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startingSpeed: 3
 --- !u!114 &7534842052325720133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,6 +52,33 @@ MonoBehaviour:
   _shotgun: {fileID: 7345495205441012557}
   _currentNode: {fileID: 0}
   _ownerIndex: 0
+--- !u!114 &4318528683135902362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964083891707838149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9786d77f86b383d43a2a5e13044a60a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startingSpeed: 3
+  _maxEnergy: 1
+  _energyRegen: 0.2
+--- !u!114 &-1265509049078613102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964083891707838149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1484d76d2f82343b73bc13abc1dee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7345495205441012557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,12 +92,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectileType: 1
-  _degreeSpread: 30
-  _chargeRate: 3.3
-  _maxCharge: 5
-  _minChargeToFire: 2
+  _degreeSpread: 60
+  _chargeRate: 5
+  _maxCharge: 10
+  _minChargeToFire: 3
   _shotSpeed: 4
   _lifetime: 1.5
+  _energyCostPerSecondCharging: 0.6
   _chargeLevel: 0
 --- !u!114 &8831722850285743249
 MonoBehaviour:
@@ -100,5 +116,6 @@ MonoBehaviour:
   _projectileType: 0
   _shotSpeed: 4
   _lifetime: 3
+  _energyCostPerShot: 0.2
   _timeUntilNextShot: 0
   _isFiring: 0
