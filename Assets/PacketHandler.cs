@@ -25,6 +25,7 @@ public class PacketHandler : MonoBehaviour
         _sr.color = ColorLibrary.Instance.PlayerColors[_ownerIndex -1];
     }
 
+
     public void DeactivatePacket()
     {
         _rb.simulated = false;

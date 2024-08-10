@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class AvatarUIDriver : MonoBehaviour
 {
-    [SerializeField] AdjustableImageBar _sliderHandler = null;
+    [SerializeField] AdjustableImageBar _energySliderHandler = null;
+    [SerializeField] AdjustableImageBar _soulSliderHandler = null;
 
     PlayerHandler _player;
 
@@ -18,6 +19,7 @@ public class AvatarUIDriver : MonoBehaviour
         _player.CurrentNodeChanged += HandleCurrentNodeChanged;
         var pdh = player.GetComponent<PlayerDataHolder>();
         pdh.CurrentEnergyChanged += HandleEnergyChanged;
+        pdh.CurrentSoulChanged += HandleSoulChanged;
     }
 
     private void HandleCurrentNodeChanged(NodeHandler newNode)
@@ -27,7 +29,12 @@ public class AvatarUIDriver : MonoBehaviour
 
     private void HandleEnergyChanged(float newEnergyFactor)
     {
-        _sliderHandler.SetFactor(newEnergyFactor);
+        _energySliderHandler.SetFactor(newEnergyFactor);
+    }
+
+    private void HandleSoulChanged(float newSoulFactor)
+    {
+        _soulSliderHandler.SetFactor(newSoulFactor);
     }
 
     private void Update()

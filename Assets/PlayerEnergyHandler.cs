@@ -15,6 +15,7 @@ public class PlayerEnergyHandler : MonoBehaviour
         if (!_pdh.IsAlive) return;
 
         _pdh.ModifyCurrentEnergy(_pdh.EnergyRegen * Time.deltaTime);
+        _pdh.ModifyCurrentSoul(_pdh.SoulRegen * Time.deltaTime);
     }
 
     public bool CheckEnergy(float energyCost)
@@ -29,5 +30,19 @@ public class PlayerEnergyHandler : MonoBehaviour
     public void SpendEnergy(float energyCost)
     {
         _pdh.ModifyCurrentEnergy(-energyCost);
+    }
+
+    public bool CheckSoul()
+    {
+        if (_pdh.CurrentSoul >= _pdh.CurrentSoulCost)
+        {
+            return true;
+        }
+        else return false;
+    }
+
+    public void SpendSoul()
+    {
+        _pdh.ModifyCurrentSoul(-_pdh.CurrentSoulCost);
     }
 }

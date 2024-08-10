@@ -13,12 +13,13 @@ public class PlayerHandler : MonoBehaviour
 
 
     //state
+    PlayerEnergyHandler _peh;
     [SerializeField] private NodeHandler _currentNode;
     public NodeHandler CurrentNode => _currentNode;
     [SerializeField] int _ownerIndex = 0;
     public int OwnerIndex => _ownerIndex;
     Vector2 _facingDirForActiveNode;
-
+    PacketHandler packet;
 
     private void Start()
     {
@@ -26,6 +27,7 @@ public class PlayerHandler : MonoBehaviour
         InputController.Instance.MouseChanged_RMB = HandleSecondaryClick;
         _ownerIndex = PlayerController.Instance.RegisterNewPlayer(this);
         NodeController.Instance.SpawnStartingNode(_ownerIndex);
+        _peh = GetComponent<PlayerEnergyHandler>();
     }
 
     #region Flow
@@ -70,9 +72,19 @@ public class PlayerHandler : MonoBehaviour
     {
         if (!wasPushedDown)
         {
+            if (!_peh.CheckSoul()) return;
+            else _peh.SpendSoul();
+
             //release a packet
             Vector2 location = _currentNode.transform.position;
-            PacketHandler packet = Instantiate(PacketLibrary.Instance.GetPacketPrefab());
+
+            if (packet) packet.DeactivatePacket();
+            else
+            {
+                packet = Instantiate(PacketLibrary.Instance.GetPacketPrefab());
+            }
+
+
             packet.transform.position = _currentNode.transform.position;
             packet.InitializePacket(
                 _currentNode.transform.up * GameController.Instance.Player.CurrentSpeed,

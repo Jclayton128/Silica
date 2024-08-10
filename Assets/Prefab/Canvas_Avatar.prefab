@@ -315,7 +315,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6063951602999130046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,7 +345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28fefacfac04404fbc980c0c144d3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sliderHandler: {fileID: 7936975394535782396}
+  _energySliderHandler: {fileID: 7936975394535782396}
+  _soulSliderHandler: {fileID: 5890552116561576691}
 --- !u!114 &7936975394535782396
 MonoBehaviour:
   m_ObjectHideFlags: 0
