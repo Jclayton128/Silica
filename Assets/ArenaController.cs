@@ -6,12 +6,16 @@ public class ArenaController : MonoBehaviour
 {
     public static ArenaController Instance { get; private set; }
 
-    [SerializeField] float[] _xStarts = { -3f, -1f, 1f, 3f };
     public float XSpan => _xSpan;
+    public int XSpanAsInts => Mathf.RoundToInt(_xSpan);
     [SerializeField] float _xSpan = 4;
-    [SerializeField] float _yMin = 2;
-    [SerializeField] float _yMax = 5;
+
+
+    //[SerializeField] float _yMin = 2;
+    //[SerializeField] float _yMax = 5;
     [SerializeField] float _yOffscreenOffset = 10;
+    public float YOffScreen_Up => _yOffscreenOffset + NodeController.Instance.CurrentNodesCentroid;
+    public float YOffScreen_Down => -_yOffscreenOffset + NodeController.Instance.CurrentNodesCentroid;
 
     private void Awake()
     {

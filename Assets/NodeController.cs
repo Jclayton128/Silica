@@ -14,18 +14,12 @@ public class NodeController : MonoBehaviour
 
     //settings
     [SerializeField] float[] _xStarts = { -3f, -1f, 1f, 3f };
-    public float XSpan => _xSpan;
-    [SerializeField] float _xSpan = 4;
-    [SerializeField] float _ySpan = 2;
-    [SerializeField] float _yOffsetNewNodes = 3.5f;
-    //[SerializeField] float _yMin = 2;
-    //[SerializeField] float _yMax = 5;
-    [SerializeField] float _yOffscreenOffset = 10;
-    public float YOffScreen_Up => _yOffscreenOffset + CurrentNodesCentroid;
-    public float YOffScreen_Down => -_yOffscreenOffset + CurrentNodesCentroid;
+    
     [SerializeField] float _yStarting = -4f;
     [SerializeField] int _densityMin = 1;
-    [SerializeField] int _densityMax = 5;
+    [SerializeField] int _densityMax = 5; 
+    [SerializeField] float _yOffsetNewNodes = 3.5f;
+    [SerializeField] float _ySpan = 2;
 
     public int CurrentNodesAscended => _currentNodesAscended;
     [SerializeField] int _currentNodesAscended = 0;
@@ -121,7 +115,7 @@ public class NodeController : MonoBehaviour
         }
 
         Vector2 pos = CUR.GetRandomPosWithinRectangularArenaAwayFromOtherPoints(
-            0, _xSpan, _yOffsetNewNodes + CurrentNodesCentroid, _ySpan,
+            0, ArenaController.Instance.XSpan, _yOffsetNewNodes + CurrentNodesCentroid, _ySpan,
             currentNodePositions, _currentLevel.MinDistanceBetweenNodes);
 
         return pos;

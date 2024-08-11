@@ -33,7 +33,7 @@ public class LimiterController : MonoBehaviour
     {
         if (_limiter) return;
 
-        Vector2 pos = new Vector2(0, NodeController.Instance.YOffScreen_Down);
+        Vector2 pos = new Vector2(0, ArenaController.Instance.YOffScreen_Down);
         _limiter = Instantiate(_limiterPrefab,
             pos, Quaternion.identity);
         _limiter.ActivateLimiter();
