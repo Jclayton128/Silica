@@ -6,6 +6,8 @@ using System;
 public class PlayerHandler : MonoBehaviour
 {
     public Action<NodeHandler> CurrentNodeChanged;
+    public Action PlayerDying;
+
 
     //references
     [SerializeField] WeaponHandler _blaster;
@@ -13,6 +15,7 @@ public class PlayerHandler : MonoBehaviour
 
 
     //state
+    PlayerDataHolder _pdh;
     PlayerEnergyHandler _peh;
     [SerializeField] private NodeHandler _currentNode;
     public NodeHandler CurrentNode => _currentNode;
@@ -26,8 +29,11 @@ public class PlayerHandler : MonoBehaviour
         InputController.Instance.MouseChanged_LMB = HandlePrimaryClick;
         InputController.Instance.MouseChanged_RMB = HandleSecondaryClick;
         _ownerIndex = PlayerController.Instance.RegisterNewPlayer(this);
+        _ownerIndex = 1;
+
         NodeController.Instance.SpawnStartingNode(_ownerIndex);
         _peh = GetComponent<PlayerEnergyHandler>();
+        _pdh = GetComponent<PlayerDataHolder>();
     }
 
     #region Flow
@@ -87,7 +93,7 @@ public class PlayerHandler : MonoBehaviour
 
             packet.transform.position = _currentNode.transform.position;
             packet.InitializePacket(
-                _currentNode.transform.up * GameController.Instance.Player.CurrentSpeed,
+                _currentNode.transform.up * _pdh.CurrentSpeed,
                 _ownerIndex);
         }
     }
@@ -123,5 +129,13 @@ public class PlayerHandler : MonoBehaviour
     }
 
     #endregion
+
+    public void ForcePlayerDeath()
+    {
+        _currentNode.DeactivateNode();
+        PlayerController.Instance.DeregisterPlayer(this);
+        PlayerDying?.Invoke();
+        Destroy(gameObject);
+    }
 
 }

@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
 
     private void HandleUpdatedCurrentNodes(int throwaway)
     {
-        _pos.y = NodeController.Instance.CurrentNodesCentroid;
+        _pos = NodeController.Instance.CurrentNodesCentroid;
         //_pos.x = 0;
         this.gameObject.transform.position = _pos;
     }

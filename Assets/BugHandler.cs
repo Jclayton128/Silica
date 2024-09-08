@@ -81,38 +81,38 @@ public class BugHandler : MonoBehaviour, IDestroyable
 
     private void SetupMoveType()
     {
-        switch (_bugBehavior)
-        {
-            case BugBehaviors.Path:
+        //switch (_bugBehavior)
+        //{
+        //    case BugBehaviors.Path:
 
-                int rand = UnityEngine.Random.Range(0, _pathMenu.Length);
-                _currentPath = _pathMenu[rand];
-                _currentWaypointIndex = 0;
-                _sign = (2 * UnityEngine.Random.Range(0, 2)) - 1;
-                if (transform.position.x + _currentPath.MaxX + 1 >= ArenaController.Instance.XSpan)
-                {
-                    Vector3 pos = transform.position;
-                    pos.x *= -1;
-                    transform.position = pos;
-                }
+        //        int rand = UnityEngine.Random.Range(0, _pathMenu.Length);
+        //        _currentPath = _pathMenu[rand];
+        //        _currentWaypointIndex = 0;
+        //        _sign = (2 * UnityEngine.Random.Range(0, 2)) - 1;
+        //        if (transform.position.x + _currentPath.MaxX + 1 >= ArenaController.Instance.XSpan)
+        //        {
+        //            Vector3 pos = transform.position;
+        //            pos.x *= -1;
+        //            transform.position = pos;
+        //        }
 
-                _waypointZero = transform.position;
+        //        _waypointZero = transform.position;
 
-                _currentWaypoint = 
-                    ((Vector3)_currentPath.Waypoints[_currentWaypointIndex] * _pathScale)
-                    + _waypointZero;
-                _currentWaypoint.x *= _sign;
+        //        _currentWaypoint = 
+        //            ((Vector3)_currentPath.Waypoints[_currentWaypointIndex] * _pathScale)
+        //            + _waypointZero;
+        //        _currentWaypoint.x *= _sign;
 
 
-                return;
+        //        return;
 
-            case BugBehaviors.StraightFall:
-                _currentWaypoint = _waypointZero;
-                _currentWaypoint.y = -9999;
-                //_rb.velocity = -transform.up * _moveSpeed;
-                return;
+        //    case BugBehaviors.StraightFall:
+        //        _currentWaypoint = _waypointZero;
+        //        _currentWaypoint.y = -9999;
+        //        //_rb.velocity = -transform.up * _moveSpeed;
+        //        return;
 
-        }
+        //}
     }
 
     public void DeactivateBug()

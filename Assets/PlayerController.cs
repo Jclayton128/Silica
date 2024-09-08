@@ -6,9 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance { get; private set; }
 
+    [SerializeField] PlayerHandler _playerPrefab;
+    [SerializeField] AvatarUIDriver _avatarUIPrefab = null;
+
     //state
     [SerializeField] List<PlayerHandler> _playerHandlers = new List<PlayerHandler>();
-    [SerializeField] AvatarUIDriver _avatarUIPrefab = null;
+    public PlayerHandler Player { get; private set; }
     private void Awake()
     {
         Instance = this;
@@ -22,9 +25,30 @@ public class PlayerController : MonoBehaviour
         return _playerHandlers.Count;
     }
 
+    public void DeregisterPlayer(PlayerHandler unneededPlayerHandler)
+    {
+        _playerHandlers.Remove(unneededPlayerHandler);
+    }
+
     public PlayerHandler GetPlayer(int ownerIndex)
     {
        return _playerHandlers[ownerIndex-1];
+    }
+
+    public void InitializeNewPlayer()
+    {
+        if (Player == null)
+        {
+            Player = Instantiate(_playerPrefab);
+        }
+        else
+        {
+            Debug.LogWarning("Player already existed; deleted old player.");
+            //PlayerController.Instance.DeregisterPlayer(Player);
+            Player.ForcePlayerDeath();
+
+            Player = Instantiate(_playerPrefab);
+        }
     }
 
 }

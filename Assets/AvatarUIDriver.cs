@@ -10,16 +10,18 @@ public class AvatarUIDriver : MonoBehaviour
     [SerializeField] AdjustableImageBar _soulSliderHandler = null;
 
     PlayerHandler _player;
-
+    PlayerDataHolder _pdh;
 
     public void AttachUIToAvatar(PlayerHandler player)
     {
         _player = player;
         transform.SetParent(_player.transform, false);
         _player.CurrentNodeChanged += HandleCurrentNodeChanged;
-        var pdh = player.GetComponent<PlayerDataHolder>();
-        pdh.CurrentEnergyChanged += HandleEnergyChanged;
-        pdh.CurrentSoulChanged += HandleSoulChanged;
+        _player.PlayerDying += HandlePlayerDeath;
+        _pdh = player.GetComponent<PlayerDataHolder>();
+        _pdh.CurrentEnergyChanged += HandleEnergyChanged;
+        _pdh.CurrentSoulChanged += HandleSoulChanged;
+
     }
 
     private void HandleCurrentNodeChanged(NodeHandler newNode)
@@ -35,6 +37,15 @@ public class AvatarUIDriver : MonoBehaviour
     private void HandleSoulChanged(float newSoulFactor)
     {
         _soulSliderHandler.SetFactor(newSoulFactor);
+    }
+
+    private void HandlePlayerDeath()
+    {
+        _player.CurrentNodeChanged -= HandleCurrentNodeChanged;
+        _player.PlayerDying -= HandlePlayerDeath;
+        _pdh.CurrentEnergyChanged -= HandleEnergyChanged;
+        _pdh.CurrentSoulChanged -= HandleSoulChanged;
+        Destroy(this.gameObject);
     }
 
     private void Update()

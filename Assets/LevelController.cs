@@ -41,14 +41,14 @@ public class LevelController : MonoBehaviour
         _levelCount++;
     }
 
-    private void Update()
-    {
-        _timeUntilNextBug -= Time.deltaTime;
-        if (_timeUntilNextBug <= 0)
-        {
-            BugController.Instance.SpawnBug(BugHandler.BugTypes.Test);
-            _timeUntilNextBug = _timeBetweenBugs;
-        }
-    }
+    //private void Update()
+    //{
+    //    _timeUntilNextBug -= Time.deltaTime;
+    //    if (_timeUntilNextBug <= 0)
+    //    {
+    //        BugController.Instance.SpawnBug(BugHandler.BugTypes.Test);
+    //        _timeUntilNextBug = _timeBetweenBugs;
+    //    }
+    //}
 
 }

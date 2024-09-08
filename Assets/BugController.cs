@@ -64,10 +64,10 @@ public class BugController : MonoBehaviour
     {
         BugHandler bug = CheckoutBug(bugType);
         Vector2 pos = Vector2.zero;
-        pos.x = UnityEngine.Random.Range
-            (-ArenaController.Instance.XSpanAsInts,
-            ArenaController.Instance.XSpanAsInts + 1);
-        pos.y = Mathf.RoundToInt(ArenaController.Instance.YOffScreen_Up);
+        //pos.x = UnityEngine.Random.Range
+        //    (-ArenaController.Instance.XSpanAsInts,
+        //    ArenaController.Instance.XSpanAsInts + 1);
+        //pos.y = Mathf.RoundToInt(ArenaController.Instance.YOffScreen_Up);
         bug.transform.position = pos;
 
         bug.ActivateBug();

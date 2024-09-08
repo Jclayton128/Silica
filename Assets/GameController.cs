@@ -8,13 +8,12 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
     public Action RunStarted;
    
-    [SerializeField] PlayerDataHolder _playerPrefab; 
+
 
     //settings
     int _limiterSpawnThreshold = 3;
 
-    //state
-    public PlayerDataHolder Player { get; private set; }
+
 
     private void Awake()
     {
@@ -28,19 +27,9 @@ public class GameController : MonoBehaviour
 
 
 
-    public void InitializeNewPlayer()
+    public void InitializeNewRun()
     {
-        if (Player == null)
-        {
-            Player = Instantiate(_playerPrefab);
-        }
-        else
-        {
-            Debug.LogWarning("Player already existed; deleted old player.");
-            Destroy(Player);
-            Player = Instantiate(_playerPrefab);
-        }
-
+        PlayerController.Instance.InitializeNewPlayer();
         SetupNewRun();
     }
 
