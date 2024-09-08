@@ -7,7 +7,7 @@ public class NodeHandler : MonoBehaviour, IDestroyable
 {
     public enum NodeStates {Current, Available, Used}
 
-    public enum NodeTypes {Empty, Blaster, Shotgun, Heal,    Count}
+    public enum NodeTypes {Empty, Speed, Might, Intelligence, Constitution, Wisdom,Count}
 
     //references
     SpriteRenderer _sr;
@@ -51,12 +51,24 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         NodeType = nodeType;
         switch (nodeType)
         {
-            case NodeTypes.Blaster:
-                _sr_Icon.sprite = NodeLibrary.Instance.IconBlaster;
+            case NodeTypes.Speed:
+                _sr_Icon.sprite = NodeLibrary.Instance.IconSpeed;
                 break;
 
-            case NodeTypes.Shotgun:
-                _sr_Icon.sprite = NodeLibrary.Instance.IconShotgun;
+            case NodeTypes.Might:
+                _sr_Icon.sprite = NodeLibrary.Instance.IconMight;
+                break;
+
+            case NodeTypes.Wisdom:
+                _sr_Icon.sprite = NodeLibrary.Instance.IconWisdom;
+                break;
+
+            case NodeTypes.Constitution:
+                _sr_Icon.sprite = NodeLibrary.Instance.IconConstitution;
+                break;
+
+            case NodeTypes.Intelligence:
+                _sr_Icon.sprite = NodeLibrary.Instance.IconIntelligence;
                 break;
 
         }

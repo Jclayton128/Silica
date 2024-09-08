@@ -29,16 +29,16 @@ public class LimiterController : MonoBehaviour
         _limiterSpeed_current = _limiterStartSpeed;
     }
 
-    public void SpawnLimiter()
-    {
-        if (_limiter) return;
+    //public void SpawnLimiter()
+    //{
+    //    if (_limiter) return;
 
-        Vector2 pos = new Vector2(0, ArenaController.Instance.YOffScreen_Down);
-        _limiter = Instantiate(_limiterPrefab,
-            pos, Quaternion.identity);
-        _limiter.ActivateLimiter();
-        _limiter.SetSpeed(_limiterSpeed_current);
-    }
+    //    Vector2 pos = new Vector2(0, ArenaController.Instance.YOffScreen_Down);
+    //    _limiter = Instantiate(_limiterPrefab,
+    //        pos, Quaternion.identity);
+    //    _limiter.ActivateLimiter();
+    //    _limiter.SetSpeed(_limiterSpeed_current);
+    //}
 
     public void HandleBugAbsorb(Vector2 location, float speedToAdd)
     {

@@ -11,11 +11,7 @@ public class ArenaController : MonoBehaviour
     [SerializeField] float _xSpan = 4;
 
 
-    //[SerializeField] float _yMin = 2;
-    //[SerializeField] float _yMax = 5;
-    [SerializeField] float _yOffscreenOffset = 10;
-    public float YOffScreen_Up => _yOffscreenOffset + NodeController.Instance.CurrentNodesCentroid;
-    public float YOffScreen_Down => -_yOffscreenOffset + NodeController.Instance.CurrentNodesCentroid;
+   
 
     private void Awake()
     {

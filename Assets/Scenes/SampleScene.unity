@@ -572,6 +572,9 @@ MonoBehaviour:
   _usedNodeSprite: {fileID: 21300000, guid: 09c06d766969d464295034e100db25b1, type: 3}
   _iconBlaster: {fileID: 21300000, guid: 41bcc5e534cf04e479d94a9e404b839b, type: 3}
   _iconShotgun: {fileID: 21300000, guid: 1382b337593cf72489a79f40601556ca, type: 3}
+  _iconIntelligence: {fileID: 21300000, guid: 5493ce09a5ef4474cacb7804ce51cc3d, type: 3}
+  _iconWisdom: {fileID: 21300000, guid: 70d68f89cf16e644b9f9f32d413f3fca, type: 3}
+  _iconConstitution: {fileID: 21300000, guid: f5195eb7efc5f96428fb1c473f0292f6, type: 3}
 --- !u!114 &1250369453
 MonoBehaviour:
   m_ObjectHideFlags: 0

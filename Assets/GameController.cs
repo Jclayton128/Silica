@@ -51,9 +51,9 @@ public class GameController : MonoBehaviour
 
     private void CheckForLimiterSpawn(int nodesAscended)
     {
-        if (nodesAscended >= _limiterSpawnThreshold)
-        {            
-            LimiterController.Instance.SpawnLimiter();
-        }
+        //if (nodesAscended >= _limiterSpawnThreshold)
+        //{            
+        //    LimiterController.Instance.SpawnLimiter();
+        //}
     }
 }

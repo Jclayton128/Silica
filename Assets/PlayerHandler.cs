@@ -53,12 +53,12 @@ public class PlayerHandler : MonoBehaviour
                 //do nothing
                 return;
 
-            case NodeHandler.NodeTypes.Blaster:
+            case NodeHandler.NodeTypes.Speed:
                 if (wasPushedDown) _blaster.HandleButtonDown();
                 else _blaster.HandleButtonUp();
                 return;
 
-            case NodeHandler.NodeTypes.Shotgun:
+            case NodeHandler.NodeTypes.Might:
                 if (wasPushedDown) _shotgun.HandleButtonDown();
                 else _shotgun.HandleButtonUp();
                 return;

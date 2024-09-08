@@ -13,11 +13,19 @@ public class NodeLibrary : MonoBehaviour
     [SerializeField] Sprite _usedNodeSprite = null;
 
     [SerializeField] Sprite _iconBlaster = null;
-    public Sprite IconBlaster => _iconBlaster;
+    public Sprite IconSpeed => _iconBlaster;
 
     [SerializeField] Sprite _iconShotgun = null;
-    public Sprite IconShotgun => _iconShotgun;
+    public Sprite IconMight => _iconShotgun;
 
+    [SerializeField] Sprite _iconIntelligence = null;
+    public Sprite IconIntelligence => _iconIntelligence;
+
+    [SerializeField] Sprite _iconWisdom = null;
+    public Sprite IconWisdom => _iconWisdom;
+
+    [SerializeField] Sprite _iconConstitution = null;
+    public Sprite IconConstitution => _iconConstitution;
 
 
     private void Awake()

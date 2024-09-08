@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879247c824872b347a1d4423e8ddc31e, type: 3}
   m_Name: TestLevel
   m_EditorClassIdentifier: 
-  _possibleNodes: 0100000002000000
-  _nodeDensity: 0.2
-  _minDistanceBetweenNodes: 2
+  _possibleNodes: 0100000002000000030000000400000005000000
+  _nodeDensity: 0.8
+  _minDistanceBetweenNodes: 1.5
