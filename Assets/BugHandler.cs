@@ -73,7 +73,7 @@ public class BugHandler : MonoBehaviour, IDestroyable
         _coll.enabled = true;
         _sr.enabled = true;
         if (_ps.Length>0) _ps[0]?.Play();
-        _health.Reset();
+        _health.ResetHealth();
 
         SetupMoveType();
 

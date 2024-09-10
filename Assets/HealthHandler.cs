@@ -16,21 +16,26 @@ public class HealthHandler : MonoBehaviour
     {
         _host = GetComponent<IDestroyable>();
         if (_host == null) Debug.LogWarning("Object is has Health but isn't Damageable");
-        Reset();
+        ResetHealth();
     }
 
     public void ApplyDamage(float damageToInflict)
     {
         _currentHealth -= damageToInflict;
+
+        _host.HandleHealthDrop(_currentHealth / _healthMax);
         if (_currentHealth <= 0) _host.HandleZeroHealth();
-        else
-        {
-            _host.HandleHealthDrop(_currentHealth/_healthMax);
-        }
+
+        //if (_currentHealth <= 0) _host.HandleZeroHealth();
+        //else
+        //{
+        //    _host.HandleHealthDrop(_currentHealth/_healthMax);
+        //}
+
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _healthMax);
     }
 
-    public void Reset()
+    public void ResetHealth()
     {
         _currentHealth = _healthMax;
     }
