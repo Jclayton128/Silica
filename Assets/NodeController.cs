@@ -66,7 +66,8 @@ public class NodeController : MonoBehaviour
         //CurrentNodesUpdated?.Invoke(_currentNodesAscended);
 
     }
-    public void SpawnNode(NodeHandler.NodeStates nodeState)
+
+    public void SpawnNode(NodeHandler.NodeStates nodeState, NodeHandler.NodeTypes nodeType)
     {
         NodeHandler newNode;
         if (_deactivatedNodes.Count == 0)
@@ -94,8 +95,13 @@ public class NodeController : MonoBehaviour
 
         newNode.transform.position = _pos;
         newNode.ActivateNode(nodeState,
-            GenerateRandomNodeType(),
+            nodeType,
             0);
+    }
+
+    public void SpawnNode(NodeHandler.NodeStates nodeState)
+    {
+        SpawnNode(nodeState, GenerateRandomNodeType());
     }
 
     private NodeHandler.NodeTypes GenerateRandomNodeType()
@@ -106,19 +112,22 @@ public class NodeController : MonoBehaviour
 
     private Vector2 GenerateNodePosition()
     {
-        //List<Vector3> currentNodePositions = new List<Vector3>();
+        List<Vector3> currentNodePositions = new List<Vector3>();
 
-        //foreach (var node in _activatedNodes)
-        //{
-        //    currentNodePositions.Add(node.transform.position);
-        //}
+        foreach (var node in _activatedNodes)
+        {
+            currentNodePositions.Add(node.transform.position);
+        }
 
-        //Vector2 pos = CUR.GetRandomPosWithinRectangularArenaAwayFromOtherPoints(
-        //    0, ArenaController.Instance.XSpan, _yOffsetNewNodes + CurrentNodesCentroid, _ySpan,
-        //    currentNodePositions, _currentLevel.MinDistanceBetweenNodes);
+        Vector2 pos = CUR.GetRandomPosWithinArenaAwayFromOtherPoints(Vector2.zero,
+            ArenaController.Instance.CurrentArenaFunctionalRadius,
+            currentNodePositions, 1f);
 
-        //return pos;
-        return Vector2.zero;
+
+            //0, ArenaController.Instance.XSpan, _yOffsetNewNodes + CurrentNodesCentroid, _ySpan,
+            //currentNodePositions, _currentLevel.MinDistanceBetweenNodes);
+
+        return pos;
     }
 
     public void DespawnNode(NodeHandler unneededNode)

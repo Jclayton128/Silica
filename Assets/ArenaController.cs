@@ -17,7 +17,8 @@ public class ArenaController : MonoBehaviour
     [SerializeField] float _arenaRadius = 6;
 
     //state
-    private Arena _currentArena;   
+    private Arena _currentArena;
+    public float CurrentArenaFunctionalRadius => _currentArena.Radius * _maxEdgeFactor;
    
 
     private void Awake()

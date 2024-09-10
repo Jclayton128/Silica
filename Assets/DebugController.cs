@@ -23,11 +23,22 @@ public class DebugController : MonoBehaviour
         {
             GenerateTestBug();
         }
+
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            GenerateMainframeNode();
+        }
     }
 
     private void GenerateAvailableNode()
     {
         NodeController.Instance.SpawnNode(NodeHandler.NodeStates.Available);
+    }
+
+    private void GenerateMainframeNode()
+    {
+        NodeController.Instance.SpawnNode(NodeHandler.NodeStates.Available,
+            NodeHandler.NodeTypes.Mainframe);
     }
 
     private void StartNewRun()

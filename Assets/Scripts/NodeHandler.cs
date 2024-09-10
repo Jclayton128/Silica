@@ -7,12 +7,16 @@ public class NodeHandler : MonoBehaviour, IDestroyable
 {
     public enum NodeStates {Current, Available, Used}
 
-    public enum NodeTypes {Empty, Speed, Might, Intelligence, Constitution, Wisdom,Count}
+    public enum NodeTypes {Empty, Speed, Might, Intelligence, Constitution, Wisdom, Mainframe,
+        Count}
 
     //references
     SpriteRenderer _sr;
     [SerializeField] SpriteRenderer _sr_Icon = null;
     [SerializeField] Transform _icon = null;
+    [SerializeField] RingSpinner _ring0 = null;
+    [SerializeField] RingSpinner _ring1 = null;
+    [SerializeField] RingSpinner _ring2 = null;
 
     //state
     [SerializeField] private int _ownerIndex = 0;
@@ -71,9 +75,31 @@ public class NodeHandler : MonoBehaviour, IDestroyable
                 _sr_Icon.sprite = NodeLibrary.Instance.IconIntelligence;
                 break;
 
+            case NodeTypes.Mainframe:
+                _sr_Icon.sprite = NodeLibrary.Instance.IconMainframe;
+                break;
+
         }
 
+        SetupRingSpinners();
         //Setup other nuances for this node later in this method
+    }
+
+    private void SetupRingSpinners()
+    {
+        if (NodeType == NodeTypes.Mainframe)
+        {
+            _ring0.SetupRing(true, 20);
+            _ring1.SetupRing(false, 20);
+            _ring2.SetupRing(true, -90);
+        }
+        else
+        {
+            _ring0.SetupRing(false, 0);
+            _ring1.SetupRing(false, 0);
+            _ring2.SetupRing(false, 0);
+        }
+
     }
 
     public void ConvertToCurrentNode(int ownerIndex)

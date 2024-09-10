@@ -27,6 +27,9 @@ public class NodeLibrary : MonoBehaviour
     [SerializeField] Sprite _iconConstitution = null;
     public Sprite IconConstitution => _iconConstitution;
 
+    [SerializeField] Sprite _iconMainframe = null;
+    public Sprite IconMainframe => _iconMainframe;
+
 
     private void Awake()
     {
