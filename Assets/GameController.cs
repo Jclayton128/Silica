@@ -8,9 +8,14 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
     public Action RunStarting;
     public Action RunStarted;  
+    public enum GameModes { Title, InRun, Editor}
 
 
     //settings
+
+    //state
+    public GameModes GameMode => _gameMode;
+    GameModes _gameMode = GameModes.Title;
 
     private void Awake()
     {
@@ -22,16 +27,48 @@ public class GameController : MonoBehaviour
         NodeController.Instance.CurrentNodesUpdated += CheckForLimiterSpawn;
     }
 
+    public bool RequestEnterEditorMode()
+    {
+        if (_gameMode == GameModes.Title)
+        {
+            _gameMode = GameModes.Editor;
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning("Cannot enter Editor Mode right now");
+            return false;
+        }
+    }
 
+    public bool RequestExitEditorMode()
+    {
+        if (_gameMode == GameModes.Editor)
+        {
+            _gameMode = GameModes.Title;
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning("Cannot exit Editor Mode right now");
+            return false;
+        }
+    }
 
     public void InitializeNewRun()
     {
-        RunStarting?.Invoke();
+        if (_gameMode == GameModes.Title)
+        {
+            RunStarting?.Invoke();
 
-        ServerController.Instance.SetupNewGame();
-        PlayerController.Instance.InitializeNewPlayer();
+            ServerController.Instance.SetupNewGame();
+            PlayerController.Instance.InitializeNewPlayer();
 
-        RunStarted?.Invoke();
+            _gameMode = GameModes.InRun;
+
+            RunStarted?.Invoke();
+        }
+
     }
 
     private void CheckForLimiterSpawn(int nodesAscended)

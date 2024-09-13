@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9190306240264049857}
   - component: {fileID: 7897264231342302110}
   m_Layer: 6
-  m_Name: Node_Packet
+  m_Name: Packet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

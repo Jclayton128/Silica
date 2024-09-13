@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class DebugController : MonoBehaviour
 {
-    
+    [SerializeField] EditorCanvasDriver _editorCanvas = null;
+
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.N))
@@ -27,6 +28,15 @@ public class DebugController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.M))
         {
             GenerateMainframeNode();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            EnterEditorMode();
+        }
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            ExitEditorMode();
         }
     }
 
@@ -53,5 +63,23 @@ public class DebugController : MonoBehaviour
     private void GenerateTestBug()
     {
         BugController.Instance.SpawnBug(BugHandler.BugTypes.Test);
+    }
+
+    private void EnterEditorMode()
+    {
+        bool canDo = GameController.Instance.RequestEnterEditorMode();
+        if (canDo)
+        {
+            _editorCanvas.ShowPanel();
+        }
+    }
+
+    private void ExitEditorMode()
+    {
+        bool canDo = GameController.Instance.RequestEnterEditorMode();
+        if (canDo)
+        {
+            _editorCanvas.ShowPanel();
+        }
     }
 }

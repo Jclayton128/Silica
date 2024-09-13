@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
 
     public static CameraController Instance { get; private set; }
     //CinemachineVirtualCamera _cvc;
-    Camera _cam;
+    [SerializeField] Camera _cam = null;
 
     //settings
     [SerializeField] float _posChangeTime = 1f;
@@ -37,6 +37,7 @@ public class CameraController : MonoBehaviour
     {
         Instance = this;
         _zoomOutPos = new Vector3(0, 0, _cameraZOffset);
+        _cam.orthographicSize = _zoomScaleIn;
     }
     private void Start()
     {
@@ -44,10 +45,10 @@ public class CameraController : MonoBehaviour
         //this.gameObject.transform.position = _pos;
         //_cvc.Follow = this.transform;
 
-        _cam = Camera.main;
+        if (!_cam) _cam = Camera.main;
 
         GameController.Instance.RunStarted += HandleRunStarted;
-        _currentZoom = _zoomScaleIn;
+        ZoomIn_Editor();
     }
 
     private void HandleRunStarted()
@@ -67,6 +68,18 @@ public class CameraController : MonoBehaviour
             _posTween = _cam.transform.DOMove(_zoomInPos, _posChangeTime);
         }
 
+    }
+
+    [ContextMenu("Zoom Out (Editor)")]
+    public void ZoomOut_Editor()
+    {
+        _cam.orthographicSize = _zoomScaleOut;
+    }
+
+    [ContextMenu("Zoom In (Editor)")]
+    public void ZoomIn_Editor()
+    {
+        _cam.orthographicSize = _zoomScaleIn;
     }
 
     public void ZoomOut()

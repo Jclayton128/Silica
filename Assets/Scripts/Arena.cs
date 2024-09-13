@@ -21,4 +21,5 @@ public class Arena : object
     public Color StartColor => _startColor;
     private Color _startColor;
 
+
 }
