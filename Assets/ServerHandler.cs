@@ -43,7 +43,8 @@ public class ServerHandler : MonoBehaviour
         _serverState = state;
         _serverType = type;
         _isHome = isHome;
-        gameObject.layer = 12;
+        if (_isHome) gameObject.layer = 10;
+        else gameObject.layer = 12;
         RenderServerIcon();
     }
 

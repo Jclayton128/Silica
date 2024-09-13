@@ -99,6 +99,7 @@ public class CameraController : MonoBehaviour
         _isZoomingOut = false;
 
         _posTween.Kill();
+        _zoomInPos.z = _cameraZOffset;
         _posTween = _cam.transform.DOMove(_zoomInPos, _posChangeTime);
 
         ZoomingIn?.Invoke();

@@ -133,7 +133,8 @@ public class PlayerHandler : MonoBehaviour
             packet.InitializePacket(_ownerIndex);
         }
 
-        packet.ActivatePacket(_currentNode.transform.up * _pdh.CurrentSpeed);
+        packet.ActivatePacket(_currentNode.transform.up * _pdh.CurrentSpeed,
+            _pdh.PacketLifetime);
         packet.gameObject.layer = 6;
         packet.transform.position = _currentNode.transform.position;
 
@@ -151,7 +152,8 @@ public class PlayerHandler : MonoBehaviour
             packet.InitializePacket(_ownerIndex);
         }
 
-        packet.ActivatePacket(_currentServer.transform.up * _pdh.CurrentSpeed);
+        packet.ActivatePacket(_currentServer.transform.up * _pdh.CurrentSpeed,
+            _pdh.PacketLifetime);
         packet.gameObject.layer = 11;
         packet.transform.position = _currentServer.transform.position;
     }

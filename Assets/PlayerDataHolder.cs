@@ -28,6 +28,8 @@ public class PlayerDataHolder : MonoBehaviour
     public float CurrentSoul => _currentSoul;
     private float _currentSoul;
 
+    private float _packetLifetime;
+    public float PacketLifetime => _packetLifetime;
 
     public float EnergyRegen => _energyRegen;
     [Tooltip("Energy gained per second")]

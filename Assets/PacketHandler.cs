@@ -10,6 +10,7 @@ public class PacketHandler : MonoBehaviour
     ParticleSystem _ps;
 
     //state
+    float _lifetimeRemaining;
     int _ownerIndex = -1;
     public int OwnerIndex => _ownerIndex;
 
@@ -24,14 +25,16 @@ public class PacketHandler : MonoBehaviour
         _sr.color = ColorLibrary.Instance.PlayerColors[_ownerIndex -1];
     }
 
-    public void ActivatePacket(Vector2 velocity)
+    public void ActivatePacket(Vector2 velocity, float lifetime)
     {
+        enabled = true;
         _rb.simulated = true;
         _coll.enabled = true;
         _sr.enabled = true;
         _ps.Play();
         _rb.velocity = velocity;
         transform.up = velocity;
+        _lifetimeRemaining = lifetime;
     }
 
 
@@ -41,6 +44,16 @@ public class PacketHandler : MonoBehaviour
         _coll.enabled = false;
         _sr.enabled = false;
         _ps.Stop();
+        enabled = false;
         //Destroy(gameObject, 0.1f);
+    }
+
+    private void Update()
+    {
+        _lifetimeRemaining -= Time.deltaTime;
+        if (_lifetimeRemaining <= 0)
+        {
+            DeactivatePacket();
+        }
     }
 }
