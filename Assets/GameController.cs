@@ -6,14 +6,11 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
-    public Action RunStarted;
-   
+    public Action RunStarting;
+    public Action RunStarted;  
 
 
     //settings
-    int _limiterSpawnThreshold = 3;
-
-
 
     private void Awake()
     {
@@ -29,12 +26,11 @@ public class GameController : MonoBehaviour
 
     public void InitializeNewRun()
     {
-        PlayerController.Instance.InitializeNewPlayer();
-        SetupNewRun();
-    }
+        RunStarting?.Invoke();
 
-    private void SetupNewRun()
-    {
+        ServerController.Instance.SetupNewGame();
+        PlayerController.Instance.InitializeNewPlayer();
+
         RunStarted?.Invoke();
     }
 

@@ -6,6 +6,7 @@ using System;
 public class PlayerHandler : MonoBehaviour
 {
     public Action<NodeHandler> CurrentNodeChanged;
+    public Action<Transform> PlayerTransformChanged;
     public Action PlayerDying;
 
 
@@ -17,11 +18,18 @@ public class PlayerHandler : MonoBehaviour
     //state
     PlayerDataHolder _pdh;
     PlayerEnergyHandler _peh;
+
     [SerializeField] private NodeHandler _currentNode;
     public NodeHandler CurrentNode => _currentNode;
+
+    ServerHandler _currentServer;
+    public ServerHandler CurrentServer => _currentServer;
+
+    public Transform CurrentTransform => CurrentNode ? _currentNode.transform : _currentServer.transform;
+
     [SerializeField] int _ownerIndex = 0;
     public int OwnerIndex => _ownerIndex;
-    Vector2 _facingDirForActiveNode;
+    Vector2 _facingDir;
     PacketHandler packet;
 
     private void Start()
@@ -31,7 +39,8 @@ public class PlayerHandler : MonoBehaviour
         _ownerIndex = PlayerController.Instance.RegisterNewPlayer(this);
         _ownerIndex = 1;
 
-        NodeController.Instance.SpawnStartingNode(_ownerIndex);
+        _currentServer = ServerController.Instance.StartingServer;
+        //NodeController.Instance.SpawnStartingNode(_ownerIndex);
         _peh = GetComponent<PlayerEnergyHandler>();
         _pdh = GetComponent<PlayerDataHolder>();
     }
@@ -39,68 +48,122 @@ public class PlayerHandler : MonoBehaviour
     #region Flow
     private void Update()
     {
+
         if (_currentNode != null)
+        {            
+            UpdateCurrentNodeFacing();
+        }
+
+        else if (_currentServer != null)
         {
-            UpdateActiveNodeFacing();
+            UpdateCurrentServerFacing();
         }
     }
 
-    private void UpdateActiveNodeFacing()
+
+    private void UpdateCurrentNodeFacing()
     {
-        _facingDirForActiveNode = InputController.Instance.MousePosition - _currentNode.transform.position;
-        _currentNode.AdjustRotation(_facingDirForActiveNode);
+        _facingDir = InputController.Instance.MousePosition - _currentNode.transform.position;
+        _currentNode.AdjustRotation(_facingDir);
+    }
+
+    private void UpdateCurrentServerFacing()
+    {
+        _facingDir = InputController.Instance.MousePosition - _currentServer.transform.position;
+        _currentServer.AdjustRotation(_facingDir);
     }
 
     private void HandlePrimaryClick(bool wasPushedDown)
     {
-        switch (_currentNode.NodeType)
+        if (_currentNode)
         {
-            case NodeHandler.NodeTypes.Empty:
-                //do nothing
-                return;
+            switch (_currentNode.NodeType)
+            {
+                case NodeHandler.NodeTypes.Empty:
+                    //do nothing
+                    return;
 
-            case NodeHandler.NodeTypes.Speed:
-                if (wasPushedDown) _blaster.HandleButtonDown();
-                else _blaster.HandleButtonUp();
-                return;
+                case NodeHandler.NodeTypes.Speed:
+                    if (wasPushedDown) _blaster.HandleButtonDown();
+                    else _blaster.HandleButtonUp();
+                    return;
 
-            case NodeHandler.NodeTypes.Might:
-                if (wasPushedDown) _shotgun.HandleButtonDown();
-                else _shotgun.HandleButtonUp();
-                return;
+                case NodeHandler.NodeTypes.Might:
+                    if (wasPushedDown) _shotgun.HandleButtonDown();
+                    else _shotgun.HandleButtonUp();
+                    return;
 
 
+            }
         }
+        else
+        {
+            //Do LMB thing while in server map mode... maybe enter server?
+        }
+
         
     }
 
     private void HandleSecondaryClick(bool wasPushedDown)
     {
-        if (!wasPushedDown)
+        if (_currentNode)
         {
-            if (!_peh.CheckSoul()) return;
-            else _peh.SpendSoul();
-
-            //release a packet
-            Vector2 location = _currentNode.transform.position;
-
-            if (packet) packet.DeactivatePacket();
-            else
-            {
-                packet = Instantiate(PacketLibrary.Instance.GetPacketPrefab());
-            }
-
-
-            packet.transform.position = _currentNode.transform.position;
-            packet.InitializePacket(
-                _currentNode.transform.up * _pdh.CurrentSpeed,
-                _ownerIndex);
+            if (!wasPushedDown) HandleSecondaryClick_Nodes();
         }
+        else
+        {
+            if (!wasPushedDown) HandleSecondaryClick_Servers();
+        }
+
+
+    }
+
+    private void HandleSecondaryClick_Nodes()
+    {
+        if (!_peh.CheckSoul()) return;
+        else _peh.SpendSoul();
+
+        //release a packet
+        Vector2 location = _currentNode.transform.position;
+
+        if (packet) packet.DeactivatePacket();
+        else
+        {
+            packet = Instantiate(PacketLibrary.Instance.GetPacketPrefab());
+            packet.gameObject.layer = 6;
+        }
+
+
+        packet.transform.position = _currentNode.transform.position;
+        packet.InitializePacket(
+            _currentNode.transform.up * _pdh.CurrentSpeed,
+            _ownerIndex);
+    }
+
+    private void HandleSecondaryClick_Servers()
+    {
+        //release a packet
+        Vector2 location = _currentServer.transform.position;
+
+        if (packet) packet.DeactivatePacket();
+
+        packet = Instantiate(PacketLibrary.Instance.GetPacketPrefab());
+
+        packet.transform.position = _currentServer.transform.position;
+        packet.InitializePacket(
+            _currentServer.transform.up * _pdh.CurrentSpeed,
+            _ownerIndex);
+        packet.gameObject.layer = 11;
     }
 
     #endregion
 
     #region Current Node Management
+
+    public void ClearCurrentNode()
+    {
+        _currentNode = null;
+    }
 
     public void AdjustCurrentNode(NodeHandler newCurrentNode)
     {
@@ -128,6 +191,28 @@ public class PlayerHandler : MonoBehaviour
         //TODO handle destruction of player's current node from game mechanics, not graphics
     }
 
+    #endregion
+
+    #region Current Server Management
+    public void AdjustCurrentServer(ServerHandler newServerHandler)
+    {
+        ServerHandler oldServer = null;
+        if (_currentServer)
+        {
+            _currentServer.ModifyServerState(ServerHandler.ServerStates.Beaten);
+            oldServer = _currentServer;
+        }
+
+        _currentServer = newServerHandler;
+        _currentServer.ConvertToCurrentServer();
+        //CurrentNodeChanged?.Invoke(_currentNode);
+
+        //_blaster.HandleNodeChange();
+        //_shotgun.HandleNodeChange();
+
+        //tell the node controller IOT update the current nodes list (for camera and spawning)
+        PlayerTransformChanged?.Invoke(_currentServer.transform);
+    }
     #endregion
 
     public void ForcePlayerDeath()

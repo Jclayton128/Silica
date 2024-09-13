@@ -16,7 +16,7 @@ public class AvatarUIDriver : MonoBehaviour
     {
         _player = player;
         transform.SetParent(_player.transform, false);
-        _player.CurrentNodeChanged += HandleCurrentNodeChanged;
+        _player.PlayerTransformChanged += HandlePlayerLocationChanged;
         _player.PlayerDying += HandlePlayerDeath;
         _pdh = player.GetComponent<PlayerDataHolder>();
         _pdh.CurrentEnergyChanged += HandleEnergyChanged;
@@ -24,9 +24,17 @@ public class AvatarUIDriver : MonoBehaviour
 
     }
 
-    private void HandleCurrentNodeChanged(NodeHandler newNode)
+    private void HandlePlayerLocationChanged(Transform newTransform)
     {
-        transform.position = newNode.transform.position;
+        if (_player.CurrentNode)
+        {
+            transform.position = newTransform.position;
+        }
+        else
+        {
+            //remain hidden somewhere; UI not needed on server map
+        }
+
     }
 
     private void HandleEnergyChanged(float newEnergyFactor)
@@ -41,7 +49,7 @@ public class AvatarUIDriver : MonoBehaviour
 
     private void HandlePlayerDeath()
     {
-        _player.CurrentNodeChanged -= HandleCurrentNodeChanged;
+        _player.PlayerTransformChanged -= HandlePlayerLocationChanged;
         _player.PlayerDying -= HandlePlayerDeath;
         _pdh.CurrentEnergyChanged -= HandleEnergyChanged;
         _pdh.CurrentSoulChanged -= HandleSoulChanged;
@@ -50,6 +58,14 @@ public class AvatarUIDriver : MonoBehaviour
 
     private void Update()
     {
-        transform.rotation = _player.CurrentNode.transform.rotation;
+        if (_player.CurrentNode)
+        {
+            transform.rotation = _player.CurrentNode.transform.rotation;
+        }
+        else if (_player.CurrentServer)
+        {
+            transform.rotation = _player.CurrentServer.transform.rotation;
+        }
+        
     }
 }

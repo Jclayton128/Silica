@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
     //state
     [SerializeField] List<PlayerHandler> _playerHandlers = new List<PlayerHandler>();
-    public PlayerHandler Player { get; private set; }
+    public PlayerHandler CurrentPlayer { get; private set; }
     private void Awake()
     {
         Instance = this;
@@ -37,17 +37,17 @@ public class PlayerController : MonoBehaviour
 
     public void InitializeNewPlayer()
     {
-        if (Player == null)
+        if (CurrentPlayer == null)
         {
-            Player = Instantiate(_playerPrefab);
+            CurrentPlayer = Instantiate(_playerPrefab);
         }
         else
         {
             Debug.LogWarning("Player already existed; deleted old player.");
             //PlayerController.Instance.DeregisterPlayer(Player);
-            Player.ForcePlayerDeath();
+            CurrentPlayer.ForcePlayerDeath();
 
-            Player = Instantiate(_playerPrefab);
+            CurrentPlayer = Instantiate(_playerPrefab);
         }
     }
 

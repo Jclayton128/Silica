@@ -44,8 +44,11 @@ public class DebugController : MonoBehaviour
     private void StartNewRun()
     {
         Debug.Log("new run!");
-        ArenaController.Instance.CreateNewCurrentArena();
+        //ArenaController.Instance.CreateNewCurrentArena();
+
+
         GameController.Instance.InitializeNewRun();
+
     }
     private void GenerateTestBug()
     {

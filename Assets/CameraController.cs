@@ -43,15 +43,20 @@ public class CameraController : MonoBehaviour
         //_cvc.Follow = this.transform;
 
         _cam = Camera.main;
-        
-        NodeController.Instance.CurrentNodesUpdated += HandleUpdatedCurrentNodes;
+
+        GameController.Instance.RunStarted += HandleRunStarted;
         _currentZoom = _zoomScaleIn;
     }
 
-
-    private void HandleUpdatedCurrentNodes(int throwaway)
+    private void HandleRunStarted()
     {
-        _zoomInPos = NodeController.Instance.CurrentNodesCentroid;
+        PlayerController.Instance.CurrentPlayer.PlayerTransformChanged += HandleUpdatedCurrentNodes;
+    }
+
+
+    private void HandleUpdatedCurrentNodes(Transform newTransform)
+    {
+        _zoomInPos = newTransform.position;
         _zoomInPos.z = _cameraZOffset;
 
         if (!_isZoomingOut)
@@ -70,6 +75,15 @@ public class CameraController : MonoBehaviour
         _isZoomingOut = true;
 
         _posTween.Kill();
+        if (PlayerController.Instance.CurrentPlayer.CurrentNode)
+        {
+            _zoomOutPos = new Vector3(0, 0, _cameraZOffset);
+        }
+        else
+        {
+            _zoomOutPos = PlayerController.Instance.CurrentPlayer.CurrentTransform.position;
+            _zoomOutPos.z = _cameraZOffset;
+        }
         _posTween = _cam.transform.DOMove(_zoomOutPos, _posChangeTime);
 
         ZoomingOut?.Invoke();

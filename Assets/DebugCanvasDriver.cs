@@ -15,10 +15,10 @@ public class DebugCanvasDriver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LimiterController.Instance.LimiterSpeedChanged += HandleLimiterSpeedChanged;
-        LevelController.Instance.LevelCountIncrease += HandleLevelCountChanged;
-        HandleLimiterSpeedChanged();
-        HandleLevelCountChanged();
+        //LimiterController.Instance.LimiterSpeedChanged += HandleLimiterSpeedChanged;
+        //LevelController.Instance.LevelCountIncrease += HandleLevelCountChanged;
+        //HandleLimiterSpeedChanged();
+        //HandleLevelCountChanged();
     }
 
     private void HandleLimiterSpeedChanged()
