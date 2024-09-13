@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
+
+
     public static InputController Instance { get; private set; }
 
     public Vector3 MousePosition;// { get; private set; } 
     public Action<bool> MouseChanged_LMB;
     public Action<bool> MouseChanged_RMB;
+
+
 
     private void Awake()
     {
@@ -24,8 +28,11 @@ public class InputController : MonoBehaviour
         UpdateMousePosition();
 
         UpdateMouseClicks();
+
+        UpdateMouseScroll();
         
     }
+
 
     private void UpdateMouseClicks()
     {
@@ -52,6 +59,17 @@ public class InputController : MonoBehaviour
         MousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
+    private void UpdateMouseScroll()
+    {
+        if (Input.mouseScrollDelta.y < 0)
+        {
+            CameraController.Instance.ZoomOut();
+        }
+        else if (Input.mouseScrollDelta.y > 0)
+        {
+            CameraController.Instance.ZoomIn();
+        }
+    }
 
 
 }

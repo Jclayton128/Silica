@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;  
 
 public class NodeHandler : MonoBehaviour, IDestroyable
 {
@@ -18,6 +19,10 @@ public class NodeHandler : MonoBehaviour, IDestroyable
     [SerializeField] RingSpinner _ring1 = null;
     [SerializeField] RingSpinner _ring2 = null;
 
+    //settings
+    [SerializeField] float _iconFadeTime = 0.5f;
+
+
     //state
     [SerializeField] private int _ownerIndex = 0;
     PlayerHandler _playerHandler;
@@ -25,11 +30,17 @@ public class NodeHandler : MonoBehaviour, IDestroyable
     private bool _isInitialized = false;
     public NodeStates NodeState;// { get; private set; }
     public NodeTypes NodeType;// { get; private set; }
+    Tween _iconFade;
+
 
     private void Initialize()
     {
         _sr = GetComponent<SpriteRenderer>();
         _isInitialized = true;
+
+        CameraController.Instance.ZoomingIn += HandleZoomingIn;
+        CameraController.Instance.ZoomingOut += HandleZoomingOut;
+        
     }
 
     public void ActivateNode(NodeStates nodeState, NodeTypes nodeType, int ownerIndex)
@@ -78,8 +89,19 @@ public class NodeHandler : MonoBehaviour, IDestroyable
             case NodeTypes.Mainframe:
                 _sr_Icon.sprite = NodeLibrary.Instance.IconMainframe;
                 break;
-
         }
+
+        _iconFade.Kill();
+        if (CameraController.Instance.IsZoomedIn)
+        {
+            _iconFade = _sr_Icon.DOFade(1, 0.01f);
+        }
+        else
+        {
+            _iconFade = _sr_Icon.DOFade(0, 0.01f);
+        }
+
+
 
         SetupRingSpinners();
         //Setup other nuances for this node later in this method
@@ -175,7 +197,6 @@ public class NodeHandler : MonoBehaviour, IDestroyable
     }
 
 
-
     public void HandleZeroHealth()
     {
         //TODO have a cool node destruction sequence
@@ -195,5 +216,17 @@ public class NodeHandler : MonoBehaviour, IDestroyable
  
 
         _sr.color = Color.HSVToRGB(h, s, v);
+    }
+
+    private void HandleZoomingIn()
+    {
+        _iconFade.Kill();
+        _iconFade = _sr_Icon.DOFade(1, _iconFadeTime);
+    }
+
+    private void HandleZoomingOut()
+    {
+        _iconFade.Kill();
+        _iconFade = _sr_Icon.DOFade(0, _iconFadeTime*4);
     }
 }

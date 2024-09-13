@@ -402,6 +402,7 @@ MonoBehaviour:
   _ring0: {fileID: 7173662142375673132}
   _ring1: {fileID: 7048976308461116924}
   _ring2: {fileID: 5897850843589682694}
+  _iconFadeTime: 2
   _ownerIndex: 0
   NodeState: 0
   NodeType: 0
