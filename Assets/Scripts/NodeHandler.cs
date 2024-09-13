@@ -46,7 +46,7 @@ public class NodeHandler : MonoBehaviour, IDestroyable
     public void ActivateNode(NodeStates nodeState, NodeTypes nodeType, int ownerIndex)
     {
         gameObject.SetActive(true);
-
+        gameObject.layer = 7;
         if (!_isInitialized)
         {
             Initialize();
@@ -111,9 +111,9 @@ public class NodeHandler : MonoBehaviour, IDestroyable
     {
         if (NodeType == NodeTypes.Mainframe)
         {
-            _ring0.SetupRing(true, 20);
-            _ring1.SetupRing(false, 20);
-            _ring2.SetupRing(true, -90);
+            _ring0.SetupRing(true, 10);
+            _ring1.SetupRing(false, 10);
+            _ring2.SetupRing(true, -15);
         }
         else
         {
@@ -135,6 +135,8 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         _playerHandler = PlayerController.Instance.GetPlayer(_ownerIndex);
         _playerHandler.AdjustCurrentNode(this);
 
+        gameObject.layer = 0;
+
         NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
     }
 
@@ -144,6 +146,8 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         _sr.sprite = NodeLibrary.Instance.GetUsedNodeSprite();
         AdjustRotation(Vector2.up);
         _sr.color = ColorLibrary.Instance.UsedColor;
+
+        gameObject.layer = 6;
 
         _playerHandler = null;
         _ownerIndex = -1;
@@ -164,10 +168,11 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         _icon.up = Vector2.up;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         PacketHandler ph;
-        if (!collision.TryGetComponent<PacketHandler>(out ph))
+        if (!collision.gameObject.TryGetComponent<PacketHandler>(out ph))
         {
             Debug.LogWarning("triggered collision with a non-packet!");
             return;
@@ -201,8 +206,48 @@ public class NodeHandler : MonoBehaviour, IDestroyable
             }
 
 
-        }       
+        }
     }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    PacketHandler ph;
+    //    if (!collision.TryGetComponent<PacketHandler>(out ph))
+    //    {
+    //        Debug.LogWarning("triggered collision with a non-packet!");
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        if (_ownerIndex > 0)
+    //        {
+    //            Debug.LogWarning("An owned node can't be captured!");
+    //            return;
+    //        }
+    //        else if (NodeType == NodeTypes.Mainframe)
+    //        {
+    //            //exit
+    //            ServerController.Instance.ExitServerFromArena();
+    //            PlayerController.Instance.CurrentPlayer.ReturnToCurrentServer();
+    //            ph.DeactivatePacket();
+
+    //        }
+    //        else if (NodeController.Instance.CheckIfNodeIsAvailable(this))
+    //        {
+    //            //capture this node and make it the current node of the owning player
+    //            _ownerIndex = ph.OwnerIndex;
+
+    //            if (_ownerIndex > 0)
+    //            {
+    //                ConvertToCurrentNode(_ownerIndex);
+    //            }
+
+    //            ph.DeactivatePacket();
+    //        }
+
+
+    //    }       
+    //}
 
 
     public void HandleZeroHealth()

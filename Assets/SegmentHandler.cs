@@ -57,4 +57,17 @@ public class SegmentHandler : MonoBehaviour, IDestroyable
             _health.ResetHealth();
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        PacketHandler ph;
+        if (!collision.TryGetComponent<PacketHandler>(out ph))
+        {
+            Debug.LogWarning("triggered collision with a non-packet!");
+            return;
+        }
+
+        //ph.DeactivatePacket();
+
+    }
+
 }

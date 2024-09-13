@@ -13,16 +13,25 @@ public class PacketHandler : MonoBehaviour
     int _ownerIndex = -1;
     public int OwnerIndex => _ownerIndex;
 
-    public void InitializePacket(Vector2 velocity, int ownerIndex)
+    public void InitializePacket(int ownerIndex)
     {
         _rb = GetComponent<Rigidbody2D>();
-        _rb.velocity = velocity;
-        transform.up = velocity;
+
         _coll = GetComponent<Collider2D>();
         _sr = GetComponent<SpriteRenderer>();
         _ps = GetComponent<ParticleSystem>();
         _ownerIndex = ownerIndex;
         _sr.color = ColorLibrary.Instance.PlayerColors[_ownerIndex -1];
+    }
+
+    public void ActivatePacket(Vector2 velocity)
+    {
+        _rb.simulated = true;
+        _coll.enabled = true;
+        _sr.enabled = true;
+        _ps.Play();
+        _rb.velocity = velocity;
+        transform.up = velocity;
     }
 
 
@@ -32,6 +41,6 @@ public class PacketHandler : MonoBehaviour
         _coll.enabled = false;
         _sr.enabled = false;
         _ps.Stop();
-        Destroy(gameObject, 3);
+        //Destroy(gameObject, 0.1f);
     }
 }

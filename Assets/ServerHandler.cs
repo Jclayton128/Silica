@@ -43,7 +43,7 @@ public class ServerHandler : MonoBehaviour
         _serverState = state;
         _serverType = type;
         _isHome = isHome;
-
+        gameObject.layer = 12;
         RenderServerIcon();
     }
 
@@ -63,15 +63,15 @@ public class ServerHandler : MonoBehaviour
     public void ConvertToCurrentServer()
     {
         ModifyServerState(ServerStates.Current);
-
+        gameObject.layer = 10;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (PlayerController.Instance.CurrentPlayer.CurrentServer == this) return;
 
         PacketHandler ph;
-        if (!collision.TryGetComponent<PacketHandler>(out ph))
+        if (!collision.gameObject.TryGetComponent<PacketHandler>(out ph))
         {
             Debug.LogWarning("triggered collision with a non-packet!");
             return;

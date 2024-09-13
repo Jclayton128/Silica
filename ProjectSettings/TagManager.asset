@@ -12,12 +12,12 @@ TagManager:
   - Water
   - UI
   - Node_Packet
-  - Node
+  - Node_Noncurrent
   - Weaponry
   - Damagable
-  - Limiter
+  - NodeServer_Current
   - Server_Packet
-  - Server
+  - Server_Noncurrent
   - 
   - 
   - 
