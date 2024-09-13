@@ -21,6 +21,11 @@ public class ServerController : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        CameraController.Instance.ZoomedMicro += HandleZoomMicroCompleted;
+    }
+
     public void RegisterServer(ServerHandler server)
     {
         _allServers.Add(server);
@@ -42,6 +47,51 @@ public class ServerController : MonoBehaviour
             RegisterServer(sh1);
             sh1.Initialize();
             sh1.SetupServer(ServerHandler.ServerStates.Unvisited, ServerHandler.ServerTypes.Type1, false);
+        }
+    }
+
+    public void EnterServerToArena()
+    {
+        HideAllServersWhenEnteringAnArena();
+
+        CameraController.Instance.ZoomMicro();
+
+    }
+
+    private void HandleZoomMicroCompleted()
+    {
+        ArenaController.Instance.CreateNewCurrentArena();
+        NodeController.Instance.SpawnStartingNode(1);
+    }
+
+    public void ExitServerFromArena()
+    {
+        Debug.Log("Exiting Arena");
+
+        //Close the arena borders
+        //Disable all nodes
+        //reveal all servers
+
+        CameraController.Instance.ZoomIn();
+        NodeController.Instance.DespawnAllNodes();
+        ArenaController.Instance.CloseDownArena();
+        ShowAllServersWhenExitingAnArena();
+
+    }
+
+    private void HideAllServersWhenEnteringAnArena()
+    {
+        foreach(ServerHandler server in _allServers)
+        {
+            server.HideServer();
+        }
+    }
+
+    private void ShowAllServersWhenExitingAnArena()
+    {
+        foreach (ServerHandler server in _allServers)
+        {
+            server.ShowServer();
         }
     }
 

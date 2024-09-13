@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
 {
     public Action ZoomingOut;
     public Action ZoomingIn;
+    public Action ZoomedMicro;
 
     public static CameraController Instance { get; private set; }
     //CinemachineVirtualCamera _cvc;
@@ -19,6 +20,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float _zoomTime = 0.5f;
     [SerializeField] float _zoomScaleIn = 6;
     [SerializeField] float _zoomScaleOut = 12;
+    [SerializeField] float _zoomScaleMicro = 3;
     [SerializeField] float _cameraZOffset = -10;
 
     //state
@@ -94,16 +96,34 @@ public class CameraController : MonoBehaviour
         _zoomTween.Kill();
 
         _zoomTween = _cam.DOOrthoSize(_zoomScaleIn, _zoomTime);
-        //_zoomTween = DOTween.To(() => _currentZoom, x => _currentZoom = x,
-        //    _zoomScaleIn,
-        //    _zoomTime).OnComplete(HandleZoomComplete);
-        //_isZooming = true;
         _isZoomingOut = false;
 
         _posTween.Kill();
         _posTween = _cam.transform.DOMove(_zoomInPos, _posChangeTime);
 
         ZoomingIn?.Invoke();
+    }
+
+    public void ZoomMicro()
+    {
+        _zoomTween.Kill();
+
+        _zoomTween = _cam.DOOrthoSize(_zoomScaleMicro, _zoomTime).OnComplete(HandleZoomMicroCompleted);
+        _isZoomingOut = false;
+
+        //_posTween.Kill();
+        //_posTween = _cam.transform.DOMove(_zoomInPos, _posChangeTime);
+
+
+    }
+
+    private void HandleZoomMicroCompleted()
+    {
+        ZoomedMicro?.Invoke();
+
+        _zoomTween.Kill();
+        _cam.orthographicSize = _zoomScaleIn;
+
     }
 
 }

@@ -28,11 +28,13 @@ public class AvatarUIDriver : MonoBehaviour
     {
         if (_player.CurrentNode)
         {
+            gameObject.SetActive(true);
             transform.position = newTransform.position;
         }
         else
         {
             //remain hidden somewhere; UI not needed on server map
+            gameObject.SetActive(false);
         }
 
     }

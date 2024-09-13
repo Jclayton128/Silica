@@ -29,10 +29,10 @@ public class NodeController : MonoBehaviour
     Vector2 _pos;
     //[SerializeField] float _nodeDensity = 0.5f;
 
-    List<NodeHandler> _currentNodes = new List<NodeHandler>();// { get; private set; } = null;
+    [SerializeField] List<NodeHandler> _currentNodes = new List<NodeHandler>();// { get; private set; } = null;
     public Vector2 CurrentNodesCentroid => FindCurrentNodesYCentroid();
-    Queue<NodeHandler> _deactivatedNodes = new Queue<NodeHandler>();
-    List<NodeHandler> _activatedNodes = new List<NodeHandler>();
+    [SerializeField] Queue<NodeHandler> _deactivatedNodes = new Queue<NodeHandler>();
+    [SerializeField] List<NodeHandler> _activatedNodes = new List<NodeHandler>();
 
     List<NodeHandler> _availableNodes = new List<NodeHandler>();
 
@@ -182,23 +182,19 @@ public class NodeController : MonoBehaviour
 
     }
 
-    //private void DespawnLowerNodes()
-    //{
-    //    //cull nodes off bottom of screen
-    //    List<NodeHandler> nodesToCull = new List<NodeHandler>();
-    //    foreach (var node in _activatedNodes)
-    //    {
-    //        if (node.transform.position.y < CurrentNodesCentroid + (2 * _yStarting))
-    //        {
-    //            nodesToCull.Add(node);
-    //        }
-    //    }
+    public void DespawnAllNodes()
+    {
+        List<NodeHandler> nodesToCull = new List<NodeHandler>();
+        foreach (var node in _activatedNodes)
+        {
+            nodesToCull.Add(node);
+        }
 
-    //    for (int i = nodesToCull.Count-1; i > 0; i--)
-    //    {
-    //        nodesToCull[i].DeactivateNode();
-    //    }
-    //}
+        for (int i = nodesToCull.Count - 1; i >= 0; i--)
+        {
+            nodesToCull[i].DeactivateNode();
+        }
+    }
 
     public void RemoveNodeFromAvailableNodeList(NodeHandler usedNode)
     {

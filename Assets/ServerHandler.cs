@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ServerHandler : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class ServerHandler : MonoBehaviour
     //refs
     [SerializeField] SpriteRenderer _sr = null;
     [SerializeField] SpriteRenderer _iconSR = null;
+    Collider2D _coll;
+
+    //settings
+    [SerializeField] float _fadeTime = 1f;
 
     //state
     [SerializeField] ServerStates _serverState = ServerStates.Unvisited;
@@ -18,8 +23,11 @@ public class ServerHandler : MonoBehaviour
     public ServerTypes ServerType => _serverType;
     public ServerStates ServerState => _serverState;
     [SerializeField] bool _isHome = false;
+
+    Tween _srTween;
+    Tween _iconTween;
     
-    private void Start()
+    private void Awake()
     {
         Initialize();
     }
@@ -27,7 +35,7 @@ public class ServerHandler : MonoBehaviour
     public void Initialize()
     {
         _sr = GetComponent<SpriteRenderer>();
-
+        _coll = GetComponent<Collider2D>();
     }
 
     public void SetupServer(ServerStates state, ServerTypes type, bool isHome)
@@ -44,6 +52,45 @@ public class ServerHandler : MonoBehaviour
         _serverState = newState;
         RenderServerIcon();
     }
+
+
+    public void AdjustRotation(Vector2 facingDir)
+    {
+        transform.up = facingDir;
+        _iconSR.transform.up = Vector2.up;
+    }
+
+    public void ConvertToCurrentServer()
+    {
+        ModifyServerState(ServerStates.Current);
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (PlayerController.Instance.CurrentPlayer.CurrentServer == this) return;
+
+        PacketHandler ph;
+        if (!collision.TryGetComponent<PacketHandler>(out ph))
+        {
+            Debug.LogWarning("triggered collision with a non-packet!");
+            return;
+        }
+        else
+        {
+            Debug.Log("triggered collision with packet");
+            if (true) //Use this IF to check if player is allowed to enter this server (ie, locked, military, secret?)
+            {
+                ph.DeactivatePacket();
+                PlayerController.Instance.CurrentPlayer.AdjustCurrentServer(this);
+
+            }
+
+
+        }
+    }
+
+    #region Server Visuals
 
     private void RenderServerIcon()
     {
@@ -75,38 +122,28 @@ public class ServerHandler : MonoBehaviour
         transform.up = Vector3.up;
     }
 
-    public void AdjustRotation(Vector2 facingDir)
+    public void HideServer()
     {
-        transform.up = facingDir;
-        _iconSR.transform.up = Vector2.up;
+        //fade away
+        _srTween.Kill();
+        _iconTween.Kill();
+
+        _srTween = _sr.DOFade(0, _fadeTime);
+        _iconTween = _iconSR.DOFade(0, _fadeTime);
+
+        _coll.enabled = false;
+
     }
 
-    public void ConvertToCurrentServer()
+    public void ShowServer()
     {
-        ModifyServerState(ServerStates.Current);
+        _srTween.Kill();
+        _iconTween.Kill();
 
+        _srTween = _sr.DOFade(1, _fadeTime);
+        _iconTween = _iconSR.DOFade(1, _fadeTime);
+        _coll.enabled = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (PlayerController.Instance.CurrentPlayer.CurrentServer == this) return;
-
-        PacketHandler ph;
-        if (!collision.TryGetComponent<PacketHandler>(out ph))
-        {
-            Debug.LogWarning("triggered collision with a non-packet!");
-            return;
-        }
-        else
-        {
-            Debug.Log("triggered collision with packet");
-            if (true) //Use this IF to check if player is allowed to enter this server (ie, locked, military, secret?)
-            {
-                PlayerController.Instance.CurrentPlayer.AdjustCurrentServer(this);
-                ph.DeactivatePacket();
-            }
-
-
-        }
-    }
+    #endregion
 }

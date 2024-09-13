@@ -904,7 +904,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617484877}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -5876,6 +5876,8 @@ MonoBehaviour:
   _ySpan: 3
   _currentNodesAscended: 0
   _currentLevel: {fileID: 11400000, guid: 6ec686bd76d065d47ba941f47a7068ce, type: 2}
+  _currentNodes: []
+  _activatedNodes: []
 --- !u!114 &1999929160
 MonoBehaviour:
   m_ObjectHideFlags: 0

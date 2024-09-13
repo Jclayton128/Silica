@@ -179,6 +179,14 @@ public class NodeHandler : MonoBehaviour, IDestroyable
                 Debug.LogWarning("An owned node can't be captured!");
                 return;
             }
+            else if (NodeType == NodeTypes.Mainframe)
+            {
+                //exit
+                ServerController.Instance.ExitServerFromArena();
+                PlayerController.Instance.CurrentPlayer.ReturnToCurrentServer();
+                ph.DeactivatePacket();
+
+            }
             else if (NodeController.Instance.CheckIfNodeIsAvailable(this))
             {
                 //capture this node and make it the current node of the owning player

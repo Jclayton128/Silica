@@ -28,4 +28,9 @@ public class ArenaHandler : MonoBehaviour
         _edgePS.Play(true);
     }
 
+    public void CloseArena()
+    {
+        _edgePS.Stop();
+    }
+
 }

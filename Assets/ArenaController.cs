@@ -36,9 +36,15 @@ public class ArenaController : MonoBehaviour
         _arenaHandler.SetupArena(newArena);   
     }
 
+
     public Vector2 GetNewPlayerPosition()
     {
         Vector2 pos = _currentArena.StartVector * _currentArena.Radius * _maxEdgeFactor;
         return pos;
+    }
+
+    public void CloseDownArena()
+    {
+        _arenaHandler.CloseArena();
     }
 }

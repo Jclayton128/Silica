@@ -175,7 +175,7 @@ public class PlayerHandler : MonoBehaviour
         } 
 
         _currentNode = newCurrentNode;
-        CurrentNodeChanged?.Invoke(_currentNode);
+        PlayerTransformChanged?.Invoke(_currentNode.transform);
 
         _blaster.HandleNodeChange();
         _shotgun.HandleNodeChange();
@@ -194,6 +194,13 @@ public class PlayerHandler : MonoBehaviour
     #endregion
 
     #region Current Server Management
+
+    public void ReturnToCurrentServer()
+    {
+        _currentNode = null;
+        PlayerTransformChanged?.Invoke(CurrentTransform);
+    }
+
     public void AdjustCurrentServer(ServerHandler newServerHandler)
     {
         ServerHandler oldServer = null;
@@ -205,13 +212,11 @@ public class PlayerHandler : MonoBehaviour
 
         _currentServer = newServerHandler;
         _currentServer.ConvertToCurrentServer();
-        //CurrentNodeChanged?.Invoke(_currentNode);
 
-        //_blaster.HandleNodeChange();
-        //_shotgun.HandleNodeChange();
+        //Enter the Server...
+        ServerController.Instance.EnterServerToArena();
 
-        //tell the node controller IOT update the current nodes list (for camera and spawning)
-        PlayerTransformChanged?.Invoke(_currentServer.transform);
+        PlayerTransformChanged?.Invoke(CurrentTransform);
     }
     #endregion
 
