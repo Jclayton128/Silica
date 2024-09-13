@@ -40,6 +40,9 @@ public class PlayerDataHolder : MonoBehaviour
     public float CurrentSoulCost => _currentSoulCost;
     private float _currentSoulCost = 1;
 
+    [SerializeField] private float _packetLifetime = 5;
+    public float PacketLifetime => _packetLifetime;
+
     // Start is called before the first frame update
     void Start()
     {

@@ -130,14 +130,13 @@ public class PlayerHandler : MonoBehaviour
         else
         {
             packet = Instantiate(PacketLibrary.Instance.GetPacketPrefab());
-            packet.gameObject.layer = 6;
+            packet.InitializePacket(_ownerIndex);
         }
 
-
+        packet.gameObject.layer = 6;
+        packet.ActivatePacket(_currentNode.transform.up * _pdh.CurrentSpeed, _pdh.PacketLifetime);
         packet.transform.position = _currentNode.transform.position;
-        packet.InitializePacket(
-            _currentNode.transform.up * _pdh.CurrentSpeed,
-            _ownerIndex);
+
     }
 
     private void HandleSecondaryClick_Servers()
@@ -146,13 +145,15 @@ public class PlayerHandler : MonoBehaviour
         Vector2 location = _currentServer.transform.position;
 
         if (packet) packet.DeactivatePacket();
+        else
+        {
+            packet = Instantiate(PacketLibrary.Instance.GetPacketPrefab());
+            packet.InitializePacket(_ownerIndex);
+        }
 
-        packet = Instantiate(PacketLibrary.Instance.GetPacketPrefab());
 
         packet.transform.position = _currentServer.transform.position;
-        packet.InitializePacket(
-            _currentServer.transform.up * _pdh.CurrentSpeed,
-            _ownerIndex);
+        packet.ActivatePacket(_currentServer.transform.up * _pdh.CurrentSpeed, _pdh.PacketLifetime);
         packet.gameObject.layer = 11;
     }
 

@@ -66,7 +66,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startingSpeed: 3
   _maxEnergy: 1
+  _maxSoul: 1
+  _startingSoulCost: 1
   _energyRegen: 0.2
+  _soulRegen: 2
 --- !u!114 &-1265509049078613102
 MonoBehaviour:
   m_ObjectHideFlags: 0
