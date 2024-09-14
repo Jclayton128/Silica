@@ -49,23 +49,23 @@ public class NodeController : MonoBehaviour
 
     #region Node Creation
 
-    public void SpawnStartingNode(int ownerIndex)
-    {
-        NodeHandler newNode;
-        newNode = Instantiate(NodeLibrary.Instance.GetNodePrefab());
+    //public void SpawnStartingNode(int ownerIndex)
+    //{
+    //    NodeHandler newNode;
+    //    newNode = Instantiate(NodeLibrary.Instance.GetNodePrefab());
 
-        _pos = ArenaController.Instance.GetNewPlayerPosition();
-        newNode.transform.position = _pos;
+    //    _pos = ArenaController.Instance.GetNewPlayerPosition();
+    //    newNode.transform.position = _pos;
 
-        newNode.ActivateNode(NodeHandler.NodeStates.Current,
-            NodeHandler.NodeTypes.Empty, //The node type should not be fixed
-            ownerIndex);
+    //    newNode.ActivateNode(NodeHandler.NodeStates.Current,
+    //        NodeHandler.NodeTypes.Empty, //The node type should not be fixed
+    //        ownerIndex);
 
-        _activatedNodes.Add(newNode);
-        //_currentNodes.Add(newNode);
-        //CurrentNodesUpdated?.Invoke(_currentNodesAscended);
+    //    _activatedNodes.Add(newNode);
+    //    //_currentNodes.Add(newNode);
+    //    //CurrentNodesUpdated?.Invoke(_currentNodesAscended);
 
-    }
+    //}
 
     public void SpawnNode(NodeHandler.NodeStates nodeState, NodeHandler.NodeTypes nodeType)
     {
@@ -86,7 +86,7 @@ public class NodeController : MonoBehaviour
             //Should check if proposed point is too close to existing nodes
             //_pos.y = CurrentNodesCentroid + UnityEngine.Random.Range(_yMin, _yMax);
             //_pos.x += UnityEngine.Random.Range(-_xSpan, _xSpan);
-            _pos = GenerateNodePosition();
+            _pos = GenerateRandomValidNodePosition();
 
             _availableNodes.Add(newNode);
         }
@@ -110,7 +110,7 @@ public class NodeController : MonoBehaviour
         return _currentLevel.PossibleNodes[rand];
     }
 
-    private Vector2 GenerateNodePosition()
+    private Vector2 GenerateRandomValidNodePosition()
     {
         List<Vector3> currentNodePositions = new List<Vector3>();
 
@@ -120,7 +120,7 @@ public class NodeController : MonoBehaviour
         }
 
         Vector2 pos = CUR.GetRandomPosWithinArenaAwayFromOtherPoints(Vector2.zero,
-            ArenaController.Instance.CurrentArenaFunctionalRadius,
+            PlayerController.Instance.CurrentPlayer.CurrentServer.Arena.ArenaFunctionalRadius,
             currentNodePositions, 1f);
 
 

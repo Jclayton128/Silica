@@ -16,6 +16,14 @@ PrefabInstance:
       propertyPath: NodeState
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1378184291008995926, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
+      propertyPath: _currentNodeType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378184291008995926, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
+      propertyPath: _firewallSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 13b1d96c7e50ddd4d9d5ad14c8d698b6, type: 2}
     - target: {fileID: 3749042804881257720, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

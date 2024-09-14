@@ -8,8 +8,8 @@ public class NodeHandler : MonoBehaviour, IDestroyable
 {
     public enum NodeStates {Current, Available, Used}
 
-    public enum NodeTypes {Empty, Speed, Might, Intelligence, Constitution, Wisdom, Mainframe,
-        Count}
+    public enum NodeTypes {Empty, Speed, Might, Intelligence, Constitution, Wisdom,
+        Mainframe, Starting, Count}
 
     //references
     SpriteRenderer _sr;
@@ -21,17 +21,25 @@ public class NodeHandler : MonoBehaviour, IDestroyable
 
     //settings
     [SerializeField] float _iconFadeTime = 0.5f;
+    [SerializeField] FirewallSettings _firewallSettings = null;
 
 
     //state
-    [SerializeField] private int _ownerIndex = 0;
     PlayerHandler _playerHandler;
     public bool HoldsPlayer => _playerHandler != null;
     private bool _isInitialized = false;
-    public NodeStates NodeState;// { get; private set; }
-    public NodeTypes NodeType;// { get; private set; }
+    public NodeStates NodeState => _currentNodeState;// { get; private set; }
+    private NodeStates _currentNodeState;
+    public NodeTypes NodeType => _currentNodeType;// { get; private set; }
+    [SerializeField]  NodeTypes _currentNodeType;
     Tween _iconFade;
 
+    private void Start()
+    {
+        Initialize();
+        SetupRingSpinners(_firewallSettings);
+        ActivateNode(NodeState, NodeType, 0);
+    }
 
     private void Initialize()
     {
@@ -54,16 +62,15 @@ public class NodeHandler : MonoBehaviour, IDestroyable
 
         if (nodeState == NodeStates.Current)
         {
-            ConvertToCurrentNode(ownerIndex);
+            ConvertToCurrentNode();
         }
         else if (nodeState == NodeStates.Available)
         {
-            _ownerIndex = 0;
             _sr.sprite = NodeLibrary.Instance.GetAvailableNodeSprite();
             _sr.color = ColorLibrary.Instance.AvailableColor;
         }
 
-        NodeType = nodeType;
+        _currentNodeType = nodeType;
         switch (nodeType)
         {
             case NodeTypes.Speed:
@@ -107,6 +114,13 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         //Setup other nuances for this node later in this method
     }
 
+    private void SetupRingSpinners(FirewallSettings firewallSettings)
+    {
+        _ring0.SetupRing(firewallSettings.ActiveSegments_0, firewallSettings.SpinRate_0);
+        _ring1.SetupRing(firewallSettings.ActiveSegments_1, firewallSettings.SpinRate_1);
+        _ring2.SetupRing(firewallSettings.ActiveSegments_2, firewallSettings.SpinRate_2);
+    }
+
     private void SetupRingSpinners()
     {
         if (NodeType == NodeTypes.Mainframe)
@@ -124,15 +138,14 @@ public class NodeHandler : MonoBehaviour, IDestroyable
 
     }
 
-    public void ConvertToCurrentNode(int ownerIndex)
+    public void ConvertToCurrentNode()
     {
-        _ownerIndex = ownerIndex;
-        NodeState = NodeStates.Current;
+        _currentNodeState = NodeStates.Current;
         _sr.sprite = NodeLibrary.Instance.GetCurrentNodeSprite();
-        _sr.color = ColorLibrary.Instance.PlayerColors[_ownerIndex -1];
+        _sr.color = ColorLibrary.Instance.PlayerColors[0];
 
         //tell the owningplayer that he now has a new current node
-        _playerHandler = PlayerController.Instance.GetPlayer(_ownerIndex);
+        _playerHandler = PlayerController.Instance.CurrentPlayer;
         _playerHandler.AdjustCurrentNode(this);
 
         NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
@@ -140,14 +153,12 @@ public class NodeHandler : MonoBehaviour, IDestroyable
 
     public void ConvertToUsedNode()
     {
-        NodeState = NodeStates.Used;
+        _currentNodeState = NodeStates.Used;
         _sr.sprite = NodeLibrary.Instance.GetUsedNodeSprite();
         AdjustRotation(Vector2.up);
         _sr.color = ColorLibrary.Instance.UsedColor;
 
         _playerHandler = null;
-        _ownerIndex = -1;
-
     }
 
     public void DeactivateNode()
@@ -174,12 +185,7 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         }
         else
         {
-            if (_ownerIndex > 0)
-            {
-                Debug.LogWarning("An owned node can't be captured!");
-                return;
-            }
-            else if (NodeType == NodeTypes.Mainframe)
+            if (NodeType == NodeTypes.Mainframe)
             {
                 //exit
                 ServerController.Instance.ExitServerFromArena();
@@ -189,14 +195,7 @@ public class NodeHandler : MonoBehaviour, IDestroyable
             }
             else if (NodeController.Instance.CheckIfNodeIsAvailable(this))
             {
-                //capture this node and make it the current node of the owning player
-                _ownerIndex = ph.OwnerIndex;
-
-                if (_ownerIndex > 0)
-                {
-                    ConvertToCurrentNode(_ownerIndex);
-                }
-
+                ConvertToCurrentNode();
                 ph.DeactivatePacket();
             }
 

@@ -16,6 +16,7 @@ public class ServerHandler : MonoBehaviour
 
     //settings
     [SerializeField] float _fadeTime = 1f;
+    [SerializeField] ArenaHandler _arenaPrefab = null;
 
     //state
     [SerializeField] ServerStates _serverState = ServerStates.Unvisited;
@@ -23,7 +24,8 @@ public class ServerHandler : MonoBehaviour
     public ServerTypes ServerType => _serverType;
     public ServerStates ServerState => _serverState;
     [SerializeField] bool _isHome = false;
-
+    ArenaHandler _activeArena;
+    public ArenaHandler Arena => _activeArena;
     Tween _srTween;
     Tween _iconTween;
     
@@ -36,6 +38,11 @@ public class ServerHandler : MonoBehaviour
     {
         _sr = GetComponent<SpriteRenderer>();
         _coll = GetComponent<Collider2D>();
+    }
+
+    private void Start()
+    {
+        ServerController.Instance.RegisterServer(this);
     }
 
     public void SetupServer(ServerStates state, ServerTypes type, bool isHome)
@@ -88,6 +95,21 @@ public class ServerHandler : MonoBehaviour
 
 
         }
+    }
+
+    public void EnterArena()
+    {
+        if (_activeArena) Destroy(_activeArena);
+
+        _activeArena = Instantiate(_arenaPrefab);
+        _activeArena.SetupArena();
+    }
+
+
+    public void ExitArena()
+    {
+        _activeArena.CloseArena();
+        //if (_activeArena) Destroy(_activeArena);
     }
 
     #region Server Visuals

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &1071434802805638602
+--- !u!1001 &556935345994660883
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,15 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1378184291008995926, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
       propertyPath: NodeType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1378184291008995926, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
-      propertyPath: NodeState
-      value: 1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1378184291008995926, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
       propertyPath: _currentNodeType
-      value: 1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1378184291008995926, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
       propertyPath: _firewallSettings
@@ -64,9 +60,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5931819514872233643, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 36e25fac3939d154da3dcf6217f157ba, type: 3}
     - target: {fileID: 9119383532042460655, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
       propertyPath: m_Name
-      value: Node_Speed
+      value: Node_Starting
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

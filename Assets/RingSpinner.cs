@@ -40,6 +40,16 @@ public class RingSpinner : MonoBehaviour
         }
     }
 
+    public void SetupRing(bool[] activeSegments, float spinRate)
+    {
+        _spinRate = spinRate;
+
+        for (int i = 0; i < activeSegments.Length; i++)
+        {
+            _segments[i].gameObject.SetActive(activeSegments[i]);
+        }
+    }
+
     public void SetupRing(bool isActive, float spinRate)
     {
         if (!isActive)

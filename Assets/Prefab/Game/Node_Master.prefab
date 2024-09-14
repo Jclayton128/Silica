@@ -374,7 +374,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b82ec2a248d446544abdc35adebf200f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aaaa1199df2b9e54b9821669341e82fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -403,6 +403,7 @@ MonoBehaviour:
   _ring1: {fileID: 7048976308461116924}
   _ring2: {fileID: 5897850843589682694}
   _iconFadeTime: 2
+  _firewallSettings: {fileID: 0}
   _ownerIndex: 0
   NodeState: 0
   NodeType: 0

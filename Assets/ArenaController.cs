@@ -17,8 +17,8 @@ public class ArenaController : MonoBehaviour
     [SerializeField] float _arenaRadius = 6;
 
     //state
-    private Arena _currentArena;
-    public float CurrentArenaFunctionalRadius => _currentArena.Radius * _maxEdgeFactor;
+    //private Arena _currentArena;
+    //public float CurrentArenaFunctionalRadius => _currentArena.Radius * _maxEdgeFactor;
    
 
     private void Awake()
@@ -27,24 +27,24 @@ public class ArenaController : MonoBehaviour
     }
 
 
-    public void CreateNewCurrentArena()
-    {
-        Arena newArena = new Arena(_arenaRadius,
-            UnityEngine.Random.insideUnitCircle.normalized,
-            UnityEngine.Random.ColorHSV(0,1, 0.2f, 1f, 0.2f, 1f));
-        _currentArena = newArena;
-        _arenaHandler.SetupArena(newArena);   
-    }
+    //public void CreateNewCurrentArena()
+    //{
+    //    Arena newArena = new Arena(_arenaRadius,
+    //        UnityEngine.Random.insideUnitCircle.normalized,
+    //        UnityEngine.Random.ColorHSV(0,1, 0.2f, 1f, 0.2f, 1f));
+    //    _currentArena = newArena;
+    //    _arenaHandler.SetupArena(newArena);   
+    //}
 
 
-    public Vector2 GetNewPlayerPosition()
-    {
-        Vector2 pos = _currentArena.StartVector * _currentArena.Radius * _maxEdgeFactor;
-        return pos;
-    }
+    //public Vector2 GetNewPlayerPosition()
+    //{
+    //    Vector2 pos = _currentArena.StartVector * _currentArena.Radius * _maxEdgeFactor;
+    //    return pos;
+    //}
 
-    public void CloseDownArena()
-    {
-        _arenaHandler.CloseArena();
-    }
+    //public void CloseDownArena()
+    //{
+    //    _arenaHandler.CloseArena();
+    //}
 }
