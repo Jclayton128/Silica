@@ -59,14 +59,18 @@ public class ServerController : MonoBehaviour
     {
         HideAllServersWhenEnteringAnArena();
 
-        CameraController.Instance.ZoomMicro();
+        //CameraController.Instance.ZoomMicro();
+
+        PlayerController.Instance.CurrentPlayer.CurrentServer.EnterArena();
+        CameraController.Instance.ZoomIn_Instant();
 
     }
 
     private void HandleZoomMicroCompleted()
     {
-        PlayerController.Instance.CurrentPlayer.CurrentServer.EnterArena();
 
+        //PlayerController.Instance.CurrentPlayer.CurrentServer.EnterArena();
+        //CameraController.Instance.ZoomIn_Instant();
 
         //ArenaController.Instance.CreateNewCurrentArena();
         //Find the starting node for the arena and make it the player's current node
@@ -75,14 +79,13 @@ public class ServerController : MonoBehaviour
 
     public void ExitServerFromArena()
     {
-        Debug.Log("Exiting Arena");
 
         //Close the arena borders
         //Disable all nodes
         //reveal all servers
 
         CameraController.Instance.ZoomIn();
-        NodeController.Instance.DespawnAllNodes();
+        //NodeController.Instance.DespawnAllNodes();
         PlayerController.Instance.CurrentPlayer.CurrentServer.ExitArena();
         //ArenaController.Instance.CloseDownArena();
         ShowAllServersWhenExitingAnArena();

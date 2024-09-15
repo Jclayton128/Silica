@@ -22,10 +22,10 @@ public class GameController : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
-        NodeController.Instance.CurrentNodesUpdated += CheckForLimiterSpawn;
-    }
+    //private void Start()
+    //{
+    //    NodeController.Instance.CurrentNodesUpdated += CheckForLimiterSpawn;
+    //}
 
     public bool RequestEnterEditorMode()
     {

@@ -25,6 +25,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1378184291008995926, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
+      propertyPath: _currentNodeState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378184291008995926, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
       propertyPath: _firewallSettings
       value: 
       objectReference: {fileID: 11400000, guid: e16960baf787fae4cb93570a99c16505, type: 2}

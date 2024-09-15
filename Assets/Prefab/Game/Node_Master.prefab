@@ -397,6 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32eae34a453bbb84c82e421c826b5e2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sr: {fileID: 5931819514872233643}
   _sr_Icon: {fileID: 8108983932497158781}
   _icon: {fileID: 5811203406763903640}
   _ring0: {fileID: 7173662142375673132}
@@ -404,9 +405,8 @@ MonoBehaviour:
   _ring2: {fileID: 5897850843589682694}
   _iconFadeTime: 2
   _firewallSettings: {fileID: 0}
-  _ownerIndex: 0
-  NodeState: 0
-  NodeType: 0
+  _currentNodeState: 1
+  _currentNodeType: 0
 --- !u!58 &4369593037292985734
 CircleCollider2D:
   m_ObjectHideFlags: 0

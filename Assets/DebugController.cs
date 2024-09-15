@@ -15,20 +15,20 @@ public class DebugController : MonoBehaviour
 
         }
 
-        if (Input.GetKeyUp(KeyCode.P))
-        {
-            GenerateAvailableNode();
-        }
+        //if (Input.GetKeyUp(KeyCode.P))
+        //{
+        //    GenerateAvailableNode();
+        //}
 
         if (Input.GetKeyUp(KeyCode.B))
         {
             GenerateTestBug();
         }
 
-        if (Input.GetKeyUp(KeyCode.M))
-        {
-            GenerateMainframeNode();
-        }
+        //if (Input.GetKeyUp(KeyCode.M))
+        //{
+        //    GenerateMainframeNode();
+        //}
 
         if (Input.GetKeyUp(KeyCode.Tab))
         {
@@ -40,16 +40,16 @@ public class DebugController : MonoBehaviour
         }
     }
 
-    private void GenerateAvailableNode()
-    {
-        NodeController.Instance.SpawnNode(NodeHandler.NodeStates.Available);
-    }
+    //private void GenerateAvailableNode()
+    //{
+    //    NodeController.Instance.SpawnNode(NodeHandler.NodeStates.Available);
+    //}
 
-    private void GenerateMainframeNode()
-    {
-        NodeController.Instance.SpawnNode(NodeHandler.NodeStates.Available,
-            NodeHandler.NodeTypes.Mainframe);
-    }
+    //private void GenerateMainframeNode()
+    //{
+    //    NodeController.Instance.SpawnNode(NodeHandler.NodeStates.Available,
+    //        NodeHandler.NodeTypes.Mainframe);
+    //}
 
     private void StartNewRun()
     {

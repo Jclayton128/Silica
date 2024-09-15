@@ -72,7 +72,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2226794236980748825, guid: d115e203b6f5e9e4fae2bea3c4e51baf, type: 3}
       propertyPath: _radius
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3387799780266720655, guid: d115e203b6f5e9e4fae2bea3c4e51baf, type: 3}
       propertyPath: m_Name

@@ -17,57 +17,54 @@ public class ArenaHandler : MonoBehaviour
     //state
     ParticleSystem.MainModule _edgePSmain;
     ParticleSystem.ShapeModule _edgePSshape;
-    List<NodeHandler> _allNodes;
-    List<NodeHandler> starts = new List<NodeHandler>();
+    [SerializeField] List<NodeHandler> _allNodes;
+    [SerializeField] List<NodeHandler> _starts = new List<NodeHandler>();
+    [SerializeField] List<NodeHandler> _availableNodes = new List<NodeHandler>();
+
 
     public float ArenaFunctionalRadius => _radius * _maxEdgeFactor;
 
 
 
-    private void Start()
+    public void SetupArena()
     {
-        if (_edgePS) 
+        if (_edgePS)
         {
             _edgePSmain = _edgePS.main;
             _edgePSshape = _edgePS.shape;
         }
 
-        _edgePS.Pause(true);
-    }
-
-    public void SetupArena()
-    {
         _edgePSmain.startColor = _startColor;
         _edgePSshape.radius = _radius;
         _edgePS.Play(true);
 
         _allNodes = GatherNodes();
+        ActivateStartingNode();
     }
 
     public List<NodeHandler> GatherNodes()
     {
-        List<NodeHandler> nodes = new List<NodeHandler>();
-
         List<NodeHandler> mainframes = new List<NodeHandler>();
 
 
         foreach (var node in gameObject.GetComponentsInChildren<NodeHandler>())
         {
-            nodes.Add(node);
+            _allNodes.Add(node);
+            _availableNodes.Add(node);
             if (node.NodeType == NodeHandler.NodeTypes.Mainframe)
             {
                 mainframes.Add(node);
             }
             if (node.NodeType == NodeHandler.NodeTypes.Starting)
             {
-                starts.Add(node);
+                _starts.Add(node);
             }
         }
-        Debug.Log($"Found {nodes.Count} nodes");
+        Debug.Log($"Found {_allNodes.Count} nodes");
         if (mainframes.Count == 0) Debug.LogWarning($"Hey, I found no mainframes to exit!");
-        if (starts.Count == 0) Debug.LogWarning($"Hey, I found no starting nodes");
+        if (_starts.Count == 0) Debug.LogWarning($"Hey, I found no starting nodes");
 
-        return nodes;
+        return _allNodes;
     }
 
     public void CloseArena()
@@ -79,7 +76,21 @@ public class ArenaHandler : MonoBehaviour
 
     public void ActivateStartingNode()
     {
-        starts[0].ConvertToCurrentNode();
+        _starts[0].ConvertToCurrentNode();
     }
 
+    public void RemoveAvailableNode(NodeHandler node)
+    {
+        _availableNodes.Remove(node);
+    }
+
+    public void AddAvailableNode(NodeHandler node)
+    {
+        _availableNodes.Add(node);
+    }
+
+    public bool CheckIsIfNodeIsAvailable(NodeHandler node)
+    {
+        return _availableNodes.Contains(node);
+    }
 }

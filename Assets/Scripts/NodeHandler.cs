@@ -12,7 +12,7 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         Mainframe, Starting, Count}
 
     //references
-    SpriteRenderer _sr;
+    [SerializeField] SpriteRenderer _sr = null;
     [SerializeField] SpriteRenderer _sr_Icon = null;
     [SerializeField] Transform _icon = null;
     [SerializeField] RingSpinner _ring0 = null;
@@ -29,10 +29,11 @@ public class NodeHandler : MonoBehaviour, IDestroyable
     public bool HoldsPlayer => _playerHandler != null;
     private bool _isInitialized = false;
     public NodeStates NodeState => _currentNodeState;// { get; private set; }
-    private NodeStates _currentNodeState;
+    [SerializeField] private NodeStates _currentNodeState = NodeStates.Available;
     public NodeTypes NodeType => _currentNodeType;// { get; private set; }
     [SerializeField]  NodeTypes _currentNodeType;
-    Tween _iconFade;
+    Tween _iconFadeTween;
+
 
     private void Start()
     {
@@ -60,10 +61,11 @@ public class NodeHandler : MonoBehaviour, IDestroyable
             Initialize();
         }
 
-        if (nodeState == NodeStates.Current)
-        {
-            ConvertToCurrentNode();
-        }
+        //if (nodeState == NodeStates.Current)
+        //{
+        //    ConvertToCurrentNode();
+        //}
+
         else if (nodeState == NodeStates.Available)
         {
             _sr.sprite = NodeLibrary.Instance.GetAvailableNodeSprite();
@@ -98,14 +100,14 @@ public class NodeHandler : MonoBehaviour, IDestroyable
                 break;
         }
 
-        _iconFade.Kill();
+        _iconFadeTween.Kill();
         if (CameraController.Instance.IsZoomedIn)
         {
-            _iconFade = _sr_Icon.DOFade(1, 0.01f);
+            _iconFadeTween = _sr_Icon.DOFade(1, 0.01f);
         }
         else
         {
-            _iconFade = _sr_Icon.DOFade(0, 0.01f);
+            _iconFadeTween = _sr_Icon.DOFade(0, 0.01f);
         }
 
 
@@ -143,12 +145,13 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         _currentNodeState = NodeStates.Current;
         _sr.sprite = NodeLibrary.Instance.GetCurrentNodeSprite();
         _sr.color = ColorLibrary.Instance.PlayerColors[0];
+        PlayerController.Instance.CurrentArena.RemoveAvailableNode(this);
 
         //tell the owningplayer that he now has a new current node
         _playerHandler = PlayerController.Instance.CurrentPlayer;
         _playerHandler.AdjustCurrentNode(this);
 
-        NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
+        //NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
     }
 
     public void ConvertToUsedNode()
@@ -158,13 +161,14 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         AdjustRotation(Vector2.up);
         _sr.color = ColorLibrary.Instance.UsedColor;
 
+        PlayerController.Instance.CurrentArena.RemoveAvailableNode(this);
+
         _playerHandler = null;
     }
 
     public void DeactivateNode()
     {
-
-        NodeController.Instance.DespawnNode(this);
+        //NodeController.Instance.DespawnNode(this);
 
         gameObject.SetActive(false);
     }
@@ -193,7 +197,7 @@ public class NodeHandler : MonoBehaviour, IDestroyable
                 ph.DeactivatePacket();
 
             }
-            else if (NodeController.Instance.CheckIfNodeIsAvailable(this))
+            else if (PlayerController.Instance.CurrentArena.CheckIsIfNodeIsAvailable(this))
             {
                 ConvertToCurrentNode();
                 ph.DeactivatePacket();
@@ -227,13 +231,18 @@ public class NodeHandler : MonoBehaviour, IDestroyable
 
     private void HandleZoomingIn()
     {
-        _iconFade.Kill();
-        _iconFade = _sr_Icon.DOFade(1, _iconFadeTime);
+        _iconFadeTween.Kill();
+        _iconFadeTween = _sr_Icon.DOFade(1, _iconFadeTime);
     }
 
     private void HandleZoomingOut()
     {
-        _iconFade.Kill();
-        _iconFade = _sr_Icon.DOFade(0, _iconFadeTime*4);
+        _iconFadeTween.Kill();
+        _iconFadeTween = _sr_Icon.DOFade(0, _iconFadeTime*4);
+    }
+
+    private void OnDestroy()
+    {
+        _iconFadeTween.Kill();
     }
 }

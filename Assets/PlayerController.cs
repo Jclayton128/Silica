@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     //state
     [SerializeField] List<PlayerHandler> _playerHandlers = new List<PlayerHandler>();
     public PlayerHandler CurrentPlayer { get; private set; }
+
+    public ArenaHandler CurrentArena => CurrentPlayer.CurrentServer.Arena;
     private void Awake()
     {
         Instance = this;

@@ -48,7 +48,7 @@ public class CameraController : MonoBehaviour
         if (!_cam) _cam = Camera.main;
 
         GameController.Instance.RunStarted += HandleRunStarted;
-        ZoomIn_Editor();
+        ZoomIn_Instant();
     }
 
     private void HandleRunStarted()
@@ -71,13 +71,13 @@ public class CameraController : MonoBehaviour
     }
 
     [ContextMenu("Zoom Out (Editor)")]
-    public void ZoomOut_Editor()
+    public void ZoomOut_Instant()
     {
         _cam.orthographicSize = _zoomScaleOut;
     }
 
     [ContextMenu("Zoom In (Editor)")]
-    public void ZoomIn_Editor()
+    public void ZoomIn_Instant()
     {
         _cam.orthographicSize = _zoomScaleIn;
     }
