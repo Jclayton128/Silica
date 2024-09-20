@@ -68,8 +68,13 @@ MonoBehaviour:
   _maxEnergy: 1
   _maxSoul: 1
   _startingSoulCost: 1
+  _currentSpeed: 0
+  _currentEnergy: 0
+  _currentSoul: 0
   _energyRegen: 0.2
   _soulRegen: 2
+  _packetLifetime_nodes: 1.5
+  _packetLifetime_servers: 1
 --- !u!114 &-1265509049078613102
 MonoBehaviour:
   m_ObjectHideFlags: 0

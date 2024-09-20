@@ -20,13 +20,13 @@ public class PlayerDataHolder : MonoBehaviour
     bool _isAlive = true;
 
     public float CurrentSpeed => _currentSpeed;
-    private float _currentSpeed;
+    [SerializeField] private float _currentSpeed;
 
     public float CurrentEnergy => _currentEnergy;
-    private float _currentEnergy;
+    [SerializeField] private float _currentEnergy;
 
     public float CurrentSoul => _currentSoul;
-    private float _currentSoul;
+    [SerializeField] private float _currentSoul;
 
 
     public float EnergyRegen => _energyRegen;
@@ -40,8 +40,11 @@ public class PlayerDataHolder : MonoBehaviour
     public float CurrentSoulCost => _currentSoulCost;
     private float _currentSoulCost = 1;
 
-    [SerializeField] private float _packetLifetime = 5;
-    public float PacketLifetime => _packetLifetime;
+    [SerializeField] private float _packetLifetime_nodes = 5;
+    public float NodePacketLifetime => _packetLifetime_nodes;
+
+    [SerializeField] private float _packetLifetime_servers = 5;
+    public float ServersPacketLifetime => _packetLifetime_servers;
 
     // Start is called before the first frame update
     void Start()

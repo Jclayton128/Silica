@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ICEHandler : MonoBehaviour
+public abstract class Ice : MonoBehaviour
 {
     public enum IceTypes { Undefined, DriftAndDestroy, Tracer, SentryTurret }
 

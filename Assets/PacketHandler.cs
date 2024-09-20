@@ -10,9 +10,11 @@ public class PacketHandler : MonoBehaviour, IDestroyable
     ParticleSystem _ps;
 
     //state
+    float _startingLifetime;
     float _lifetimeRemaining;
     int _ownerIndex = -1;
     public int OwnerIndex => _ownerIndex;
+    Color _color;
 
     public void InitializePacket(int ownerIndex)
     {
@@ -22,6 +24,7 @@ public class PacketHandler : MonoBehaviour, IDestroyable
         _ps = GetComponent<ParticleSystem>();
         _ownerIndex = ownerIndex;
         _sr.color = ColorLibrary.Instance.PlayerColors[_ownerIndex -1];
+        _color = _sr.color;
     }
 
     public void ActivatePacket(Vector2 velocity, float lifetime)
@@ -36,8 +39,16 @@ public class PacketHandler : MonoBehaviour, IDestroyable
         transform.up = velocity;
 
         _lifetimeRemaining = lifetime;
+        _startingLifetime = lifetime;
     }
 
+    private void Update()
+    {
+        _color.a = _lifetimeRemaining / _startingLifetime;
+        _sr.color = _color;
+        _lifetimeRemaining -= Time.deltaTime;
+        if (_lifetimeRemaining <= 0) DeactivatePacket();
+    }
 
     public void DeactivatePacket()
     {
@@ -45,8 +56,8 @@ public class PacketHandler : MonoBehaviour, IDestroyable
         _coll.enabled = false;
         _sr.enabled = false;
         _ps.Stop();
-        //Destroy(gameObject, 3);
         enabled = false;
+        Destroy(gameObject, 3);
     }
 
     public void HandleZeroHealth()

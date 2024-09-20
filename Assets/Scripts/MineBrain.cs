@@ -24,15 +24,17 @@ public class MineBrain : MonoBehaviour, IDestroyable
     [SerializeField] Color _colorOnceDetect = Color.cyan;
     [SerializeField] float _seekSpeed = 1f;
     [SerializeField] PuffHandler _explodePuff = null;
+    [SerializeField] bool _willTargetPackets = true;
+    [SerializeField] bool _willTargetCurrentNode = true;
 
     //state
-    IceMind_Drift _maker;
+    Ice_DriftLayer _maker;
     Transform _targetTransform;
     Vector2 _targetVec;
     float _timeForNextScan;
-    int _layerMask_PacketNode = (1 << 6) | (1 << 7);
+    int _layerMask_PacketNode;
 
-    public void Initialize(Vector2 velocity, IceMind_Drift maker)
+    public void Initialize(Vector2 velocity, Ice_DriftLayer maker)
     {
         _dh = GetComponent<DamageHandler>();
         _dh.DamageDealt += HandleZeroHealth;
@@ -44,6 +46,24 @@ public class MineBrain : MonoBehaviour, IDestroyable
         _rb.drag = UnityEngine.Random.Range(_minDrag, _maxDrag);
         _maker = maker;
         _timeForNextScan = _timeBetweenScans;
+
+        if (_willTargetCurrentNode && _willTargetPackets)
+        {
+            _layerMask_PacketNode = (1 << 6) | (1 << 7);
+        }
+        else if (!_willTargetCurrentNode && _willTargetPackets)
+        {
+            _layerMask_PacketNode = (1 << 6);
+        }
+        else if (_willTargetCurrentNode && !_willTargetPackets)
+        {
+            _layerMask_PacketNode = (1 << 7);
+        }
+        else
+        {
+            _layerMask_PacketNode = 1;
+        }
+
     }
 
     private void Update()

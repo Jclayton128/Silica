@@ -4957,6 +4957,8 @@ MonoBehaviour:
   _colorOnceDetect: {r: 1, g: 0.8777145, b: 0, a: 1}
   _seekSpeed: 1
   _explodePuff: {fileID: 1073883828404535855, guid: c170092e83f7ed44fa1ac2f4a8471c7c, type: 3}
+  _willTargetPackets: 1
+  _willTargetCurrentNode: 0
 --- !u!50 &6253179595653533228
 Rigidbody2D:
   serializedVersion: 4
