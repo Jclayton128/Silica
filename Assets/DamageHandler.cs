@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DamageHandler : MonoBehaviour
 {
+    public Action DamageDealt;
     PoolHandler _ph;
 
     [SerializeField] float _damage = 1;
@@ -37,7 +38,8 @@ public class DamageHandler : MonoBehaviour
             }
             else
             {
-                _ph.DeactivatePoolObject();
+                DamageDealt?.Invoke();
+                if (_ph) _ph.DeactivatePoolObject();
             }
         }
     }

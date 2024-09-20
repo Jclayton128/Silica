@@ -1149,7 +1149,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2062415811981050198, guid: 307ceb84945e7eb4fac6fe8cd9ba1450, type: 3}
       propertyPath: m_Name
-      value: Server_Start
+      value: Server_Home
       objectReference: {fileID: 0}
     - target: {fileID: 2260720374444311476, guid: 307ceb84945e7eb4fac6fe8cd9ba1450, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1195,6 +1195,10 @@ PrefabInstance:
       propertyPath: _arena
       value: 
       objectReference: {fileID: 3324874524340042962, guid: ffd5f4f62e46cd74da097fff16a8cd47, type: 3}
+    - target: {fileID: 2349917289995162263, guid: 307ceb84945e7eb4fac6fe8cd9ba1450, type: 3}
+      propertyPath: _arenaPrefab
+      value: 
+      objectReference: {fileID: 3461786940407863222, guid: 8bcbd279eec81474f9417f094cc5f959, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PacketHandler : MonoBehaviour
+public class PacketHandler : MonoBehaviour, IDestroyable
 {
     Rigidbody2D _rb;
     Collider2D _coll;
@@ -47,5 +47,15 @@ public class PacketHandler : MonoBehaviour
         _ps.Stop();
         //Destroy(gameObject, 3);
         enabled = false;
+    }
+
+    public void HandleZeroHealth()
+    {
+        DeactivatePacket();
+    }
+
+    public void HandleHealthDrop(float factorRemaining)
+    {
+        //
     }
 }

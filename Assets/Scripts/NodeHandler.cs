@@ -150,6 +150,7 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         //tell the owningplayer that he now has a new current node
         _playerHandler = PlayerController.Instance.CurrentPlayer;
         _playerHandler.AdjustCurrentNode(this);
+        gameObject.layer = 7;
 
         //NodeController.Instance.RemoveNodeFromAvailableNodeList(this);
     }
@@ -164,6 +165,7 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         PlayerController.Instance.CurrentArena.RemoveAvailableNode(this);
 
         _playerHandler = null;
+        gameObject.layer = 11;
     }
 
     public void DeactivateNode()
@@ -184,7 +186,7 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         PacketHandler ph;
         if (!collision.TryGetComponent<PacketHandler>(out ph))
         {
-            Debug.LogWarning("triggered collision with a non-packet!");
+            //Debug.LogWarning("triggered collision with a non-packet!");
             return;
         }
         else

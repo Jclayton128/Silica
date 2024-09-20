@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ArenaHandler : MonoBehaviour
 {
+    public Action ArenaShuttingDown;
+
     //scene refs
     [SerializeField] ParticleSystem _edgePS = null;
 
@@ -60,7 +63,7 @@ public class ArenaHandler : MonoBehaviour
                 _starts.Add(node);
             }
         }
-        Debug.Log($"Found {_allNodes.Count} nodes");
+        //Debug.Log($"Found {_allNodes.Count} nodes");
         if (mainframes.Count == 0) Debug.LogWarning($"Hey, I found no mainframes to exit!");
         if (_starts.Count == 0) Debug.LogWarning($"Hey, I found no starting nodes");
 
@@ -70,6 +73,7 @@ public class ArenaHandler : MonoBehaviour
     public void CloseArena()
     {
         //TODO maybe have some kind of cinematic zoom in on the conquered node?
+        ArenaShuttingDown?.Invoke();
         Destroy(gameObject);
         _edgePS.Stop();
     }

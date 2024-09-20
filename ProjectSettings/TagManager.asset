@@ -11,12 +11,12 @@ TagManager:
   - 
   - Water
   - UI
-  - Node_Packet
-  - Node
+  - PacketForNodes
+  - NodeWithPlayer
   - Weaponry
   - Damagable
-  - Limiter
-  - Server_Packet
+  - NodeWithoutPlayer
+  - PacketForServer
   - Server
   - 
   - 
