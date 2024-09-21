@@ -245,6 +245,7 @@ public class NodeHandler : MonoBehaviour, IDestroyable
 
     private void OnDestroy()
     {
+
         _iconFadeTween.Kill();
     }
 }

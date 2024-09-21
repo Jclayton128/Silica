@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -1265509049078613102}
   - component: {fileID: 7345495205441012557}
   - component: {fileID: 8831722850285743249}
+  - component: {fileID: 8042458329751610958}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -65,16 +66,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startingSpeed: 3
+  _startingRange: 4
   _maxEnergy: 1
   _maxSoul: 1
   _startingSoulCost: 1
   _currentSpeed: 0
+  _currentRange: 0
   _currentEnergy: 0
   _currentSoul: 0
   _energyRegen: 0.2
   _soulRegen: 2
-  _packetLifetime_nodes: 1.5
-  _packetLifetime_servers: 1
 --- !u!114 &-1265509049078613102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,3 +128,18 @@ MonoBehaviour:
   _energyCostPerShot: 0.2
   _timeUntilNextShot: 0
   _isFiring: 0
+--- !u!114 &8042458329751610958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964083891707838149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0b3cc604779d24ebce165de6ee863a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _linkPrefab: {fileID: 7900049767398659709, guid: 40d455d7e1bf7f24ba1057d9fb2490ec, type: 3}
+  _nodesInChain: []
+  _activeLinks: []

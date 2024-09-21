@@ -9,6 +9,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2904123532626585844, guid: 6e6dbd9474087f74a93fd1b010b4d1ac, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2904123532626585844, guid: 6e6dbd9474087f74a93fd1b010b4d1ac, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1158896247
+      objectReference: {fileID: 0}
+    - target: {fileID: -2904123532626585844, guid: 6e6dbd9474087f74a93fd1b010b4d1ac, type: 3}
       propertyPath: m_RenderAlignment
       value: 3
       objectReference: {fileID: 0}

@@ -9,18 +9,25 @@ public class PlayerDataHolder : MonoBehaviour
     public Action<float> CurrentSoulChanged;
     
     //Settings
+    [Header("Start Settings")]
     [SerializeField] float _startingSpeed = 3;
+    [SerializeField] float _startingRange = 3;
     [SerializeField] float _maxEnergy = 1;
     [SerializeField] float _maxSoul = 1;
     [SerializeField] float _startingSoulCost = 1;
 
 
     //state
+
     public bool IsAlive => _isAlive;
+
     bool _isAlive = true;
 
     public float CurrentSpeed => _currentSpeed;
+    [Header("Current Params")]
     [SerializeField] private float _currentSpeed;
+
+    [SerializeField] private float _currentRange;
 
     public float CurrentEnergy => _currentEnergy;
     [SerializeField] private float _currentEnergy;
@@ -40,16 +47,14 @@ public class PlayerDataHolder : MonoBehaviour
     public float CurrentSoulCost => _currentSoulCost;
     private float _currentSoulCost = 1;
 
-    [SerializeField] private float _packetLifetime_nodes = 5;
-    public float NodePacketLifetime => _packetLifetime_nodes;
-
-    [SerializeField] private float _packetLifetime_servers = 5;
-    public float ServersPacketLifetime => _packetLifetime_servers;
+    public float PacketLifetime => _currentRange/_currentSpeed;
+    //public float ServersPacketLifetime => _currentRange / _currentSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
         _currentSpeed = _startingSpeed;
+        _currentRange = _startingRange;
         _currentEnergy = _maxEnergy;
         _currentSoul = _maxSoul;
     }
