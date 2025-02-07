@@ -79,7 +79,7 @@ public class DebugController : MonoBehaviour
         bool canDo = GameController.Instance.RequestEnterEditorMode();
         if (canDo)
         {
-            _editorCanvas.ShowPanel();
+            _editorCanvas.HidePanel();
         }
     }
 }

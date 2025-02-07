@@ -21,6 +21,7 @@ public class ArenaHandler : MonoBehaviour
     ParticleSystem.MainModule _edgePSmain;
     ParticleSystem.ShapeModule _edgePSshape;
     [SerializeField] List<NodeHandler> _allNodes;
+    public List<NodeHandler> AllNodes => _allNodes;
     [SerializeField] List<NodeHandler> _starts = new List<NodeHandler>();
     [SerializeField] List<NodeHandler> _availableNodes = new List<NodeHandler>();
 
