@@ -63,7 +63,7 @@ public class SegmentHandler : MonoBehaviour, IDestroyable
         PacketHandler ph;
         if (!collision.TryGetComponent<PacketHandler>(out ph))
         {
-            Debug.LogWarning("triggered collision with a non-packet!");
+            //Debug.LogWarning("triggered collision with a non-packet!");
             return;
         }
         ph.DeactivatePacket();
