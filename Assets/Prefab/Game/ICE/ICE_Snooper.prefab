@@ -52,6 +52,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5410450506320984671, guid: ff8143d97cf25a84e809e2cb0fe6107f, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410450506320984671, guid: ff8143d97cf25a84e809e2cb0fe6107f, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410450506320984671, guid: ff8143d97cf25a84e809e2cb0fe6107f, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8010685416249245145, guid: ff8143d97cf25a84e809e2cb0fe6107f, type: 3}
       propertyPath: m_Name
       value: ICE_Snooper
@@ -81,3 +93,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5550d624b21954488bc1542233a806f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _iceType: 0
+  _sr: {fileID: 4214695012039757028}
+  _moveSpeed_Max: 1
+  _moveAccel: 2
+  _timeToScanPosition: 3
+  _scanRange: 1.1
+  _color_Unalert: {r: 0.98490566, g: 0.95247775, b: 0.57793516, a: 1}
+  _color_Alert: {r: 1, g: 0, b: 0, a: 1}
+  _unvisitedNodes: []
+  _moveSpeed_Current: 0
+--- !u!212 &4214695012039757028 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5410450506320984671, guid: ff8143d97cf25a84e809e2cb0fe6107f, type: 3}
+  m_PrefabInstance: {fileID: 8171872618730075835}
+  m_PrefabAsset: {fileID: 0}

@@ -9,18 +9,28 @@ public class ICE_Snooper : Ice, IDestroyable
     //If it detects the player nearby, it becomes Alert.
     //If Alert, it orbits the player while firing bullets until no longer Alert.
 
+    //refs
+    [SerializeField] SpriteRenderer _sr = null;
+
     //settings
-    [SerializeField] float _moveSpeed = 1f;
-    float _timeToScanPosition = 2f;
-    float _scanRange = 2f;
+    [SerializeField] float _moveSpeed_Max = 1f;
+    [SerializeField] float _moveAccel = 0.4f;
+    [SerializeField] float _timeToScanPosition = 2f;
+    [SerializeField] float _scanRange = 2f;
+    [SerializeField] Color _color_Unalert = Color.yellow;
+    [SerializeField] Color _color_Alert = Color.red;
+    [SerializeField] float _alertScaling = 2f;
 
     //State
-    [SerializeField] List<NodeHandler> _unvisitedNodes = new List<NodeHandler>();
+     List<NodeHandler> _unvisitedNodes = new List<NodeHandler>();
     Vector3 _targetPosition = Vector2.zero;
     Vector3 _dir;
-    float _moveFactor;
+    float _moveSpeed_Current;
     Vector3 _movement;
     float _timeAtTargetPosition;
+    [SerializeField] float _playerDist;
+    float _alertFactor;
+    bool _hasDetectedPlayer = false;
 
     protected override void Start()
     {
@@ -30,9 +40,8 @@ public class ICE_Snooper : Ice, IDestroyable
 
     private void ResetUnvisitedNodes()
     {
-
         _unvisitedNodes = new List<NodeHandler>(PlayerController.Instance.CurrentArena.AllNodes);
-        //Debug.Log($"resetting nodes. Now have {_unvisitedNodes.Count} nodes to visit");
+        //pDebug.Log($"resetting nodes. Now have {_unvisitedNodes.Count} nodes to visit");
     }
 
     private Vector2 GetNextNodeToVisit()
@@ -54,14 +63,20 @@ public class ICE_Snooper : Ice, IDestroyable
 
     private void Update()
     {
-        if (_targetPosition.magnitude > Mathf.Epsilon)
-        {
-            _dir = (_targetPosition - transform.position);
-            //_moveFactor = Mathf.InverseLerp(0, 3f, )
-            _movement = _dir.normalized * _moveSpeed * Time.deltaTime;
-            transform.position += _movement;
+        _dir = (_targetPosition - transform.position);
+        _moveSpeed_Current = Mathf.Clamp(_moveSpeed_Current, 0, _moveSpeed_Max);
+        _movement = _dir.normalized * _moveSpeed_Current * Time.deltaTime;
+        transform.position += _movement;
 
-            if (_dir.magnitude < _scanRange)
+        if (_dir.magnitude < _scanRange)
+        {
+            _moveSpeed_Current -= _moveAccel * Time.deltaTime;
+            ScanForPlayer();
+            if (_alertFactor > 0.1f)
+            {
+                //keep scanning
+            }
+            else
             {
                 _timeAtTargetPosition += Time.deltaTime;
                 if (_timeAtTargetPosition > _timeToScanPosition)
@@ -70,6 +85,28 @@ public class ICE_Snooper : Ice, IDestroyable
                 }
             }
         }
+        else
+        {
+            _moveSpeed_Current += _moveAccel * Time.deltaTime;
+        }
+
+        Debug.DrawLine(transform.position, _targetPosition, Color.red);
+
+    }
+
+    private void ScanForPlayer()
+    {
+        _playerDist = (PlayerController.Instance.CurrentPlayer.CurrentNode.transform.position - transform.position).magnitude;
+        if (_playerDist <= _scanRange)
+        {
+            _alertFactor += Time.deltaTime;
+        }
+        else
+        {
+            _alertFactor -= Time.deltaTime;
+        }
+        _alertFactor = Mathf.Clamp01(_alertFactor);
+        _sr.color = Color.Lerp(_color_Unalert, _color_Alert, _alertFactor);
     }
 
     #endregion
