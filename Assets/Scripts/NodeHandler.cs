@@ -166,9 +166,19 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         PlayerController.Instance.CurrentArena.RemoveAvailableNode(this);
 
         _playerHandler = null;
-        gameObject.layer = 11;
+        gameObject.layer = 10;
 
         if (_weapon) _weapon.HandleNodeChangedToUsed();
+    }
+
+    public void ConvertToAvailableNode()
+    {
+        _currentNodeState = NodeStates.Available;
+        ActivateNode(NodeState, NodeType, 0);
+        PlayerController.Instance.CurrentArena.AddAvailableNode(this);
+
+        _playerHandler = null;
+        gameObject.layer = 10;
     }
 
     public void DeactivateNode()

@@ -6,6 +6,7 @@ using System;
 public class PlayerHandler : MonoBehaviour
 {
     public Action<NodeHandler> CurrentNodeChanged;
+    public Action RevertedToPreviousNode;
     public Action<Transform> PlayerTransformChanged;
     public Action PlayerDying;
 
@@ -19,6 +20,22 @@ public class PlayerHandler : MonoBehaviour
     PlayerDataHolder _pdh;
     PlayerEnergyHandler _peh;
 
+    [SerializeField] List<NodeHandler> _nodeTrail = new List<NodeHandler>();
+    public List<NodeHandler> NodesInTrail => _nodeTrail;
+    //[SerializeField] private NodeHandler _previousNode;
+    public NodeHandler PreviousNode => FindPreviousNode();
+
+    private NodeHandler FindPreviousNode()
+    {
+        if (_nodeTrail.Count >= 2) return _nodeTrail[_nodeTrail.Count - 2];
+        else
+        {
+            return null;
+        }
+
+
+    }
+
     [SerializeField] private NodeHandler _currentNode;
     public NodeHandler CurrentNode => _currentNode;
 
@@ -31,6 +48,8 @@ public class PlayerHandler : MonoBehaviour
     public int OwnerIndex => _ownerIndex;
     Vector2 _facingDir;
     PacketHandler packet;
+
+
 
     private void Start()
     {
@@ -145,23 +164,41 @@ public class PlayerHandler : MonoBehaviour
 
     #region Current Node Management
 
-    public void ClearCurrentNode()
-    {
-        _currentNode = null;
-    }
+    //public void ClearCurrentNode()
+    //{
+    //    _currentNode = null;
+    //}
 
     public void AdjustCurrentNode(NodeHandler newCurrentNode)
     {
-        NodeHandler oldNode = null;
-        if (_currentNode) 
-        {
-            _currentNode.ConvertToUsedNode();
-            oldNode = _currentNode;
-        } 
+        //_previousNode = null;
+        //NodeHandler oldNode = null;
+       
 
-        _currentNode = newCurrentNode;
+        if (_nodeTrail.Count > 0 && PreviousNode == newCurrentNode)
+        {
+            NodeHandler nodeToDepart = _currentNode;
+            //revert to previous node
+            _currentNode = PreviousNode;
+            nodeToDepart.ConvertToAvailableNode();
+            _nodeTrail.Remove(nodeToDepart);
+            RevertedToPreviousNode?.Invoke();
+        }
+        else
+        {
+            if (_currentNode)
+            {
+                _currentNode.ConvertToUsedNode();
+            }
+
+            _currentNode = newCurrentNode;
+            _nodeTrail.Add(_currentNode);
+            CurrentNodeChanged?.Invoke(_currentNode);
+        }
+
+
         PlayerTransformChanged?.Invoke(_currentNode.transform);
-        CurrentNodeChanged?.Invoke(_currentNode);
+
 
         //_blaster.HandleNodeChange();
         //_shotgun.HandleNodeChange();
@@ -183,6 +220,7 @@ public class PlayerHandler : MonoBehaviour
 
     public void ReturnToCurrentServer()
     {
+        _nodeTrail.Clear();
         _currentNode = null;
         PlayerTransformChanged?.Invoke(CurrentTransform);
     }

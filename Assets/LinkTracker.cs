@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,6 @@ public class LinkTracker : MonoBehaviour
     [SerializeField] LinkHandler _linkPrefab;
 
     //state
-    [SerializeField] List<NodeHandler> _nodesInChain = new List<NodeHandler>();
     [SerializeField] List<LinkHandler> _activeLinks = new List<LinkHandler>();
 
 
@@ -25,15 +25,18 @@ public class LinkTracker : MonoBehaviour
     {
         _player = GetComponent<PlayerHandler>();
         _player.CurrentNodeChanged += HandleCurrentNodeChanged;
+        _player.RevertedToPreviousNode += HandleRevertedToPreviousNode;
     }
+
+
 
     private void HandleCurrentNodeChanged(NodeHandler newNode)
     {
-        _nodesInChain.Add(newNode);
-        if (_nodesInChain.Count > 1)
+        var list = PlayerController.Instance.CurrentPlayer.NodesInTrail;
+        if (list.Count > 1)
         {
-            NodeHandler newestNode = _nodesInChain[_nodesInChain.Count - 1];
-            NodeHandler secondNewestNode = _nodesInChain[_nodesInChain.Count -2];
+            NodeHandler newestNode = list[list.Count - 1];
+            NodeHandler secondNewestNode = list[list.Count - 2];
 
             LinkHandler newLink = Instantiate(_linkPrefab);
             newLink.Initialize();
@@ -41,6 +44,19 @@ public class LinkTracker : MonoBehaviour
             _activeLinks.Add(newLink);
         }
         PlayerController.Instance.CurrentArena.ArenaShuttingDown += HandleArenaShutdown;
+    }
+
+    private void HandleRevertedToPreviousNode()
+    {
+        DestroyLastLink();
+    }
+
+    private void DestroyLastLink()
+    {
+        Debug.Log("removing last link");
+        LinkHandler lastLink = _activeLinks[_activeLinks.Count - 1];
+        _activeLinks.Remove(lastLink);
+        lastLink.CloseDown();
     }
 
     private void HandleArenaShutdown()
@@ -51,7 +67,6 @@ public class LinkTracker : MonoBehaviour
         }
 
         _activeLinks.Clear();
-        _nodesInChain.Clear();
         PlayerController.Instance.CurrentArena.ArenaShuttingDown -= HandleArenaShutdown;
     }
 }

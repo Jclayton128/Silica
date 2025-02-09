@@ -96,6 +96,32 @@ public class ArenaHandler : MonoBehaviour
 
     public bool CheckIsIfNodeIsAvailable(NodeHandler node)
     {
-        return _availableNodes.Contains(node);
+        bool isPreviousNode;
+        if (node == PlayerController.Instance.CurrentPlayer.PreviousNode)
+        {
+            isPreviousNode = true;
+        }
+        else
+        {
+            isPreviousNode = false;
+        }
+
+        bool isAvailable;
+        if (_availableNodes.Contains(node))
+        {
+            isAvailable = true;
+        }
+        else
+        {
+            isAvailable = false;
+        }
+
+        bool canBeUsed;
+        if (isPreviousNode || isAvailable) canBeUsed = true;
+        else canBeUsed = false;
+
+        Debug.Log($"{isPreviousNode}, {isAvailable}, {canBeUsed}");
+
+        return canBeUsed;
     }
 }
