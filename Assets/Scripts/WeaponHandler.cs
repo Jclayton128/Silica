@@ -9,8 +9,8 @@ public abstract class WeaponHandler : MonoBehaviour
 
     protected virtual void Start()
     {
-        _player = GetComponent<PlayerHandler>();
-        _playerEnergyHandler = GetComponent<PlayerEnergyHandler>();
+        _player = PlayerController.Instance.CurrentPlayer;
+        _playerEnergyHandler = _player.GetComponent<PlayerEnergyHandler>();
 
     }
 
@@ -18,5 +18,5 @@ public abstract class WeaponHandler : MonoBehaviour
 
     public abstract void HandleButtonUp();
 
-    public abstract void HandleNodeChange();
+    public abstract void HandleNodeChangedToUsed();
 }

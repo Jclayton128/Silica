@@ -18,6 +18,7 @@ public class NodeHandler : MonoBehaviour, IDestroyable
     [SerializeField] RingSpinner _ring0 = null;
     [SerializeField] RingSpinner _ring1 = null;
     [SerializeField] RingSpinner _ring2 = null;
+    [SerializeField] WeaponHandler _weapon = null;
 
     //settings
     [SerializeField] float _iconFadeTime = 0.5f;
@@ -166,6 +167,8 @@ public class NodeHandler : MonoBehaviour, IDestroyable
 
         _playerHandler = null;
         gameObject.layer = 11;
+
+        if (_weapon) _weapon.HandleNodeChangedToUsed();
     }
 
     public void DeactivateNode()
@@ -180,6 +183,22 @@ public class NodeHandler : MonoBehaviour, IDestroyable
         transform.up = facingDir;
         _icon.up = Vector2.up;
     }
+
+    #region Weapon / Effects
+
+    public void ActivateWeapon()
+    {
+        if (!_weapon) return;
+        _weapon.HandleButtonDown();
+    }
+
+    public void DeactivateWeapon()
+    {
+        if (!_weapon) return;
+        _weapon.HandleButtonUp();
+    }
+
+    #endregion
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

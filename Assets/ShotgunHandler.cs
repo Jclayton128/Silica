@@ -35,7 +35,7 @@ public class ShotgunHandler : WeaponHandler
         _chargeLevel = 0;
     }
 
-    public override void HandleNodeChange()
+    public override void HandleNodeChangedToUsed()
     {
         _isCharging = false;
         _chargeLevel = 0;

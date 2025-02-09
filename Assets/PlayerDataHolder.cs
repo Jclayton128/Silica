@@ -7,7 +7,8 @@ public class PlayerDataHolder : MonoBehaviour
 {
     public Action<float> CurrentEnergyChanged;
     public Action<float> CurrentSoulChanged;
-    
+    public Action StatsChanged;
+
     //Settings
     [Header("Start Settings")]
     [SerializeField] float _startingSpeed = 3;
@@ -50,6 +51,27 @@ public class PlayerDataHolder : MonoBehaviour
     public float PacketLifetime => _currentRange/_currentSpeed;
     //public float ServersPacketLifetime => _currentRange / _currentSpeed;
 
+    [Header("Base Stats")]
+    [SerializeField] int _speed_Base = 0;
+    [SerializeField] int _might_Base = 0;
+    [SerializeField] int _intelligence_Base = 0;
+    [SerializeField] int _constitution_Base = 0;
+    [SerializeField] int _wisdom_Base = 0;
+
+    [Header("Temporary Stats")]
+    [SerializeField] int _speed_Mod = 0;
+    [SerializeField] int _might_Mod = 0;
+    [SerializeField] int _intelligence_Mod = 0;
+    [SerializeField] int _constitution_Mod = 0;
+    [SerializeField] int _wisdom_Mod = 0;
+
+    public int Stat_Speed => _speed_Base + _speed_Mod;
+    public int Stat_Might => _might_Base + _might_Mod;
+    public int Stat_Intelligence => _intelligence_Base + _intelligence_Mod;
+    public int Stat_Constitution => _constitution_Base + _constitution_Mod;
+    public int Stat_Wisdom => _wisdom_Base + _wisdom_Mod;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,4 +95,33 @@ public class PlayerDataHolder : MonoBehaviour
         CurrentSoulChanged?.Invoke(_currentSoul/_maxSoul);
     }
 
+    public void ModifySpeed(int amountToAdd)
+    {
+        _speed_Mod += amountToAdd;
+        StatsChanged?.Invoke();
+    }
+
+    public void ModifyMight(int amountToAdd)
+    {
+        _might_Mod += amountToAdd;
+        StatsChanged?.Invoke();
+    }
+
+    public void ModifyIntelligence(int amountToAdd)
+    {
+        _intelligence_Mod += amountToAdd;
+        StatsChanged?.Invoke();
+    }
+
+    public void ModifyConstitution(int amountToAdd)
+    {
+        _constitution_Mod += amountToAdd;
+        StatsChanged?.Invoke();
+    }
+
+    public void ModifyWisdom(int amountToAdd)
+    {
+        _wisdom_Mod += amountToAdd;
+        StatsChanged?.Invoke();
+    }
 }

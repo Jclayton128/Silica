@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1378184291008995926, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
+      propertyPath: _weapon
+      value: 
+      objectReference: {fileID: 8908321213337892097}
+    - target: {fileID: 1378184291008995926, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
       propertyPath: NodeType
       value: 2
       objectReference: {fileID: 0}
@@ -79,5 +83,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9119383532042460655, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8908321213337892097}
   m_SourcePrefab: {fileID: 100100000, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
+--- !u!1 &3835287260886318760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9119383532042460655, guid: 892c040aac6bdaf4e9bbc945e2e9810e, type: 3}
+  m_PrefabInstance: {fileID: 5455867342062199623}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8908321213337892097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3835287260886318760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c7627e4bb859524691b0f938ff83555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectileType: 1
+  _degreeSpread: 60
+  _chargeRate: 5
+  _maxCharge: 10
+  _minChargeToFire: 3
+  _shotSpeed: 4
+  _lifetime: 1.5
+  _energyCostPerSecondCharging: 0.6
+  _chargeLevel: 0

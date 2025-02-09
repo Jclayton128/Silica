@@ -77,24 +77,8 @@ public class PlayerHandler : MonoBehaviour
     {
         if (_currentNode)
         {
-            switch (_currentNode.NodeType)
-            {
-                case NodeHandler.NodeTypes.Empty:
-                    //do nothing
-                    return;
-
-                case NodeHandler.NodeTypes.Speed:
-                    if (wasPushedDown) _blaster.HandleButtonDown();
-                    else _blaster.HandleButtonUp();
-                    return;
-
-                case NodeHandler.NodeTypes.Might:
-                    if (wasPushedDown) _shotgun.HandleButtonDown();
-                    else _shotgun.HandleButtonUp();
-                    return;
-
-
-            }
+            if (wasPushedDown) _currentNode.ActivateWeapon();
+            else _currentNode.DeactivateWeapon();
         }
         else
         {
@@ -179,8 +163,8 @@ public class PlayerHandler : MonoBehaviour
         PlayerTransformChanged?.Invoke(_currentNode.transform);
         CurrentNodeChanged?.Invoke(_currentNode);
 
-        _blaster.HandleNodeChange();
-        _shotgun.HandleNodeChange();
+        //_blaster.HandleNodeChange();
+        //_shotgun.HandleNodeChange();
 
         //tell the node controller IOT update the current nodes list (for camera and spawning)
         //NodeController.Instance.AdjustCurrentNodes(oldNode, newCurrentNode);

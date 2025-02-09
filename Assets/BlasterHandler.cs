@@ -29,9 +29,11 @@ public class BlasterHandler : WeaponHandler
         //_timeUntilNextShot = _timeBetweenShot;
     }
 
-    public override void HandleNodeChange()
+    public override void HandleNodeChangedToUsed()
     {
         _isFiring = false;
+
+        PlayerController.Instance.CurrentPlayer.GetComponent<PlayerDataHolder>().ModifySpeed(1);
     }
 
     private void Update()
